@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { IoArrowForward } from "react-icons/io5";
+import { CgArrowLongRightC } from "react-icons/cg";
 
 interface BreadcrumbProps {
   items: { label: string; href: string }[];
@@ -11,11 +11,11 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
     <nav className="flex items-center space-x-1 text-sm text-gray-600">
       {items.map((item, index) => (
         <span key={index} className="flex items-center">
-          <a href={item.href} className="hover:text-gray-900 hover:underline">
+          <a href={item.href} className={`${index===0 && "text-[#8b7eff]"} ${index!=0 && "font-bold"} hover:text-gray-600 hover:underline`}>
             {item.label}
           </a>
           {index < items.length - 1 && (
-            <span className="mx-1 text-gray-400"><IoArrowForward size={12} className="mt-1" /></span>
+            <span className="mx-1 flex justify-center text-gray-400"> <CgArrowLongRightC size={15} className="my-3.5 mx-2 text-[#8b7eff]" /></span>
           )}
         </span>
       ))}
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ title, breadcrumbItems }) => {
   return (
     <header className="bg-transparent p-4 flex items-center justify-between">
       <div>
-        <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
+        <h1 className="text-lg font-bold text-gray-900">{title}</h1>
       </div>
       <div className="flex items-center space-x-4">
         <Breadcrumb items={breadcrumbItems} />
