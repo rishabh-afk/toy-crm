@@ -1,9 +1,10 @@
 "use client";
 
-
 import React, { useState, useRef, useEffect } from "react";
 import { Post } from "@/hooks/apiUtils";
 import Link from "next/link";
+import { CiEdit } from "react-icons/ci";
+import { useRouter } from "next/router";
 
 const OtpVerification = ({
   email,
@@ -18,9 +19,10 @@ const OtpVerification = ({
 }) => {
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const [otp, setOtp] = useState<string[]>(Array(4).fill(""));
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [, setIsResendDisabled] = useState(true);
+  const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const router = useRouter();
 
   // Enable the verify button when all OTP digits are filled
   useEffect(() => {
@@ -86,6 +88,10 @@ const OtpVerification = ({
     }
   };
 
+  const handleGoBack = ()=>{
+    router.prefetch("/auth/login");
+  }
+
   const handleResend = async () => {
     setTimer(30);
     setIsResendDisabled(true);
@@ -112,14 +118,25 @@ const OtpVerification = ({
   };
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="bg-white px-6 py-10 w-full max-w-md">
-
-        <p className="text-left text-sm font-semibold text-primary/70 mb-5">
-          Email Verification Code:
+      <div className="bg-white px-6 items-center w-full max-w-md">
+      <h6 className="text-md font-bold text-primary text-center mb-4">
+          Enter OTP to verify your <br className="hidden bg:block" /> E-mail
+        </h6>
+        <p className="text-center text-xs text-primary/70 mb-5">
+          We&apos;ve sent an OTP to this E-mail Address <br />
+          <span className="text-primary/70 pt-1 flex justify-center items-center font-semibold cursor-pointer">
+            {email}{" "}
+            <span
+              onClick={handleGoBack}
+              className="text-primary hover:text-primary/80 hover:underline text-xs pl-2 cursor-pointer"
+            >
+              <CiEdit size={18} />
+            </span>
+          </span>
         </p>
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-4 gap-3 justify-center items-center mb-2"
+          className="grid grid-cols-6 gap-3 justify-center items-center mb-2"
         >
           {otp.map((_, index) => (
             <input
@@ -133,24 +150,49 @@ const OtpVerification = ({
               ref={(el) => {
                 inputRefs.current[index] = el as HTMLInputElement;
               }}
-              className="w-full h-10 aspect-square text-center border focus:border-2 border-primary/30 rounded-md focus:outline-none focus:border-primary/70 text-lg" // Reduced font size
+              className="w-full aspect-square text-center border focus:border-2 border-primary/30 rounded-md focus:outline-none focus:border-primary/70 text-lg" // Reduced font size
             />
           ))}
         </form>
-        <p className="text-center text-sm mb-5">
-          Did&apos;t receive a code? <Link href={""} className="text-blue-600" onClick={handleResend}>Resend</Link>
-        </p>
+
+        <div className="flex mb-4  place-items-start">
+          <input
+            id="checked-checkbox"
+            type="checkbox"
+            value=""
+            className="w-3.5 h-3.5 mt-1 accent-[#8b7eff] appearance-auto rounded-sm border"
+          />
+          <label
+            htmlFor="checked-checkbox"
+            className="ms-2 text-sm font-normal text-gray-500 dark:text-gray-300"
+          >
+            {" "}
+            Did&apos;t receive a code?{" "}
+            <Link href={""} className="text-blue-600" onClick={handleResend}>
+              Resend
+            </Link>
+          </label>
+        </div>
+
         <button
           type="submit"
           onClick={handleSubmit}
           disabled={isButtonDisabled}
-          className={`w-full py-1 text-white rounded-md transition text-m duration-200 ${isButtonDisabled
-              ? "bg-[#8b7eff]/90 cursor-not-allowed"
-              : "bg-[#8b7eff] hover:bg-primary-700"
-            }`}
+          className={`w-full py-1 text-white rounded-md transition text-m duration-200 ${
+            isButtonDisabled
+              ? "btn-primary cursor-not-allowed"
+              : "btn-primary hover:bg-primary-700"
+          }`}
         >
           Verify
         </button>
+        <div className="text-center mt-2">
+          {isResendDisabled ? (
+            <p className="text-primary">Resend OTP in {timer}s</p>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );
