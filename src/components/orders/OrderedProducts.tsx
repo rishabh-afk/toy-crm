@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { IoPrintSharp, IoShareOutline } from "react-icons/io5";
 
@@ -46,63 +47,65 @@ const OrderedProducts: React.FC = () => {
   ];
 
   return (
-    <div className="mt-8 bg-white rounded shadow-md p-6">
-      <h3 className="text-lg font-semibold text-gray-800">Ordered Products</h3>
+    <div className="mt-8 bg-white rounded shadow-md py-6">
+      <h3 className="text-lg font-semibold text-gray-800 px-6  border-b-2 border-gray-100">Ordered Products</h3>
 
       <div className="mt-4 overflow-x-auto">
         <table className="min-w-full text-sm text-left text-gray-500">
-          <thead className="bg-gray-100 text-gray-600 text-sm uppercase font-medium">
+          <thead className="bg-white text-gray-800 text-sm border-b-2 border-gray-100">
             <tr>
-              <th className="py-3 px-6">S.No</th>
-              <th className="py-3 px-6">Product Name</th>
-              <th className="py-3 px-6">Price</th>
-              <th className="py-3 px-6">Quantity</th>
-              <th className="py-3 px-6">Tracking ID</th>
-              <th className="py-3 px-6">Total</th>
+              <th className="py-3 font-semibold px-6">S.no</th>
+              <th className="py-3 font-semibold px-6">Product Name</th>
+              <th className="py-3 font-semibold px-6">Price</th>
+              <th className="py-3 font-semibold px-6">Quantity</th>
+              <th className="py-3 font-semibold px-6">Tracking ID</th>
+              <th className="py-3 font-semibold px-6">Total</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product, index) => (
               <tr key={product.id} className="border-b">
-                <td className="py-4 px-6">{index + 1 < 10 ? `0${index + 1}` : index + 1}.</td>
+                <td className="py-4 text-gray-900 font-semibold px-6">{index + 1 < 10 ? `0${index + 1}` : index + 1}.</td>
                 <td className="py-4 px-6 flex items-center space-x-4">
-                  <img
+                  <Image
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-12 h-12 rounded-md object-cover"
+                    height={100}
+                    width={100}
+                    className="border border-gray-100 rounded-md object-cover"
                   />
                   <div>
-                    <p className="font-medium text-gray-800">{product.name}</p>
+                    <p className="font-bold text-gray-800">{product.name}</p>
                     <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full inline-block">
                       {product.discount}
                     </span>
-                    <p className="text-xs text-gray-600 mt-1">Color: {product.color}</p>
-                    <p className="text-xs text-gray-600">Size: {product.size}</p>
+                    <p className="text-sm font-semibold text-gray-400 mt-1">Color: <span className="text-gray-600">{product?.color}</span></p>
+                    <p className="text-sm font-semibold text-gray-400">Size: <span className="text-gray-600">{product?.size}</span></p>
                   </div>
                 </td>
                 <td className="py-4 px-6">
-                  <span className="text-pink-500 font-medium">${product.price}</span>{" "}
+                  <span className="text-pink-500 text-xl font-bold">${product.price}</span>{" "}
                   <span className="line-through text-gray-400">${product.originalPrice}</span>
                 </td>
-                <td className="py-4 px-6">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</td>
+                <td className="py-4 px-6 text-sm text-gray-900">{product.quantity < 10 ? `0${product.quantity}` : product.quantity}</td>
                 <td className="py-4 px-6">
-                  <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                  <span className="bg-gray-100 text-gray-900 font-normal text-xs px-2 rounded">
                     {product.trackingId}
                   </span>
                 </td>
-                <td className="py-4 px-6 font-medium">${product.total}</td>
+                <td className="py-4 px-6 text-gray-900 font-bold font-base">${product.total}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
-      <div className="mt-6 flex justify-between space-x-4">
-        <button className="bg-purple-100 text-purple-500 px-4 py-2 rounded flex items-center space-x-2">
+      <div className="mt-6 flex justify-between space-x-4 px-4">
+        <button className="bg-purple-100 text-purple-500 px-2 py-1 text-sm rounded flex items-center space-x-2">
           <IoPrintSharp size={15} className="" />
           <span>Print</span>
         </button>
-        <button className="bg-purple-500 text-white px-4 py-2 rounded flex items-center space-x-2 hover:bg-purple-600 transition">
+        <button className="btn-primary text-white px-4 py-1 rounded flex text-sm items-center space-x-2 transition">
         <IoShareOutline size={15} className="" />
           <span>Share Details</span>
         </button>
