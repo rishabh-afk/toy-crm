@@ -65,7 +65,7 @@ const Login: React.FC = () => {
     <>
       {!token && (
         <div className="bg-[url('/assets/bg/bg.png')] bg-cover min-h-screen flex justify-center items-center">
-          <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-2/3 lg:mx-auto">
+          <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-3/5 lg:mx-auto">
             <div className="col mx-auto pt-6 px-10  text-center lg:mx-0 lg:flex-auto lg:py-4 lg:text-left lg:w-2/4 lg:pt-6 lg:px-2 lg:pl-10">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -172,8 +172,8 @@ const Login: React.FC = () => {
                 className="mx-auto mt-4 object-contain"
               ></Image>
               <div className="flex-fill my-4 text-center">
-                <h6 className="mb-0 font-semibold pb-2 fs-12">Welcome Back</h6>
-                <p className="text-xs font-semibold text-gray-400 px-5">
+                <h6 className="mb-0 font-semibold pb-1 text-lg">Welcome Back</h6>
+                <p className="text-sm font-semibold text-gray-400 px-5">
                   Sign in to your account to continue.
                 </p>
               </div>

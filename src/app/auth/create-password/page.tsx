@@ -140,9 +140,8 @@ const CreatePassword: React.FC = () => {
                         unoptimized
                         className="mx-auto mt-4 object-contain"></Image>
                     <div className="flex-fill my-4 text-center">
-                        <h6 className="mb-0 font-semibold pb-2 fs-12">Set Your New Password</h6>
-                        <p className='text-xs font-semibold text-gray-400 px-5'>Create a secure password for protection.</p>
-
+                        <h6 className="mb-0 font-semibold pb-1 text-lg">Set Your New Password</h6>
+                        <p className='text-sm font-semibold text-gray-400 px-5'>Create a secure password for protection.</p>
                     </div>
                     <Link href="/dashboard">
                         <Image
