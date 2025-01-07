@@ -65,7 +65,7 @@ const Login: React.FC = () => {
     <>
       {!token && (
         <div className="bg-[url('/assets/bg/bg.png')] bg-cover min-h-screen flex justify-center items-center">
-          <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-3/5 lg:mx-auto">
+          <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-2/3 lg:mx-auto">
             <div className="col mx-auto pt-6 px-10  text-center lg:mx-0 lg:flex-auto lg:py-4 lg:text-left lg:w-2/4 lg:pt-6 lg:px-2 lg:pl-10">
               <form onSubmit={handleSubmit}>
                 <div className="mb-4">
@@ -140,10 +140,10 @@ const Login: React.FC = () => {
                   </div>
                   <div className="flex mb-4 items-center">
                     <Link
-                      href={""}
+                      href={"/auth/forgot-password"}
                       className="ms-2 text-sm font-medium text-[#35bdaa] dark:text-gray-300"
                     >
-                      Forgat Password?
+                      Forgot Password?
                     </Link>
                   </div>
                 </div>
@@ -152,7 +152,7 @@ const Login: React.FC = () => {
                 type="submit"
                 onClick={handleSubmit}
                 className={`w-full py-2 flex justify-center text-white rounded-md transition text-m duration-200
-                        btn-primary`}
+                        bg-primary`}
               >
                 <IoLogInOutline
                   size={16}
@@ -178,7 +178,7 @@ const Login: React.FC = () => {
                 </p>
               </div>
 
-              <Link href="/dashboard">
+              <Link href="">
                 <Image
                   src={"/assets/logo/logo.jpg"}
                   alt="logo"

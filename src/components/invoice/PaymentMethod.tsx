@@ -55,7 +55,7 @@ const PaymentMethod = () => {
           />
         </div>
       )}
-      <p className="mt-4 text-green-600">
+      <p className="mt-4 text-green-600 bg-green-00">
         Please make sure to pay the invoice bill within 120 days.
       </p>
     </div>

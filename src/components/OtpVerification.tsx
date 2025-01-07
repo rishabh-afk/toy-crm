@@ -4,14 +4,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { Post } from "@/hooks/apiUtils";
 import Link from "next/link";
 import { CiEdit } from "react-icons/ci";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
-const OtpVerification = ({
-  email,
-  // setOtpLocal,
-  // handleGoBack,
-  setIsModalVisible,
-}: {
+const OtpVerification = ({}: // email,
+// setOtpLocal,
+// handleGoBack,
+// setIsModalVisible,
+{
   email: any;
   setOtpLocal?: any;
   handleGoBack?: any;
@@ -22,7 +21,14 @@ const OtpVerification = ({
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
-  // const router = useRouter();
+  const [email, setEmail] = useState<string | null>("");
+  const router = useRouter();
+
+  // set email
+  useEffect(() => {
+    const emailId = localStorage.getItem("email");
+    setEmail(emailId);
+  }, []);
 
   // Enable the verify button when all OTP digits are filled
   useEffect(() => {
@@ -73,6 +79,10 @@ const OtpVerification = ({
     }
   };
 
+  const handleGoBack = () => {
+    router.push("/auth/forgot-password");
+  };
+
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -88,14 +98,10 @@ const OtpVerification = ({
     }
   };
 
-  const handleGoBack = ()=>{
-    // router.prefetch("/auth/login");
-  }
-
   const handleResend = async () => {
     setTimer(30);
     setIsResendDisabled(true);
-    await Post("vendors/send-otp", { email: email });
+    await Post("/api/user/forgot-pass", { email: email });
     setOtp(Array(6).fill(""));
   };
 
@@ -104,13 +110,14 @@ const OtpVerification = ({
 
     const otpCode = otp.join("");
     try {
-      const response: any = await Post("vendors/verify-otp", {
+      const response: any = await Post("/api/user/forgot-pass-otp-verify", {
         email: email,
         otp: otpCode,
       });
       if (response.success) {
-        localStorage.setItem("accessToken", response?.data?.accessToken);
-        setIsModalVisible(false);
+        localStorage.setItem("adminToken", response?.data?.token);
+        // setIsModalVisible(false);
+        router.push("/auth/create-password");
       }
     } catch (error) {
       console.log(error);
@@ -119,7 +126,7 @@ const OtpVerification = ({
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="bg-white px-6 items-center w-full max-w-md">
-      <h6 className="text-md font-bold text-primary text-center mb-4">
+        <h6 className="text-md font-bold text-primary text-center mb-4">
           Enter OTP to verify your <br className="hidden bg:block" /> E-mail
         </h6>
         <p className="text-center text-xs text-primary/70 mb-5">
@@ -155,13 +162,7 @@ const OtpVerification = ({
           ))}
         </form>
 
-        <div className="flex mb-4  place-items-start">
-          <input
-            id="checked-checkbox"
-            type="checkbox"
-            value=""
-            className="w-3.5 h-3.5 mt-1 accent-[#8b7eff] appearance-auto rounded-sm border"
-          />
+        <div className="flex mb-4 justify-center place-items-start">
           <label
             htmlFor="checked-checkbox"
             className="ms-2 text-sm font-normal text-gray-500 dark:text-gray-300"
@@ -180,8 +181,8 @@ const OtpVerification = ({
           disabled={isButtonDisabled}
           className={`w-full py-1 text-white rounded-md transition text-m duration-200 ${
             isButtonDisabled
-              ? "btn-primary cursor-not-allowed"
-              : "btn-primary hover:bg-primary-700"
+              ? "bg-primary cursor-not-allowed"
+              : "bg-primary hover:bg-primary-700"
           }`}
         >
           Verify
