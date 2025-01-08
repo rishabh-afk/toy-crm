@@ -20,12 +20,12 @@ const columns = [
 ];
 
 const Users: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Admin"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Employee"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data?.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Admin");
+  const operationsAllowed = getAccessPoints(user, "Manage Employee");
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -33,7 +33,7 @@ const Users: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Admin"
+          type="Employee"
           columns={columns}
           data={updatedData}
           pagination_data={paginationData}

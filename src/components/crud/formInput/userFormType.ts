@@ -101,10 +101,12 @@ export const userFormType: FormField[] = [
     placeholder: "Enter conveyance",
   },
   {
-    name: "status",
-    label: "Do you want to activate this user?",
-    type: "choose",
-    required: false,
+    name: "role",
+    label: "User Role",
+    type: "select",
+    required: true,
+    placeholder: "Select user role",
+    options: [],
   },
   {
     name: "line1",
@@ -164,6 +166,12 @@ export const userFormType: FormField[] = [
     type: "text",
     label: "Longitude",
     placeholder: "Enter longitude",
+  },
+  {
+    name: "status",
+    label: "Do you want to activate this user?",
+    type: "choose",
+    required: false,
   },
   {
     name: "profilePic",

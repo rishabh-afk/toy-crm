@@ -30,10 +30,10 @@ export const tabs = [
   {
     id: 3,
     icon: RiAdminFill,
-    label: "Manage Admin",
-    pageTitle: "All Admins",
+    label: "Manage Employee",
     href: "/dashboard/admin",
-    permission: "Manage Admin",
+    pageTitle: "All Employees",
+    permission: "Manage Employee",
   },
   {
     id: 4,

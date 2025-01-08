@@ -385,3 +385,11 @@ export const updateFormData = (
   updatedFormData.append(nestedFieldKey, JSON.stringify(nestedData));
   return updatedFormData;
 };
+
+export const getSelectFormattedData = (data: any) => {
+  const response = data.map((option: any) => ({
+    value: option?.name,
+    label: option?._id,
+  }));
+  return response;
+};

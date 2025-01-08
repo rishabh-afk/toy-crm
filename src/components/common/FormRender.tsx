@@ -13,7 +13,7 @@ interface FormRendererProps {
 
 const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
   switch (props.formType) {
-    case "Admin":
+    case "Employee":
       return <UserForm {...props} />;
     case "Lead":
       return <LeadForm {...props} />;

@@ -16,12 +16,12 @@ export const endpoints: Record<
     operations?: any;
   }
 > = {
-  Admin: {
+  Employee: {
     create: "api/user", // to create a user
     delete: "api/user/", // to delete a user
     update: "api/user/", // to update a user
     read: "api/user/", // to get a user
-    fetchAll: "api/user?role.name=Admin", // to fetch all Users
+    fetchAll: "api/user", // to fetch all Users
     operations: operations,
   },
   Role: {

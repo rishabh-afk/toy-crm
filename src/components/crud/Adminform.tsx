@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
@@ -10,6 +10,7 @@ import {
   updateFormData,
   populateFormData,
   populateFormFields,
+  getSelectFormattedData,
 } from "@/hooks/general";
 
 interface DealerFormProps {
@@ -23,12 +24,41 @@ interface DealerFormProps {
 const UserForm: React.FC<DealerFormProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
-  const formField = data?._id
-    ? populateFormFields(userFormType, data)
-    : userFormType;
+  const [loading, setLoading] = useState(true);
+  const [formField, setFormFields] = useState<any>(
+    data?._id ? populateFormFields(userFormType, data) : userFormType
+  );
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(userFormType, data) : {}
   );
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response: any = await Fetch(
+          "/api/role/public",
+          {},
+          5000,
+          true,
+          false
+        );
+        if (response.success && response?.data.length > 0) {
+          const selectData = getSelectFormattedData(response.data);
+          const updatedFormField = formField.map((obj: any) => {
+            if (obj.name === "role") return { ...obj, options: selectData };
+            return obj;
+          });
+          setFormFields(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRoles();
+    // eslint-disable-next-line
+  }, []);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -69,13 +99,15 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
 
   return (
     <div>
-      <DynamicForm
-        fields={formField}
-        formData={formData}
-        returnAs="formData"
-        setFormData={setFormData}
-        makeApiCall={makeApiCall}
-      />
+      {!loading && (
+        <DynamicForm
+          fields={formField}
+          formData={formData}
+          returnAs="formData"
+          setFormData={setFormData}
+          makeApiCall={makeApiCall}
+        />
+      )}
     </div>
   );
 };
