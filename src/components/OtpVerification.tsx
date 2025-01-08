@@ -1,28 +1,25 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import { Post } from "@/hooks/apiUtils";
 import Link from "next/link";
+import { Post } from "@/hooks/apiUtils";
 import { CiEdit } from "react-icons/ci";
 import { useRouter } from "next/navigation";
+import React, { useState, useRef, useEffect } from "react";
 
-const OtpVerification = ({}: // email,
-// setOtpLocal,
-// handleGoBack,
-// setIsModalVisible,
-{
+const OtpVerification = ({}: {
   email: any;
   setOtpLocal?: any;
   handleGoBack?: any;
   setIsModalVisible?: any;
 }) => {
+  const router = useRouter();
+
   const [timer, setTimer] = useState(60);
   const inputRefs = useRef<HTMLInputElement[]>([]);
+  const [email, setEmail] = useState<string | null>("");
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
-  const [email, setEmail] = useState<string | null>("");
-  const router = useRouter();
 
   // set email
   useEffect(() => {
@@ -43,11 +40,7 @@ const OtpVerification = ({}: // email,
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
       return () => clearInterval(interval);
-    } else {
-      setIsResendDisabled(false);
-      // setOtpLocal();
-    }
-    // eslint-disable-next-line
+    } else setIsResendDisabled(false);
   }, [timer]);
 
   const handleChange = (

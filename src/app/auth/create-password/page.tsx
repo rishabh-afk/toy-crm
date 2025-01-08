@@ -1,20 +1,20 @@
 "use client";
 
-import { IoMdEye } from "react-icons/io";
-import { IoEye, IoEyeOff, IoLockClosedOutline } from "react-icons/io5";
-import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { Post } from "@/hooks/apiUtils";
+import { IoMdEye } from "react-icons/io";
 import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { IoEye, IoEyeOff, IoLockClosedOutline } from "react-icons/io5";
 
 const CreatePassword: React.FC = () => {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [createPassword, setCreatePassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [isButtonDisabled,setIsButtonDisabled] = useState<boolean>(true);
-  const router = useRouter();
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const CreatePassword: React.FC = () => {
       localStorage.removeItem("adminToken");
       router.push("/auth/forgot-password");
     }, 180000);
-  }, []);
+  }, [router]);
 
   return (
     <div className="bg-[url('/assets/bg/bg.png')] bg-cover min-h-screen flex justify-center items-center">
@@ -97,10 +97,11 @@ const CreatePassword: React.FC = () => {
                   placeholder="R-enter your password"
                   className={`w-full text-primary px-4 py-2.5 placeholder:text-gray-400 text-sm bg-transparent outline-[#8b7eff] rounded-l-sm`}
                   type={showConfirmPassword ? "text" : "password"}
-                  onChange={(e) => {setConfirmPassword(e.target.value)
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
                     if (createPassword === e.target.value) {
-                        setIsButtonDisabled(false)
-                    }else{
+                      setIsButtonDisabled(false);
+                    } else {
                       setIsButtonDisabled(true);
                     }
                   }}
