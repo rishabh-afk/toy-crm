@@ -1,7 +1,11 @@
+import { FaHome } from "react-icons/fa";
 import { SiGoogleadmob } from "react-icons/si";
+import { GiBoxUnpacking } from "react-icons/gi";
+import { BsChatQuoteFill } from "react-icons/bs";
 import { MdManageAccounts } from "react-icons/md";
-import { RiSeoFill, RiAdminFill } from "react-icons/ri";
-import { FaHome, FaQuestionCircle } from "react-icons/fa";
+import { BiSolidPurchaseTagAlt } from "react-icons/bi";
+import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
+import { FaProductHunt, FaMoneyBillTransfer } from "react-icons/fa6";
 
 // Define tabs
 export const tabs = [
@@ -25,14 +29,6 @@ export const tabs = [
   },
   {
     id: 3,
-    icon: SiGoogleadmob,
-    label: "Manage Leads",
-    pageTitle: "All Leads",
-    href: "/dashboard/leads",
-    permission: "Manage Leads",
-  },
-  {
-    id: 4,
     icon: RiAdminFill,
     label: "Manage Admin",
     pageTitle: "All Admins",
@@ -40,19 +36,59 @@ export const tabs = [
     permission: "Manage Admin",
   },
   {
+    id: 4,
+    icon: SiGoogleadmob,
+    label: "Manage Leads",
+    pageTitle: "All Leads",
+    href: "/dashboard/leads",
+    permission: "Manage Leads",
+  },
+  {
     id: 5,
-    label: "Contact Us",
-    icon: FaQuestionCircle,
-    pageTitle: "Contact Us",
-    permission: "Contact Us",
-    href: "/dashboard/contacts",
+    icon: FaProductHunt,
+    label: "Manage Products",
+    pageTitle: "All Products",
+    href: "/dashboard/product",
+    permission: "Manage Products",
   },
   {
     id: 6,
-    icon: RiSeoFill,
-    label: "Manage SEO",
-    href: "/dashboard/seo",
-    permission: "Manage SEO",
-    pageTitle: "Search Engine Optimization (SEO)",
+    icon: BsChatQuoteFill,
+    label: "Manage Quotations",
+    pageTitle: "All Quotations",
+    href: "/dashboard/quotation",
+    permission: "Manage Quotations",
+  },
+  {
+    id: 7,
+    icon: GiBoxUnpacking,
+    label: "Manage Packing",
+    pageTitle: "All Packing",
+    href: "/dashboard/packing",
+    permission: "Manage Packing",
+  },
+  {
+    id: 8,
+    icon: BiSolidPurchaseTagAlt,
+    label: "Manage Purchase",
+    pageTitle: "All Purchase",
+    href: "/dashboard/purchase",
+    permission: "Manage Purchase",
+  },
+  {
+    id: 9,
+    icon: FaMoneyBillTransfer,
+    label: "Manage Billing",
+    pageTitle: "All Billing",
+    href: "/dashboard/billing",
+    permission: "Manage Billing",
+  },
+  {
+    id: 10,
+    icon: RiSecurePaymentFill,
+    label: "Manage Payment",
+    pageTitle: "All Payment",
+    href: "/dashboard/payment",
+    permission: "Manage Payment",
   },
 ];

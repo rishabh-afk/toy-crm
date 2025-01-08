@@ -4,14 +4,18 @@ import useFetch from "@/hooks/useFetch";
 import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
+import { useAuth } from "@/context/AuthContext";
 import Wrapper from "@/components/common/Wrapper";
+import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "ID", sortable: true },
+  { key: "_id", label: "ID" },
   { key: "name", label: "Name", sortable: true },
   { key: "email", label: "Email ID", sortable: true },
+  { key: "mobileNo", label: "Phone No.", sortable: true },
   { key: "role", label: "Role Assigned", sortable: true },
+  { key: "status", label: "Active Status", sortable: true },
   { key: "createdAt", label: "Date", sortable: true, isDate: true },
 ];
 
@@ -20,9 +24,10 @@ const Users: React.FC = () => {
   const updatedData = data?.data.result;
   const paginationData = data?.data?.pagination;
 
-  if (loading && !updatedData && !error) return <Loader />;
+  const { user } = useAuth();
+  const operationsAllowed = getAccessPoints(user, "Manage Admin");
 
-  const operationsAllowed = endpoints["Admin"].operations;
+  if (loading && !updatedData && !error) return <Loader />;
 
   return (
     <AuthGuard>

@@ -5,24 +5,21 @@ import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
 import { useAuth } from "@/context/AuthContext";
-import { getAccessPoints } from "@/hooks/general";
 import Wrapper from "@/components/common/Wrapper";
+import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  // { key: "_id", label: "ID", sortable: true },
-  { key: "leadId", label: "Lead ID" },
-  { key: "name", label: "UserName" },
-  { key: "email", label: "User Email" },
-  { key: "phone", label: "User Phone" },
-  { key: "companyName", label: "Company" },
-  // { key: "salesPersonName", label: "Sales Name" },
-  // { key: "salesPersonEmail", label: "Sales Email" },
-  { key: "source", label: "Source", sortable: true },
-  { key: "priorityLevel", label: "Priority", sortable: true },
-  { key: "status", label: "Status", sortable: true },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "quotationNo", label: "Quotation ID" },
+  { key: "preparedBy", label: "Assignee" },
+  { key: "totalQuantity", label: "Quantity" },
+  { key: "discountAmount", label: "Discount", isCurrency: "₹" },
+  { key: "freightAmount", label: "Freight", isCurrency: "₹" },
+  { key: "igstAmount", label: "IGST (Tax)", isCurrency: "₹" },
+  { key: "totalValue", label: "Total Amt.", isCurrency: "₹" },
+  { key: "taxableAmount", label: "Taxable", isCurrency: "₹" },
+  { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
+  { key: "quotationDate", label: "Send On", sortable: true, isDate: true },
 ];
 
 const filterOptions = [
@@ -33,12 +30,12 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Lead"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Leads");
+  const operationsAllowed = getAccessPoints(user, "Manage Payment");
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -46,7 +43,7 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Lead"
+          type="Quotation"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

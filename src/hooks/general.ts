@@ -337,3 +337,15 @@ export const debounce = (func: any, delay: number) => {
     }, delay);
   };
 };
+
+export const getAccessPoints = (user: any, label: string) => {
+  const userPermissions = user?.permissions ?? [];
+  let accessPoints: any = userPermissions.filter(
+    (e: any) => e.module === label
+  );
+  if (accessPoints && accessPoints.length > 0)
+    accessPoints = accessPoints[0]?.access;
+  else accessPoints = {};
+
+  return accessPoints;
+};

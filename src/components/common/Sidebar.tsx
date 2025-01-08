@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-// import Image from "next/image";
 import { tabs } from "@/data/tabs";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -10,8 +9,9 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
-  const [list, showList] = useState<any>({ tab: "", list: [] });
   const { token, user } = useAuth();
+  const [list, showList] = useState<any>({ tab: "", list: [] });
+
   if (!token) return null;
 
   const userPermissions = user?.permissions;
@@ -54,12 +54,12 @@ const Sidebar: React.FC = () => {
                   if (tab?.tabs && tab?.tabs.length > 0)
                     showList({ tab: tab?.permission, list: tab?.tabs });
                 }}
-                className={`py-3 pl-5 mr-auto w-[90%] text-sm cursor-pointer hover:bg-secondary transition rounded-r-full md:text-base text-info flex justify-between gap-2 items-center border-primary hover:text-white ${
+                className={`py-3 pl-5 mr-auto w-[95%] text-sm cursor-pointer hover:bg-secondary transition rounded-r-full text-info flex justify-between gap-2 items-center border-primary hover:text-white ${
                   pathname === tab?.href &&
                   "bg-secondary rounded-r-full text-white font-semibold"
                 }`}
               >
-                <span className="flex gap-5 items-center">
+                <span className="flex gap-2 items-center">
                   <Icon size={18} /> {tab?.label}
                 </span>
                 {tab?.tabs && tab?.tabs.length > 0 && (

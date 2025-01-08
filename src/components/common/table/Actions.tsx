@@ -39,37 +39,45 @@ const Actions: React.FC<ActionsProps> = ({
   const handleEdit = async (id?: string) => {
     if (!id) return;
 
-    const endpoint = endpoints[type]?.read;
-    if (!endpoint) return;
+    try {
+      const endpoint = endpoints[type]?.read;
+      if (!endpoint) return;
 
-    const response: any = await Fetch(`${endpoint}${id}`, {}, 5000, true);
-    if (
-      response?.success &&
-      (response?.data?._id || response?.data?.result?._id)
-    ) {
-      setData(response.data.result ? response.data.result : response.data);
-    } else setData({});
-    setIsModalVisible(true);
+      const response: any = await Fetch(`${endpoint}${id}`, {}, 5000, true);
+      if (
+        response?.success &&
+        (response?.data?._id || response?.data?.result?._id)
+      ) {
+        setData(response.data.result ? response.data.result : response.data);
+      } else setData({});
+      setIsModalVisible(true);
+    } catch (error) {
+      console.log("Handle Edit", error);
+    }
   };
 
   const handleDelete = async (id: string) => {
     if (!id) return;
 
-    setSelectIdForDeletion(id);
-    if (!showDeleteModal) return setShowDeleteModal(true);
+    try {
+      setSelectIdForDeletion(id);
+      if (!showDeleteModal) return setShowDeleteModal(true);
 
-    const deleteEndpoint = endpoints[type]?.delete;
-    const fetchEndpoint = endpoints[type]?.fetchAll;
+      const deleteEndpoint = endpoints[type]?.delete;
+      const fetchEndpoint = endpoints[type]?.fetchAll;
 
-    if (deleteEndpoint && fetchEndpoint) {
-      await Delete(`${deleteEndpoint}${id}`);
-      const response: any = await Fetch(fetchEndpoint, {}, 5000, true, false);
+      if (deleteEndpoint && fetchEndpoint) {
+        await Delete(`${deleteEndpoint}${id}`);
+        const response: any = await Fetch(fetchEndpoint, {}, 5000, true, false);
 
-      if (response?.success) {
-        setShowDeleteModal(false);
-        setFilteredData(response?.data?.result);
-        setPaginate(response?.data?.pagination);
-      } else window.location.reload();
+        if (response?.success) {
+          setShowDeleteModal(false);
+          setFilteredData(response?.data?.result);
+          setPaginate(response?.data?.pagination);
+        } else window.location.reload();
+      }
+    } catch (error) {
+      console.log("Handle Delete", error);
     }
   };
 

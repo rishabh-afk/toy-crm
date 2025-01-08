@@ -7,6 +7,7 @@ interface Column {
   label: string;
   isDate?: boolean;
   sortable?: boolean;
+  isCurrency?: string;
 }
 
 interface OperationsAllowed {
@@ -51,9 +52,26 @@ const Table: React.FC<TableProps> = ({
     fetchFilteredData({ key, dir: direction });
   };
 
+  const formatRowValue = (
+    row: Record<string, any>,
+    col: { key: string; isDate?: boolean; isCurrency?: string }
+  ) => {
+    const value = row[col.key];
+    if (!value) return "-";
+
+    if (col.key === "_id") return value?.slice(-8);
+    if (col.isDate) return dayjs(value).format("YYYY-MM-DD");
+    if (col.isCurrency) return `${col.isCurrency} ${value}`;
+
+    if (typeof value === "number") return value;
+    if (typeof value === "boolean") return value.toString();
+
+    if (value) return value.toString().slice(0, 75);
+  };
+
   return (
     <div className="overflow-x-scroll no-scrollbar">
-      <table className="min-w-full bg-white">
+      <table className="min-w-full max-w-7xl bg-white">
         <thead>
           <tr className="whitespace-nowrap">
             {columns.map((col) => (
@@ -96,17 +114,7 @@ const Table: React.FC<TableProps> = ({
                     key={col.key}
                     className="text-sm border border-gray-200 px-4 py-3"
                   >
-                    {col.isDate
-                      ? dayjs(row[col.key]).format("YYYY-MM-DD")
-                      : col.key === "_id" || col.key === "conversationId"
-                      ? row[col.key]?.slice(-8)
-                      : typeof row[col.key] === "boolean"
-                      ? row[col.key].toString()
-                      : typeof row[col.key] === "number"
-                      ? row[col.key]
-                      : row[col.key]
-                      ? row[col.key].toString().slice(0, 75)
-                      : "-"}
+                    {formatRowValue(row, col)}
                   </td>
                 ))}
                 {operationsAllowed?.read && (

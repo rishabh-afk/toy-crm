@@ -10,20 +10,33 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "ID" },
-  { key: "name", label: "Role", sortable: true },
-  { key: "description", label: "Role Description" },
+  { key: "_id", label: "ID", sortable: true },
+  { key: "productCode", label: "Code" },
+  { key: "name", label: "Name" },
+  { key: "sku", label: "SKU" },
+  { key: "barCode", label: "Bar Code" },
+  { key: "productCategory", label: "Category" },
+  { key: "brandName", label: "Brand" },
+  { key: "mrp", label: "MRP", sortable: true, isCurrency: "₹" },
+  { key: "ourPrice", label: "Price", sortable: true, isCurrency: "₹" },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", isDate: true },
+  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+];
+
+const filterOptions = [
+  { label: "Name", value: "firstName" },
+  { label: "Email", value: "email" },
+  { label: "Phone", value: "mobile" },
+  { label: "Role", value: "role" },
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Role"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Product"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Role Management");
+  const operationsAllowed = getAccessPoints(user, "Manage Products");
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -31,9 +44,10 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Role"
+          type="Product"
           columns={columns}
           data={updatedData}
+          filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
         />
