@@ -1,4 +1,5 @@
 import UserForm from "../crud/Adminform";
+import LeadForm from "../crud/LeadsForm";
 import ManageRoleForm from "../crud/Roleform";
 import ConfirmationModal from "../crud/ConfirmationModal";
 
@@ -14,6 +15,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
   switch (props.formType) {
     case "Admin":
       return <UserForm {...props} />;
+    case "Lead":
+      return <LeadForm {...props} />;
     case "Delete":
       return <ConfirmationModal {...props} />;
     case "Role":

@@ -1,11 +1,9 @@
+// import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
-import { FaRegCircleUser } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
-import { MdOutlineMailLock } from "react-icons/md";
 
 const Profile = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { user, logout } = useAuth();
   return (
     <div className="group relative">
@@ -21,17 +19,6 @@ const Profile = () => {
           </p>
         </div>
         <div className="">
-          <p className="flex hover:bg-gray-100 cursor-pointer items-center p-4 gap-2">
-            <FaRegCircleUser className="text-lg text-gray-400" />
-            <span className="text-sm text-black font-semibold">My Profile</span>
-          </p>
-          <p
-            onClick={() => router.push("/dashboard/contacts")}
-            className="flex hover:bg-gray-100 cursor-pointer items-center p-4 gap-2"
-          >
-            <MdOutlineMailLock className="text-lg text-gray-400" />
-            <span className="text-sm text-black font-semibold">Contact Us</span>
-          </p>
           <p
             onClick={logout}
             className="flex hover:bg-gray-100 cursor-pointer items-center border-t p-4 gap-2"

@@ -5,14 +5,14 @@ import { toast } from "react-toastify";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
-import { userFormType } from "./formInput/userFormType";
+import { LeadFormType } from "./formInput/LeadFormType";
 import {
   updateFormData,
   populateFormData,
   populateFormFields,
 } from "@/hooks/general";
 
-interface DealerFormProps {
+interface LeadFormProps {
   data?: any;
   onClose?: any;
   formType: any;
@@ -20,14 +20,14 @@ interface DealerFormProps {
   setFilteredData?: any;
 }
 
-const UserForm: React.FC<DealerFormProps> = (props: any) => {
+const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const formField = data?._id
-    ? populateFormFields(userFormType, data)
-    : userFormType;
+    ? populateFormFields(LeadFormType, data)
+    : LeadFormType;
   const [formData, setFormData] = useState<any>(
-    data?._id ? populateFormData(userFormType, data) : {}
+    data?._id ? populateFormData(LeadFormType, data) : {}
   );
 
   const makeApiCall = async (updatedData: any) => {
@@ -80,4 +80,4 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
   );
 };
 
-export default UserForm;
+export default LeadForm;

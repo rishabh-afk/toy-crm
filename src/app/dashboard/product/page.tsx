@@ -10,10 +10,10 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "ID", sortable: true },
-  { key: "productCode", label: "Code" },
-  { key: "name", label: "Name" },
-  { key: "sku", label: "SKU" },
+  { key: "_id", label: "Product ID" },
+  { key: "productCode", label: "Code", sortable: true },
+  { key: "name", label: "Name", sortable: true },
+  { key: "sku", label: "SKU", sortable: true },
   { key: "barCode", label: "Bar Code" },
   { key: "productCategory", label: "Category" },
   { key: "brandName", label: "Brand" },

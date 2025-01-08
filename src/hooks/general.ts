@@ -1,3 +1,5 @@
+import { assign } from "./polyfills";
+
 export const formatTimestamp = (timestamp: any) => {
   const date = new Date(timestamp);
 
@@ -348,4 +350,38 @@ export const getAccessPoints = (user: any, label: string) => {
   else accessPoints = {};
 
   return accessPoints;
+};
+
+export const populateFormFields = (fields: any, product: any) => {
+  return fields.map((field: any) => {
+    if (product.hasOwnProperty(field.name))
+      return { ...field, value: product[field.name] };
+    return field;
+  });
+};
+
+export const populateFormData = (fields: any, product: any) => {
+  const object = {};
+  fields.map((field: any) => {
+    if (product.hasOwnProperty(field.name)) {
+      assign(object, { [field.name]: product[field.name] });
+    }
+  });
+  return object;
+};
+
+export const updateFormData = (
+  formData: FormData,
+  nestedFieldKey: string,
+  nestedFields: string[],
+  fieldsToRemove: string[]
+) => {
+  const updatedFormData = new FormData();
+  const nestedData: Record<string, any> = {};
+  for (const [key, value] of formData.entries()) {
+    if (nestedFields.includes(key)) nestedData[key] = value;
+    else if (!fieldsToRemove.includes(key)) updatedFormData.append(key, value);
+  }
+  updatedFormData.append(nestedFieldKey, JSON.stringify(nestedData));
+  return updatedFormData;
 };

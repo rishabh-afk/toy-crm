@@ -29,3 +29,42 @@ export interface FilterOption {
   label: string;
   value: string;
 }
+
+export interface FormField {
+  name: string;
+  label: string;
+  type:
+    | "text"
+    | "email"
+    | "password"
+    | "richTextEditor"
+    | "file"
+    | "date"
+    | "multipleFiles"
+    | "select"
+    | "checkbox"
+    | "radio"
+    | "number"
+    | "textarea"
+    | "choose"
+    | "stringNumeric";
+  value?: any;
+  rows?: number;
+  min?: number;
+  max?: number;
+  minDate?: any;
+  maxDate?: any;
+  accept?: string;
+  maxFiles?: number;
+  maxSizeMB?: number;
+  maxLength?: number;
+  multiple?: boolean;
+  isVideo?: boolean;
+  required?: boolean;
+  widthFull?: boolean;
+  isMultiple?: boolean;
+  placeholder?: string;
+  confirmPlaceholder?: string;
+  validation?: (value: any) => string | null;
+  options?: { label: string; value: string | number }[];
+}

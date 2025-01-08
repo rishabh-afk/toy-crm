@@ -3,7 +3,7 @@
 import JoditEditor from "jodit-react";
 import { useRef, useMemo } from "react";
 
-const RichTextEditor = ({ data, setState }: { data: any; setState: any }) => {
+const RichTextEditor = ({ data, setData }: { data: any; setData: any }) => {
   const editorRef = useRef(null);
   const options = [
     "bold",
@@ -38,7 +38,6 @@ const RichTextEditor = ({ data, setState }: { data: any; setState: any }) => {
       defaultActionOnPaste: "insert_as_html",
       defaultLineHeight: 1.5,
       enter: "div",
-      // options that we defined in above step.
       buttons: options,
       buttonsMD: options,
       buttonsSM: options,
@@ -59,12 +58,19 @@ const RichTextEditor = ({ data, setState }: { data: any; setState: any }) => {
 
   return (
     <div className="w-full">
+      <label
+        htmlFor={"content"}
+        className="block font-medium text-gray-700 mb-2"
+      >
+        Blog Content
+        {<span className="text-red-500">*</span>}
+      </label>
       <JoditEditor
         ref={editorRef}
         value={data}
         {...config}
-        onChange={(htmlString) =>
-          setState((prev: any) => ({ ...prev, description: htmlString }))
+        onChange={(htmlString: any) =>
+          setData((prev: any) => ({ ...prev, content: htmlString }))
         }
       />
     </div>

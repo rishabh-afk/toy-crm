@@ -5,19 +5,19 @@ import { endpoints } from "@/data/endpoints";
 import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
 import { useAuth } from "@/context/AuthContext";
-import { getAccessPoints } from "@/hooks/general";
 import Wrapper from "@/components/common/Wrapper";
+import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  // { key: "_id", label: "ID", sortable: true },
+  // { key: "_id", label: "ID" },
   { key: "leadId", label: "Lead ID" },
   { key: "name", label: "UserName" },
   { key: "email", label: "User Email" },
   { key: "phone", label: "User Phone" },
   { key: "companyName", label: "Company" },
-  // { key: "salesPersonName", label: "Sales Name" },
-  // { key: "salesPersonEmail", label: "Sales Email" },
+  { key: "salesPersonName", label: "Sales Name" },
+  { key: "salesPersonEmail", label: "Sales Email" },
   { key: "source", label: "Source", sortable: true },
   { key: "priorityLevel", label: "Priority", sortable: true },
   { key: "status", label: "Status", sortable: true },

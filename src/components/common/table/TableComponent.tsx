@@ -71,7 +71,7 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <div className="overflow-x-scroll no-scrollbar">
-      <table className="min-w-full max-w-7xl bg-white">
+      <table className="min-w-full bg-white">
         <thead>
           <tr className="whitespace-nowrap">
             {columns.map((col) => (
