@@ -147,8 +147,8 @@ const ResetPassword: React.FC = () => {
                         type="submit"
                         onClick={handleSubmit}
                         className={`w-full py-2 mt-4 flex justify-center text-white rounded-md transition text-m duration-200 ${isButtonDisabled
-                            ? "btn-primary cursor-not-allowed"
-                            : "btn-primary hover:bg-primary-700"
+                            ? "bg-primary cursor-not-allowed"
+                            : "bg-primary hover:bg-primary-700"
                             }`}
                     >
                         <IoLockClosedOutline
@@ -159,7 +159,7 @@ const ResetPassword: React.FC = () => {
                     </button>
                     <div className="flex-fill my-4 text-center">
                         <p className="text-center text-sm font-semibold text-gray-800/70 mb-5">
-                            Want to go back? <Link href={"/demo/django/rixzo/dist/html/index.html"} className="text-blue-600 underline-offset-1">Click Here</Link>
+                            Want to go back? <Link href={""} className="text-blue-600 underline-offset-1">Click Here</Link>
                         </p>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ const ResetPassword: React.FC = () => {
                         <h6 className="mb-0 font-semibold pb-1 text-lg">Verification in Progress</h6>
                         <p className='text-sm font-semibold text-gray-400 px-4'>Please enter the code sent to your Email or phone.</p>
                     </div>
-                    <Link href="/dashboard">
+                    <Link href="">
                         <Image
                             src={"/assets/logo/logo.jpg"}
                             alt="logo"

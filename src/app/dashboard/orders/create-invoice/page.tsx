@@ -3,10 +3,9 @@ import Wrapper from "@/components/common/Wrapper";
 import Header from "@/components/Header";
 import InvoiceForm from "@/components/invoice/InvoiceForm";
 
-
 const InvoicePage = () => {
-    return (
-        <AuthGuard>
+  return (
+    <AuthGuard>
       <Wrapper>
         <Header
           title="Invoice Create"
@@ -15,17 +14,17 @@ const InvoicePage = () => {
               label: "Pages",
               href: "",
             },
-             {
+            {
               label: "Invoice Create",
               href: "",
             },
           ]}
         />
 
-         
-          <InvoiceForm />
-  </Wrapper>
-  </AuthGuard>)
-  };
-  
-  export default InvoicePage;
+        <InvoiceForm />
+      </Wrapper>
+    </AuthGuard>
+  );
+};
+
+export default InvoicePage;

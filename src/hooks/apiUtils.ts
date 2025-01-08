@@ -4,6 +4,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 // Define API base URL
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 10000, // Default timeout in milliseconds
