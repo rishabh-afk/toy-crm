@@ -3,12 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const Otp_Veriufication: React.FC = () => {
+const Otp_Verification: React.FC = () => {
+  
   return (
     <div className="bg-[url('/assets/bg/bg.png')] bg-cover min-h-screen flex justify-center items-center">
-        <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-3/5 lg:mx-auto">
+        <div className="container-sm m-5 mx-2 bg-white shadow rounded-md h-auto items-center lg:py-2 lg:flex lg:w-2/3 lg:mx-auto">
         <div className="col mx-auto pt-6 px-10 max-w-md text-center lg:mx-0 lg:flex-auto lg:py-4 lg:text-left lg:w-2/4 lg:pt-8 lg:px-2 lg:pl-10">
-          <OtpVerification email={undefined} />
+          <OtpVerification email={undefined}/>
         </div>
         <div className="col rounded m-4 py-4 mx-8 bg-[#fff8ec] lg:w-2/4">
           <Image
@@ -24,7 +25,7 @@ const Otp_Veriufication: React.FC = () => {
             <p className='text-sm font-semibold text-gray-400 px-4'>Please enter the code sent to your Email or phone.</p>
 
           </div>
-          <Link href="/dashboard">
+          <Link href="">
             <Image
               src={"/assets/logo/logo.jpg"}
               alt="logo"
@@ -41,4 +42,4 @@ const Otp_Veriufication: React.FC = () => {
   )
 }
 
-export default Otp_Veriufication
+export default Otp_Verification

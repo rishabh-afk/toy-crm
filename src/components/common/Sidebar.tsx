@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
       className={`fixed w-[17%] text-white bg-primary h-full overflow-y-scroll no-scrollbar`}
     >
       <div className="flex justify-center border-b border-b-secondary bg-primary w-[17%] items-center py-[11px] fixed top-0">
-        <Link href={"/dashboard"}>
+        <Link href={""}>
           {/* <Image
             priority
             width={150}

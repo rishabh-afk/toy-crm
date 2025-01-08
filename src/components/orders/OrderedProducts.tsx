@@ -105,7 +105,7 @@ const OrderedProducts: React.FC = () => {
           <IoPrintSharp size={15} className="" />
           <span>Print</span>
         </button>
-        <button className="btn-primary text-white px-4 py-1 rounded flex text-sm items-center space-x-2 transition">
+        <button className="bg-primary text-white px-4 py-1 rounded flex text-sm items-center space-x-2 transition">
         <IoShareOutline size={15} className="" />
           <span>Share Details</span>
         </button>
