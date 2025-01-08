@@ -100,6 +100,8 @@ const CreatePassword: React.FC = () => {
                   onChange={(e) => {setConfirmPassword(e.target.value)
                     if (createPassword === e.target.value) {
                         setIsButtonDisabled(false)
+                    }else{
+                      setIsButtonDisabled(true);
                     }
                   }}
                 />
