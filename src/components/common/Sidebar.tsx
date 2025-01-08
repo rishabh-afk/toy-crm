@@ -15,9 +15,15 @@ const Sidebar: React.FC = () => {
   if (!token) return null;
 
   const userPermissions = user?.permissions;
-  const filteredTabs = tabs.filter((tab) =>
-    userPermissions.includes(tab.permission)
-  );
+  let filteredTabs: any = [];
+  if (userPermissions && userPermissions.length > 0) {
+    filteredTabs = tabs.filter((tab) =>
+      userPermissions.some(
+        (permission: any) =>
+          permission?.module === tab.permission && permission?.access?.read
+      )
+    );
+  }
 
   return (
     <div
@@ -37,7 +43,7 @@ const Sidebar: React.FC = () => {
         </Link>
       </div>
       <nav className="flex flex-col gap-2 justify-center items-center mt-[72px]">
-        {filteredTabs.map((tab) => {
+        {filteredTabs.map((tab: any) => {
           const Icon = tab.icon;
           return (
             <React.Fragment key={tab?.id}>

@@ -11,11 +11,13 @@ const ConfirmationModal = ({
 }) => {
   return (
     <div className="flex flex-col py-10 justify-center items-center gap-5">
-      <h4 className="text-4xl font-bold text-primary/80">Do you really want to Delete?</h4>
+      <h4 className="text-4xl font-bold text-primary/80">
+        Do you really want to Delete?
+      </h4>
       <div className="flex justify-ce-nter mt-5 items-center gap-5">
         <button
           onClick={() => handleDelete(id)}
-          className="px-6 py-2 text-white text-2xl rounded-xl bg-primary/80 hover:bg-primary transition"
+          className="px-6 py-2 text-white text-2xl rounded-xl bg-primary transition"
         >
           Delete
         </button>

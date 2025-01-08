@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     const fetchUser = async (sharedToken: string) => {
       try {
-        const endpoint = "api/users/get-current-user";
+        const endpoint = "api/user/get-current-user";
         const response: { success: boolean; data: any; message: string } =
           await Fetch(endpoint, {}, 5000, true, false);
         if (response?.success && response?.data) {
@@ -66,7 +66,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const logout = () => {
     setToken(null);
     setUser({});
-    localStorage.removeItem("adminToken");
+    localStorage.clear();
     return navigate.replace("/auth/login");
   };
 

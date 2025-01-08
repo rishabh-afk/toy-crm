@@ -24,3 +24,8 @@ export interface CRMStats {
     expenses: string;
   };
 }
+
+export interface FilterOption {
+  label: string;
+  value: string;
+}

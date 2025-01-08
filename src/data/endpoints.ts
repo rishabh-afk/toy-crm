@@ -25,6 +25,22 @@ export const endpoints: Record<
     fetchAll: "blogs/all", // to fetch all blogs
     operations: operations,
   },
+  Role: {
+    create: "api/role", // to create a role
+    read: "api/role/", // to get a role
+    update: `api/role/`, // to update a role
+    delete: "api/role/", // to delete a role
+    fetchAll: "api/role", // to fetch all roles
+    operations: operations,
+  },
+  Lead: {
+    create: "api/lead", // to create a lead
+    read: "api/lead/", // to get a lead
+    update: `api/lead/`, // to update a lead
+    delete: "api/lead/", // to delete a lead
+    fetchAll: "api/lead", // to fetch all leads
+    operations: operations,
+  },
   Subscription: {
     create: "subscription/create", // to create a subscription
     read: "subscription/get/", // to get a subscription
@@ -77,11 +93,11 @@ export const endpoints: Record<
     },
   },
   Admin: {
-    create: "public/signup", // to create a user
-    delete: "public/delete/", // to delete a user
-    update: "public/update/", // to update a user
-    read: "public/get-admin-details/", // to get a user
-    fetchAll: "users/fetch-users?role=admin", // to fetch all Users
+    create: "api/user", // to create a user
+    delete: "api/user/", // to delete a user
+    update: "api/user/", // to update a user
+    read: "api/user/", // to get a user
+    fetchAll: "api/user?role.name=Admin", // to fetch all Users
     operations: operations,
   },
   Faq: {

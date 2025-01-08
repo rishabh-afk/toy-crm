@@ -9,6 +9,7 @@ import SubscriptionForm from "../crud/Subscription";
 import PropertiesForm from "../crud/PropertiesForm";
 import ConfirmationModal from "../crud/ConfirmationModal";
 import SpecializationForm from "../crud/SpecializationForm";
+import ManageRoleForm from "../crud/Roleform";
 
 interface FormRendererProps {
   data: any;
@@ -24,6 +25,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <ConfirmationModal {...props} />;
     case "Blog":
       return <BlogForm {...props} />;
+    case "Role":
+      return <ManageRoleForm {...props} />;
     case "Properties":
       return <PropertiesForm {...props} />;
     case "Dealer":

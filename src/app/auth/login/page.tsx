@@ -1,16 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/hooks/apiUtils";
-import {
-  IoEye,
-  IoEyeOff,
-  IoLogInOutline,
-} from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import Link from "next/link";
+import { IoEye, IoEyeOff, IoLogInOutline } from "react-icons/io5";
 
 const Login: React.FC = () => {
   const router = useRouter();
@@ -26,9 +22,9 @@ const Login: React.FC = () => {
     const localEmail = localStorage.getItem("email");
     const localPassword = localStorage.getItem("password");
     const response: any = await Post(
-      "/api/public/admin/login",
+      "/api/user/login",
       {
-        identifier: email || localEmail,
+        email: email || localEmail,
         password: password || localPassword,
       },
       5000
@@ -38,8 +34,8 @@ const Login: React.FC = () => {
         localStorage.setItem("email", email);
         localStorage.setItem("password", password);
       }
-      const token = response?.data?.accessToken;
-      const adminDetails = response?.data?.user;
+      const token = response?.data?.token;
+      const adminDetails = response?.data?.userData;
       login(token, adminDetails);
     }
   };
@@ -49,16 +45,16 @@ const Login: React.FC = () => {
     const localPassword = localStorage.getItem("password");
 
     const submitFormAutomatically = async () => {
-        // Call handleSubmit in useEffect (make sure it handles async logic)
-        await handleSubmit(new Event('submit') as unknown as React.FormEvent); // Trigger form submit event manually
-      };
-      
-    if (localEmail && localPassword) {
+      // Call handleSubmit in useEffect (make sure it handles async logic)
+      await handleSubmit(new Event("submit") as unknown as React.FormEvent); // Trigger form submit event manually
+    };
 
+    if (localEmail && localPassword) {
       submitFormAutomatically();
     }
 
     router.prefetch("/dashboard");
+    // eslint-disable-next-line
   }, [router]);
 
   return (
@@ -172,7 +168,9 @@ const Login: React.FC = () => {
                 className="mx-auto mt-4 object-contain"
               ></Image>
               <div className="flex-fill my-4 text-center">
-                <h6 className="mb-0 font-semibold pb-1 text-lg">Welcome Back</h6>
+                <h6 className="mb-0 font-semibold pb-1 text-lg">
+                  Welcome Back
+                </h6>
                 <p className="text-sm font-semibold text-gray-400 px-5">
                   Sign in to your account to continue.
                 </p>

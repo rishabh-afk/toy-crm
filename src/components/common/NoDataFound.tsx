@@ -1,24 +1,29 @@
 import Image from "next/image";
+import { debounce } from "@/hooks/general";
 import { FaFilter } from "react-icons/fa";
 
-const NoDataFound = ({
+interface NoDataFoundProps {
+  type: string;
+  handleAdd: () => void;
+  handleReset: () => void;
+  operationsAllowed: {
+    create?: boolean;
+    [key: string]: boolean | undefined;
+  };
+}
+
+const NoDataFound: React.FC<NoDataFoundProps> = ({
   type,
-  debounce,
-  handleEdit,
+  handleAdd,
   handleReset,
   operationsAllowed,
-}: {
-  type: string;
-  debounce: any;
-  handleEdit: any;
-  handleReset: any;
-  operationsAllowed: any;
 }) => {
   return (
     <div className="flex gap-5 justify-between font-semibold">
+      {/* Image Section */}
       <div className="w-full flex justify-center items-center">
         <Image
-          src={"/assets/error/no_data_found.avif"}
+          src="/assets/error/no_data_found.avif"
           alt="No Data Found"
           priority
           width={100}
@@ -27,7 +32,10 @@ const NoDataFound = ({
           className="w-1/2 h-full object-contain"
         />
       </div>
+
+      {/* Button Section */}
       <div className="flex space-x-2">
+        {/* Clear Filters Button */}
         <button
           type="button"
           onClick={debounce(handleReset, 1000)}
@@ -35,10 +43,12 @@ const NoDataFound = ({
         >
           Clear&nbsp;filters <FaFilter />
         </button>
+
+        {/* Add Button */}
         {operationsAllowed?.create && (
           <button
             type="button"
-            onClick={() => handleEdit("")}
+            onClick={handleAdd}
             className="bg-primary text-white px-4 h-fit py-2 rounded-md"
           >
             Add&nbsp;{type}

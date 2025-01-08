@@ -31,7 +31,7 @@ function useFetch(url: string, options?: FetchOptions) {
       setState({ data: null, loading: true, error: null });
 
       try {
-        const response = await fetch(`${BASEURL}/api/${url}`, {
+        const response = await fetch(`${BASEURL}/${url}`, {
           ...options,
           signal: controller.signal, // Attach AbortController signal
           headers: {
