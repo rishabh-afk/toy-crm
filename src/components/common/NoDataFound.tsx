@@ -21,15 +21,16 @@ const NoDataFound: React.FC<NoDataFoundProps> = ({
   return (
     <div className="flex gap-5 justify-between font-semibold">
       {/* Image Section */}
-      <div className="w-full flex justify-center items-center">
+      <div className="w-full flex flex-col justify-center items-center">
+        <h2 className="text-4xl mb-5 font-bold text-red-500">No Data Found</h2>
         <Image
-          src="/assets/error/no_data_found.avif"
+          src="/assets/error/Illustration.png"
           alt="No Data Found"
           priority
           width={100}
           height={100}
           unoptimized
-          className="w-1/2 h-full object-contain"
+          className="w-full h-full object-contain"
         />
       </div>
 

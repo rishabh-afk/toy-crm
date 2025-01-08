@@ -16,6 +16,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   filterOptions,
   fetchFilteredData,
 }) => {
+  console.log(filterOptions);
   const [selectedOption, setSelectedOption] = React.useState("");
   return (
     <div>
@@ -23,7 +24,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <BsFilterLeft size={25} /> Filters
       </p>
       <div className="flex">
-        {filterOptions.length > 0 && (
+        {filterOptions && filterOptions?.length > 0 && (
           <select
             className="rounded-l-xl border border-r-0 outline-none focus:outline-none border-gray-200 p-2"
             value={selectedOption}
@@ -32,11 +33,13 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
               setSelectedOption(e.target.value);
             }}
           >
-            {filterOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {filterOptions.map((option) =>
+              option.value ? (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ) : null
+            )}
           </select>
         )}
         <input
@@ -45,7 +48,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           placeholder="Search here..."
           onChange={(e) => setSearchTerm(e.target.value)}
           className={`${
-            filterOptions.length > 0
+            filterOptions && filterOptions.length > 0
               ? "border border-l-0 rounded-xl rounded-l-none focus:ring-0"
               : "border rounded-xl focus:ring-2 focus:ring-primary/50"
           } px-4 text-lg py-2 placeholder:text-black outline-none text-black border-gray-200 w-full`}
