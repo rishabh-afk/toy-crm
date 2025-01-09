@@ -80,7 +80,9 @@ const SingleImageUploader: FC<SingleImageUploaderProps> = ({
       />
       <div
         onClick={() => fileInputRef.current?.click()}
-        className="relative flex flex-col justify-start w-full bg-gray-50 h-48 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-gray-400 transition-colors duration-300"
+        className={`relative flex flex-col justify-start w-full bg-white h-48 border-2 border-dashed rounded-xl cursor-pointer hover:border-primary transition ${
+          selectedImage ? "border-primary" : "border-gray-300"
+        }`}
       >
         {selectedImage ? (
           <>
@@ -96,17 +98,21 @@ const SingleImageUploader: FC<SingleImageUploaderProps> = ({
                 e.stopPropagation(); // Prevent triggering file input
                 handleRemoveImage();
               }}
-              className="absolute -top-3 -right-3 bg-gray-400 text-white w-7 h-7 flex justify-center items-center aspect-square rounded-full p-1 hover:bg-gray-500 transition-all duration-200 ease-linear"
+              className="absolute -top-3 -right-3 bg-red-500 text-white w-7 h-7 flex justify-center items-center aspect-square rounded-full p-1 hover:bg-primary transition-all duration-200 ease-linear"
             >
               ✕
             </button>
           </>
         ) : (
           <div className="flex flex-col justify-center items-center h-full text-gray-600">
+            <h2 className="text-black-400 font-bold">Files Types We Accept</h2>
+            <p className="text-gray-600 text-sm py-2">
+              JPG, JPEG, PNG (Max file size: 1MB)
+            </p>
             <span>
               <IoCloudUpload size={50} className="text-gray-500" />
             </span>
-            <span className="text-gray-600">Click to upload</span>
+            <span className="text-gray-700">Click to upload</span>
           </div>
         )}
       </div>

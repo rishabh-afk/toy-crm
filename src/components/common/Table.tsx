@@ -23,6 +23,7 @@ interface TableColumn {
 interface TableProps {
   data: any;
   type?: any;
+  suffix?: string;
   hideStatus?: boolean;
   filterOptions?: any;
   columns: TableColumn[];
@@ -40,6 +41,7 @@ interface Pagination {
 const TableComponent = <T extends { [key: string]: any }>({
   data,
   type,
+  suffix,
   columns,
   hideStatus,
   filterOptions,
@@ -198,6 +200,7 @@ const TableComponent = <T extends { [key: string]: any }>({
       {/* Header */}
       <Header
         type={type}
+        suffix={suffix}
         handleAdd={handleAdd}
         handleReset={handleReset}
         filteredData={filteredData}

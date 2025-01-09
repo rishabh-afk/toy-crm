@@ -16,6 +16,22 @@ export const endpoints: Record<
     operations?: any;
   }
 > = {
+  Brand: {
+    create: "api/brand", // to create a brand
+    delete: "api/brand/", // to delete a brand
+    update: "api/brand/", // to update a brand
+    read: "api/brand/", // to get a brand
+    fetchAll: "api/brand", // to fetch all brands
+    operations: operations,
+  },
+  Category: {
+    create: "api/product-category", // to create a product-category
+    delete: "api/product-category/", // to delete a product-category
+    update: "api/product-category/", // to update a product-category
+    read: "api/product-category/", // to get a product-category
+    fetchAll: "api/product-category", // to fetch all product-categorys
+    operations: operations,
+  },
   Employee: {
     create: "api/user", // to create a user
     delete: "api/user/", // to delete a user
@@ -24,12 +40,28 @@ export const endpoints: Record<
     fetchAll: "api/user", // to fetch all Users
     operations: operations,
   },
+  UOM: {
+    create: "api/product-uom", // to create a product-uom
+    delete: "api/product-uom/", // to delete a product-uom
+    update: "api/product-uom/", // to update a product-uom
+    read: "api/product-uom/", // to get a product-uom
+    fetchAll: "api/product-uom", // to fetch all product-uoms
+    operations: operations,
+  },
   Role: {
     create: "api/role", // to create a role
     read: "api/role/", // to get a role
     update: `api/role/`, // to update a role
     delete: "api/role/", // to delete a role
     fetchAll: "api/role", // to fetch all roles
+    operations: operations,
+  },
+  Ledger: {
+    create: "api/party", // to create a party
+    delete: "api/party/", // to delete a party
+    update: "api/party/", // to update a party
+    read: "api/party/", // to get a party
+    fetchAll: "api/party", // to fetch all partys
     operations: operations,
   },
   Lead: {

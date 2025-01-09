@@ -19,17 +19,21 @@ import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
 
 interface DynamicFormProps {
+  onClose: any;
   formData?: any;
   makeApiCall?: any;
   setFormData?: any;
+  submitting: boolean;
   fields?: FormField[];
   returnAs?: "object" | "formData";
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
   fields,
+  onClose,
   returnAs,
   formData,
+  submitting,
   setFormData,
   makeApiCall,
 }) => {
@@ -217,11 +221,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             )}
           </div>
         ))}
-      <Button
-        text="Submit"
-        type="submit"
-        classes="col-span-3 w-1/4 bg-primary text-white"
-      />
+      <div className="col-span-3 flex justify-end space-x-2">
+        <Button
+          text="Submit"
+          type="submit"
+          isLoading={submitting}
+          classes="bg-primary w-1/5 text-white rounded-xl"
+        />
+        <Button
+          text="Cancel"
+          type="button"
+          onClick={onClose}
+          classes="bg-red-500 w-1/5 text-white rounded-xl hover:bg-red-700"
+        />
+      </div>
     </form>
   );
 };

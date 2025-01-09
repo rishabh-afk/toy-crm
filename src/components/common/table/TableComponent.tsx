@@ -54,19 +54,28 @@ const Table: React.FC<TableProps> = ({
 
   const formatRowValue = (
     row: Record<string, any>,
-    col: { key: string; isDate?: boolean; isCurrency?: string }
+    col: {
+      key: string;
+      isDate?: boolean;
+      isPercent?: string;
+      isCurrency?: string;
+    }
   ) => {
     const value = row[col.key];
-    if (!value) return "-";
 
     if (col.key === "_id") return value?.slice(-8);
-    if (col.isDate) return dayjs(value).format("YYYY-MM-DD");
+    if (col.isDate && value) return dayjs(value).format("YYYY-MM-DD");
     if (col.isCurrency) return `${col.isCurrency} ${value}`;
+    if (col.isPercent) return `${value} ${col.isPercent}`;
 
     if (typeof value === "number") return value;
     if (typeof value === "boolean") return value.toString();
 
-    if (value) return value.toString().slice(0, 75);
+    if (value)
+      return value.toString().length > 50
+        ? value.toString().slice(0, 50) + " ..."
+        : value.toString();
+    else return "-";
   };
 
   return (
@@ -112,7 +121,7 @@ const Table: React.FC<TableProps> = ({
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="text-sm border border-gray-200 px-4 py-3"
+                    className="text-sm border whitespace-nowrap border-gray-200 px-4 py-3"
                   >
                     {formatRowValue(row, col)}
                   </td>

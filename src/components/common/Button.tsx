@@ -46,7 +46,7 @@ const Button: React.FC<ButtonProps> = ({
           ></path>
         </svg>
       ) : null}
-      {isLoading ? "Loading..." : text}
+      {isLoading ? "Please wait..." : text}
     </button>
   );
 };

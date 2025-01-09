@@ -4,6 +4,7 @@ import GenerateExcelButton from "../GenerateExcel";
 
 interface HeaderProps {
   type: string;
+  suffix?: string;
   filteredData: any[];
   handleReset: () => void;
   handleAdd: () => void;
@@ -15,6 +16,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({
   type,
+  suffix,
   handleAdd,
   handleReset,
   filteredData,
@@ -23,7 +25,9 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <div className="flex bg-white p-5 rounded-2xl justify-between items-center">
       {/* Title */}
-      <h2 className="text-3xl text-black font-semibold w-fit">All {type}</h2>
+      <h2 className="text-3xl text-black font-semibold w-fit">
+        All {type} <span className="font-normal text-xl">{suffix}</span>
+      </h2>
 
       {/* Actions */}
       <div className="space-x-2 flex">

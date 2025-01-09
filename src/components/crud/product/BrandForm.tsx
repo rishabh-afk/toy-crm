@@ -3,16 +3,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { endpoints } from "@/data/endpoints";
-import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
-import { LeadFormType } from "./formInput/LeadFormType";
-import {
-  updateFormData,
-  populateFormData,
-  populateFormFields,
-} from "@/hooks/general";
+import DynamicForm from "@/components/common/DynamicForm";
+import { ProductBrandType } from "../formInput/productFromType";
+import { populateFormData, populateFormFields } from "@/hooks/general";
 
-interface LeadFormProps {
+interface DealerFormProps {
   data?: any;
   onClose?: any;
   formType: any;
@@ -20,15 +16,16 @@ interface LeadFormProps {
   setFilteredData?: any;
 }
 
-const LeadForm: React.FC<LeadFormProps> = (props: any) => {
+const BrandForm: React.FC<DealerFormProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const [submitting, setSubmitting] = useState(false);
   const formField = data?._id
-    ? populateFormFields(LeadFormType, data)
-    : LeadFormType;
+    ? populateFormFields(ProductBrandType, data)
+    : ProductBrandType;
+
   const [formData, setFormData] = useState<any>(
-    data?._id ? populateFormData(LeadFormType, data) : {}
+    data?._id ? populateFormData(ProductBrandType, data) : {}
   );
 
   const makeApiCall = async (updatedData: any) => {
@@ -38,21 +35,9 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const obj = [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-        "latitude",
-        "longitude",
-      ];
-      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -73,9 +58,9 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   return (
     <div>
       <DynamicForm
+        returnAs="object"
         fields={formField}
         formData={formData}
-        returnAs="formData"
         submitting={submitting}
         onClose={props?.onClose}
         setFormData={setFormData}
@@ -85,4 +70,4 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   );
 };
 
-export default LeadForm;
+export default BrandForm;

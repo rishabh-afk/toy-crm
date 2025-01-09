@@ -3,11 +3,10 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
-import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
-import { userFormType } from "./formInput/userFormType";
+import DynamicForm from "@/components/common/DynamicForm";
+import { ProductCategoryType } from "../formInput/productFromType";
 import {
-  updateFormData,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
@@ -21,32 +20,35 @@ interface DealerFormProps {
   setFilteredData?: any;
 }
 
-const UserForm: React.FC<DealerFormProps> = (props: any) => {
+const CategoryForm: React.FC<DealerFormProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
-    data?._id ? populateFormFields(userFormType, data) : userFormType
+    data?._id
+      ? populateFormFields(ProductCategoryType, data)
+      : ProductCategoryType
   );
   const [formData, setFormData] = useState<any>(
-    data?._id ? populateFormData(userFormType, data) : {}
+    data?._id ? populateFormData(ProductCategoryType, data) : {}
   );
 
   useEffect(() => {
     const fetchRoles = async () => {
       try {
         const response: any = await Fetch(
-          "/api/role/public",
+          "/api/product-category/public",
           {},
           5000,
           true,
           false
         );
-        if (response.success && response?.data.length > 0) {
+        if (response.success && response?.data?.length > 0) {
           const selectData = getSelectFormattedData(response.data);
           const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "role") return { ...obj, options: selectData };
+            if (obj.name === "parentCategory")
+              return { ...obj, options: selectData };
             return obj;
           });
           setFormFields(updatedFormField);
@@ -68,21 +70,9 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const obj = [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-        "latitude",
-        "longitude",
-      ];
-      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -104,9 +94,9 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
     <div>
       {!loading && (
         <DynamicForm
+          returnAs="object"
           fields={formField}
           formData={formData}
-          returnAs="formData"
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}
@@ -117,4 +107,4 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
   );
 };
 
-export default UserForm;
+export default CategoryForm;

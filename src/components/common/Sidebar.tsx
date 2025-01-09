@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
           <h1 className="text-3xl">MASKEEN</h1>
         </Link>
       </div>
-      <nav className="flex flex-col gap-2 justify-center items-center mt-[72px]">
+      <nav className="flex flex-col gap-2 justify-center items-center mt-[72px] mb-40">
         {filteredTabs.map((tab: any) => {
           const Icon = tab.icon;
           return (
@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
                   if (tab?.tabs && tab?.tabs.length > 0)
                     showList({ tab: tab?.permission, list: tab?.tabs });
                 }}
-                className={`py-3 pl-5 mr-auto w-[95%] text-sm cursor-pointer hover:bg-secondary transition rounded-r-full text-info flex justify-between gap-2 items-center border-primary hover:text-white ${
+                className={`py-3 pl-5 mr-auto w-[95%] pr-2 text-sm cursor-pointer hover:bg-secondary transition rounded-r-full text-info flex justify-between gap-2 items-center border-primary hover:text-white ${
                   pathname === tab?.href &&
                   "bg-secondary rounded-r-full text-white font-semibold"
                 }`}
@@ -63,7 +63,7 @@ const Sidebar: React.FC = () => {
                   <Icon size={18} /> {tab?.label}
                 </span>
                 {tab?.tabs && tab?.tabs.length > 0 && (
-                  <RiArrowDropDownLine size={20} className="w-fit" />
+                  <RiArrowDropDownLine size={23} className="w-fit" />
                 )}
               </Link>
               {list?.tab === tab?.permission && (
@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
                   onMouseEnter={() =>
                     showList({ tab: tab?.permission, list: tab?.tabs })
                   }
-                  className="flex flex-col w-full bg-primary/20"
+                  className="flex flex-col w-full bg-secondary"
                 >
                   {list?.list &&
                     list?.list.length > 0 &&
@@ -82,11 +82,9 @@ const Sidebar: React.FC = () => {
                           href={tabChild?.href}
                           key={`index+${index}`}
                           aria-label={tabChild?.label}
-                          className="w-full text-xs pr-2 pl-9 py-2 flex justify-between gap-2 items-center hover:bg-primary hover:text-white"
+                          className="w-full text-sm text-info pl-10 gap-2 py-3 flex items-center hover:bg-secondary hover:text-white"
                         >
-                          <span className="flex">
-                            <Icon size={15} className="w-7" /> {tabChild?.label}
-                          </span>
+                          <Icon className="text-base" /> {tabChild?.label}
                         </Link>
                       );
                     })}
