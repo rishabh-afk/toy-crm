@@ -1,5 +1,6 @@
 import UserForm from "../crud/Adminform";
 import LeadForm from "../crud/LeadsForm";
+import LedgerForm from "../crud/LedgerForm";
 import ManageRoleForm from "../crud/Roleform";
 import UOMForm from "../crud/product/UOMForm";
 import BrandForm from "../crud/product/BrandForm";
@@ -26,6 +27,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <ConfirmationModal {...props} />;
     case "Lead":
       return <LeadForm {...props} />;
+    case "Ledger":
+      return <LedgerForm {...props} />;
     case "Role":
       return <ManageRoleForm {...props} />;
     case "UOM":
