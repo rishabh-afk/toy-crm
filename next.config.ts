@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "wedding.s3.ap-south-1.amazonaws.com",
+        hostname: "toy-erp.s3.ap-south-1.amazonaws.com",
       },
     ],
   },

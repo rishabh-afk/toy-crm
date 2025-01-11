@@ -16,8 +16,8 @@ const columns = [
   { key: "email", label: "User Email" },
   { key: "phone", label: "User Phone" },
   { key: "companyName", label: "Company" },
-  { key: "salesPersonName", label: "Sales Name" },
-  { key: "salesPersonEmail", label: "Sales Email" },
+  { key: "salesPersonName", label: "Sales Person Name" },
+  { key: "salesPersonEmail", label: "Sales Person Email" },
   { key: "source", label: "Source", sortable: true },
   { key: "priorityLevel", label: "Priority", sortable: true },
   { key: "status", label: "Status", sortable: true },
@@ -59,3 +59,25 @@ const Contacts: React.FC = () => {
 };
 
 export default Contacts;
+
+/**
+ * 
+ * leadId
+ * firstName
+ * lastName
+ * phone
+ * email
+ * dateOfBirth
+ * gender
+ * companyName
+ * designation
+ * industry
+ * website
+ * companyPhoneNumber
+ * companyAddress
+ * sourse
+ * status - enum[]
+ * 
+ * 
+ * 
+ */

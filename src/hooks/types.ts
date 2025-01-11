@@ -31,10 +31,14 @@ export interface FilterOption {
 }
 
 export interface FormField {
+  customClasses: any;
   name: string;
   label: string;
   type:
     | "text"
+    | "label"
+    | "br"
+    | "button"
     | "email"
     | "password"
     | "richTextEditor"
