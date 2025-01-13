@@ -88,6 +88,22 @@ export const endpoints: Record<
     fetchAll: "api/product", // to fetch all products
     operations: operations,
   },
+  Packing: {
+    create: "api/packing", // to create a product
+    read: "api/packing/", // to get a product
+    update: `api/packing/`, // to update a product
+    delete: "api/packing/", // to delete a product
+    fetchAll: "api/packing/", // to fetch all products
+    operations: operations,
+  },
+  Billing: {
+    create: "api/invoice", // to create a product
+    read: "api/invoice/", // to get a product
+    update: `api/invoice/`, // to update a product
+    delete: "api/invoice/", // to delete a product
+    fetchAll: "api/invoice/", // to fetch all products
+    operations: operations,
+  },
 };
 
 export const DashboardEndpoint = {

@@ -30,6 +30,7 @@ export interface FilterOption {
   value: string;
 }
 
+
 export interface FormField {
   customClasses: any;
   name: string;
@@ -71,4 +72,7 @@ export interface FormField {
   confirmPlaceholder?: string;
   validation?: (value: any) => string | null;
   options?: { label: string; value: string | number }[];
+  isDisabled?: boolean; // Add the disabled property
 }
+
+

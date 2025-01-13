@@ -79,12 +79,6 @@ const TableComponent = <T extends { [key: string]: any }>({
     setIsModalVisible(false);
   };
 
-  // const handleActiveStatus = (activeStatus: any) => {
-  //   setActiveStatus(activeStatus);
-  //   if (activeStatus === "all") return handleReset();
-  //   fetchFilteredData({ status: activeStatus });
-  // };
-
   const handleReset = async () => {
     setEndDate("");
     setStartDate("");

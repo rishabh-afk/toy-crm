@@ -59,25 +59,3 @@ const Contacts: React.FC = () => {
 };
 
 export default Contacts;
-
-/**
- * 
- * leadId
- * firstName
- * lastName
- * phone
- * email
- * dateOfBirth
- * gender
- * companyName
- * designation
- * industry
- * website
- * companyPhoneNumber
- * companyAddress
- * sourse
- * status - enum[]
- * 
- * 
- * 
- */

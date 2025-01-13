@@ -33,13 +33,13 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   const address = data.address;
   const companyAddress = data.companyAddress;
 
-  for (let i in address) {
+  for (const i in address) {
     if (i === "_id" || i === "id") continue;
     data[i] = address[i];
   }
   delete data.address;
 
-  for (let i in companyAddress) {
+  for (const i in companyAddress) {
     if (i === "_id" || i === "id") continue;
     const keyName = `EMP${i}`;
     data[keyName] = companyAddress[i];
