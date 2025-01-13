@@ -6,6 +6,7 @@ import UOMForm from "../crud/product/UOMForm";
 import BrandForm from "../crud/product/BrandForm";
 import CategoryForm from "../crud/product/CategoryForm";
 import ConfirmationModal from "../crud/ConfirmationModal";
+import QuotationForm from "../crud/QuotationForm";
 
 interface FormRendererProps {
   data: any;
@@ -16,6 +17,8 @@ interface FormRendererProps {
 }
 
 const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
+ 
+ console.log(props)
   switch (props.formType) {
     case "Employee":
       return <UserForm {...props} />;
@@ -33,6 +36,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <ManageRoleForm {...props} />;
     case "UOM":
       return <UOMForm {...props} />;
+      case "Quotation":
+        return <QuotationForm {...props} />;
     default:
       return <div>No Form Exist</div>;
   }

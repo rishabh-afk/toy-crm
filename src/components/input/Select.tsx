@@ -49,8 +49,8 @@ const Select: FC<SelectProps> = ({ field, handleInputChange, className }) => {
           </option>
         )}
         {field.options && field.options.length > 0 ? (
-          field.options?.map((option) => (
-            <option key={option.value} value={option.label}>
+          field.options?.map((option,index) => (
+            <option key={index} value={option.label}>
               {option.value}
             </option>
           ))
