@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
-import {  QuotationFieldsType } from "./formInput/quotationFormType";
+import { QuotationFieldsType } from "./formInput/quotationFormType";
 import {
   updateFormData,
   populateFormData,
@@ -27,7 +27,9 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
-    data?._id ? populateFormFields(QuotationFieldsType, data) : QuotationFieldsType
+    data?._id
+      ? populateFormFields(QuotationFieldsType, data)
+      : QuotationFieldsType
   );
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(QuotationFieldsType, data) : {}
@@ -106,17 +108,20 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
         // <DynamicForm
         //   returnAs="object"
         //   fields={formField}
-          // formData={formData}
-          // submitting={submitting}
-          // onClose={props?.onClose}
-          // setFormData={setFormData}
-          // makeApiCall={makeApiCall}
+        // formData={formData}
+        // submitting={submitting}
+        // onClose={props?.onClose}
+        // setFormData={setFormData}
+        // makeApiCall={makeApiCall}
         // />
-        <CustomeForm fields={QuotationFieldsType}   formData={formData}
+        <CustomeForm
+          formData={formData}
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}
-          makeApiCall={makeApiCall}/>
+          makeApiCall={makeApiCall}
+          fields={QuotationFieldsType}
+        />
       )}
     </div>
   );

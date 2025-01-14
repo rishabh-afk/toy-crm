@@ -55,161 +55,173 @@ const ProductForm = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="">
       <button
         onClick={addItem}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        className="mb-6 px-6 py-2 flex justify-end ml-auto bg-primary text-white rounded-md"
       >
-        Add Item
+        + Add Item
       </button>
-      <div className="overflow-x-auto">
-        <div className="row flex gap-2 min-w-full w-full">
-          <div className="w-100 px-5 py-5  font-bold">Product Code</div>
-          <div className="w-100 px-5 py-5  font-bold">Description</div>
-          <div className="w-100 px-5 py-5  font-bold">UOM</div>
-          <div className="w-100 px-5 py-5  font-bold">Quantity</div>
-          <div className="w-100 px-5 py-5  font-bold">List Price</div>
-          <div className="w-100 px-5 py-5  font-bold">Value</div>
-          <div className="w-100 px-5 py-5  font-bold">Discount</div>
-          <div className="w-100 px-5 py-5  font-bold">GST</div>
-          <div className="w-100 px-5 py-5  font-bold">GST Amount</div>
-          <div className="w-100 px-5 py-5  font-bold">Total Amount</div>
-          <div className="w-100 px-5 py-5  font-bold">Stock In Hand</div>
-          <div className="w-100 px-5 py-5  font-bold">Actions</div>
-        </div>
-        <div className="min-w-full ">
-          {items.map((item, index) => (
-            <div className="row flex gap-1" key={index}>
-              <div className="w-50">
-                <input
-                  type="text"
-                  placeholder="Product Code"
-                  value={item.productCode}
-                  onChange={(e) =>
-                    handleChange(item.id, "productCode", e.target.value)
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="col-span-2">
-                <input
-                  type="text"
-                  placeholder="Description"
-                  value={item.description}
-                  onChange={(e) =>
-                    handleChange(item.id, "description", e.target.value)
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="text"
-                  placeholder="UOM"
-                  value={item.uom}
-                  onChange={(e) => handleChange(item.id, "uom", e.target.value)}
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="Quantity"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    handleChange(item.id, "quantity", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="List Price"
-                  value={item.listPrice}
-                  onChange={(e) =>
-                    handleChange(item.id, "listPrice", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="Value"
-                  value={item.value}
-                  onChange={(e) =>
-                    handleChange(item.id, "value", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="Discount"
-                  value={item.discount}
-                  onChange={(e) =>
-                    handleChange(item.id, "discount", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="GST"
-                  value={item.gst}
-                  onChange={(e) =>
-                    handleChange(item.id, "gst", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="GST Amount"
-                  value={item.gstAmount}
-                  onChange={(e) =>
-                    handleChange(item.id, "gstAmount", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="Total Amount"
-                  value={item.totalAmount}
-                  onChange={(e) =>
-                    handleChange(item.id, "totalAmount", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <input
-                  type="number"
-                  placeholder="Stock In Hand"
-                  value={item.stockInHand}
-                  onChange={(e) =>
-                    handleChange(item.id, "stockInHand", Number(e.target.value))
-                  }
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="w-50">
-                <button
-                  onClick={() => deleteItem(item.id)}
-                  className="px-4 py-2 bg-red-500 text-white rounded"
+      <div className="overflow-x-auto no-scrollbar">
+        <table className="table-auto w-full border-collapse whitespace-nowrap border border-gray-300">
+          <thead>
+            <tr className="bg-primary text-white text-left">
+              {[
+                "Product Code",
+                "Description",
+                "UOM",
+                "Quantity",
+                "List Price",
+                "Value",
+                "Discount",
+                "GST",
+                "GST Amount",
+                "Total Amount",
+                "Stock In Hand",
+                "Actions",
+              ].map((header) => (
+                <th
+                  key={header}
+                  className="px-14 py-2 border border-gray-300 text-lg font-medium"
                 >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.id} className="odd:bg-white even:bg-gray-50">
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="text"
+                    value={item.productCode}
+                    onChange={(e) =>
+                      handleChange(item.id, "productCode", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="text"
+                    value={item.description}
+                    onChange={(e) =>
+                      handleChange(item.id, "description", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="text"
+                    value={item.uom}
+                    onChange={(e) =>
+                      handleChange(item.id, "uom", e.target.value)
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      handleChange(item.id, "quantity", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.listPrice}
+                    onChange={(e) =>
+                      handleChange(item.id, "listPrice", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.value}
+                    onChange={(e) =>
+                      handleChange(item.id, "value", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.discount}
+                    onChange={(e) =>
+                      handleChange(item.id, "discount", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.gst}
+                    onChange={(e) =>
+                      handleChange(item.id, "gst", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.gstAmount}
+                    onChange={(e) =>
+                      handleChange(item.id, "gstAmount", Number(e.target.value))
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.totalAmount}
+                    onChange={(e) =>
+                      handleChange(
+                        item.id,
+                        "totalAmount",
+                        Number(e.target.value)
+                      )
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300">
+                  <input
+                    type="number"
+                    value={item.stockInHand}
+                    onChange={(e) =>
+                      handleChange(
+                        item.id,
+                        "stockInHand",
+                        Number(e.target.value)
+                      )
+                    }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                </td>
+                <td className="p-2 border border-gray-300 text-center">
+                  <button
+                    onClick={() => deleteItem(item.id)}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
