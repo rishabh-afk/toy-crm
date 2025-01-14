@@ -11,13 +11,12 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "billNumber", label: "Billing Number" },
-  { key: "billDate", label: "Bill Date" },
+  { key: "quotationNo", label: "Quotation No" },
   { key: "referenceNo", label: "Reference Number" },
+  { key: "preparedBy", label: "PreparedBy" },
   { key: "invoiceTo", label: "Invoice To" },
   { key: "shipTo", label: "Ship To" },
-  { key: "preparedBy", label: "PreparedBy" },
-  { key: "quotationNo", label: "Quotation No"},
- 
+  { key: "billDate", label: "Bill Date", isDate: true },
 ];
 
 const filterOptions = [
