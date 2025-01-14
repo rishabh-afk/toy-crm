@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 interface Option {
   value: string | number;
+  email: string | number;
   label: string | number;
 }
 
@@ -49,9 +50,9 @@ const Select: FC<SelectProps> = ({ field, handleInputChange, className }) => {
           </option>
         )}
         {field.options && field.options.length > 0 ? (
-          field.options?.map((option,index) => (
+          field.options?.map((option, index) => (
             <option key={index} value={option.label}>
-              {option.value}
+              {option.value} {option?.email && `(${option?.email})`}
             </option>
           ))
         ) : (

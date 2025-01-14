@@ -386,10 +386,26 @@ export const updateFormData = (
   return updatedFormData;
 };
 
+// export const updateObjectData = (
+//   formData: FormData,
+//   nestedFieldKey: string,
+//   nestedFields: string[],
+//   fieldsToRemove: string[]
+// ) => {
+//   const updatedFormData = new Object();
+//   // const nestedData: Record<string, any> = {};
+//   // for (const [key, value] of formData.entries()) {
+//   //   if (nestedFields.includes(key)) nestedData[key] = value;
+//   //   else if (!fieldsToRemove.includes(key)) updatedFormData.append(key, value);
+//   // }
+//   // updatedFormData.append(nestedFieldKey, JSON.stringify(nestedData));
+//   return updatedFormData;
+// };
 export const getSelectFormattedData = (data: any) => {
   const response = data.map((option: any) => ({
-    value: option?.name,
     label: option?._id,
+    value: option?.name,
+    email: option?.email,
   }));
   return response;
 };

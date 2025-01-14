@@ -1,3 +1,133 @@
+import { countries } from "@/data/data";
+import { getSelectFormattedData } from "@/hooks/general";
 import { FormField } from "@/hooks/types";
 
-export const LedgerType: FormField[] = [];
+export const LedgerType: FormField[] = [
+  {
+    name: "companyName",
+    type: "text",
+    required: true,
+    label: "Company Name",
+    placeholder: "Enter company name",
+  },
+  {
+    name: "contactPerson",
+    type: "text",
+    required: true,
+    label: "Contact Name",
+    placeholder: "Enter contact name",
+  },
+  {
+    type: "select",
+    required: true,
+    name: "ledgerType",
+    label: "Ledger type",
+    placeholder: "Select type",
+    options: [
+      { label: "Bank", value: "Bank" },
+      { label: "Both", value: "Both" },
+      { label: "Cash", value: "Cash" },
+      { label: "Customer", value: "Customer" },
+      { label: "Supplier", value: "Supplier" },
+    ],
+  },
+  {
+    type: "select",
+    name: "groupBy",
+    placeholder: "Select User",
+    label: "Group By (Sales Person)",
+    options: [],
+  },
+  {
+    type: "text",
+    name: "billingAddress1",
+    label: "Billing Address 1",
+    placeholder: "Enter billing address 1",
+  },
+  {
+    type: "text",
+    name: "billingAddress2",
+    label: "Billing Address 2",
+    placeholder: "Enter billing address 2",
+  },
+  {
+    type: "select",
+    name: "country",
+    required: true,
+    label: "Country",
+    placeholder: "Select Country",
+    options: getSelectFormattedData(countries),
+  },
+  {
+    name: "state",
+    type: "text",
+    label: "State",
+    placeholder: "Enter state",
+  },
+  {
+    name: "pinCode",
+    type: "text",
+    label: "Pin Code",
+    placeholder: "Enter pin Code",
+  },
+  {
+    name: "jobWork",
+    type: "text",
+    label: "Job Work",
+    placeholder: "Enter job Work",
+  },
+  {
+    name: "gstNo",
+    type: "text",
+    label: "Goods and Services Tax Number",
+    placeholder: "Enter GST Tax Number",
+  },
+  {
+    name: "panNo",
+    type: "text",
+    label: "PAN Card Number",
+    placeholder: "Enter PAN Card Number",
+  },
+  {
+    name: "yobAmount",
+    maxLength: 10,
+    type: "number",
+    label: "YOB Amount",
+    placeholder: "Enter yob Amount",
+  },
+  {
+    name: "cbAmount",
+    maxLength: 10,
+    type: "number",
+    label: "CB Amount",
+    placeholder: "Enter CB Amount",
+  },
+  {
+    name: "eYobAmount",
+    maxLength: 10,
+    type: "number",
+    label: "E-YOB Amount",
+    placeholder: "Enter E-YOB Amount",
+  },
+  {
+    name: "eCbAmount",
+    maxLength: 10,
+    type: "number",
+    label: "E-CB Amount",
+    placeholder: "Enter E-CB Amount",
+  },
+  {
+    name: "creditDays",
+    maxLength: 3,
+    type: "number",
+    label: "Credit Days",
+    placeholder: "Enter credit days",
+  },
+  {
+    name: "creditLimit",
+    maxLength: 10,
+    type: "number",
+    label: "Credit Limit",
+    placeholder: "Enter credeit Limit",
+  },
+];

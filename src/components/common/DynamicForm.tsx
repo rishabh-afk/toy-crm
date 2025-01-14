@@ -18,6 +18,7 @@ import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
 
+
 interface DynamicFormProps {
   onClose: any;
   formData?: any;
@@ -99,6 +100,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             else data.append(key, value);
           } else data.append(key, String(value));
         });
+        console.log(data)
         makeApiCall(data);
       } else makeApiCall(formData);
     }
@@ -122,6 +124,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 field={{ ...field, value: formData[field?.name] || "" }}
                 handleInputChange={handleInputChange}
               />
+            )}
+            {field.type === "br" && <br />}
+            {field.type === "label" && (
+              <div key={field.label}>
+                <label className="font-semibold text-gray-700" htmlFor={field?.name}>{field?.label}</label>
+              </div>
             )}
 
             {field.type === "br" && <br />}
@@ -155,6 +163,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 
               />
             )}
+
 
             {field.type === "textarea" && (
               <TextArea
@@ -240,6 +249,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             )}
           </div>
         ))}
+            
       <div className="col-span-3 flex justify-end space-x-2">
         <Button
           text="Submit"

@@ -23,10 +23,13 @@ const columns = [
 ];
 
 const Users: React.FC = () => {
+
+
+  
   const { data, loading, error } = useFetch(endpoints["Ledger"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data?.pagination;
-
+console.log(data)
   const { user } = useAuth();
   const operationsAllowed = getAccessPoints(user, "Manage Ledger");
 

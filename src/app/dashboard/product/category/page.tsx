@@ -11,11 +11,12 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "_id", label: "Category ID" },
-  { key: "name", label: "Category Name", sortable: true },
   { key: "hsnCode", label: "HSN Code", sortable: true },
-  { key: "igst", label: "Integrated GST", isPercent: "%", sortable: true },
-  { key: "cgst", label: "Central GST", isPercent: "%", sortable: true },
-  { key: "sgst", label: "State GST", isPercent: "%", sortable: true },
+  { key: "name", label: "Category Name", sortable: true },
+  { key: "description", label: "Category Description" },
+  { key: "igst", label: "IGST", isPercent: "%", sortable: true },
+  { key: "cgst", label: "CGST", isPercent: "%", sortable: true },
+  { key: "sgst", label: "SGST", isPercent: "%", sortable: true },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
 ];
