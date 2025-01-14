@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IoAdd, IoTrash } from "react-icons/io5";
 
 interface Item {
   id: number;
@@ -16,14 +17,27 @@ interface Item {
 }
 
 const ProductForm = () => {
-  const [items, setItems] = useState<Item[]>([]);
   const [nextId, setNextId] = useState(1);
+  const [items, setItems] = useState<Item[]>([ {
+    id: nextId,
+    productCode: "",
+    description: "",
+    uom: "",
+    quantity: 0,
+    listPrice: 0,
+    value: 0,
+    discount: 0,
+    gst: 0,
+    gstAmount: 0,
+    totalAmount: 0,
+    stockInHand: 0,
+  }]);
 
   const addItem = () => {
     setItems([
       ...items,
       {
-        id: nextId,
+        id: nextId+1,
         productCode: "",
         description: "",
         uom: "",
@@ -55,27 +69,27 @@ const ProductForm = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 pt-2">
       <button
         onClick={addItem}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded"
+        className="mb-4 px-2 py-2 bg-primary text-white rounded"
       >
-        Add Item
+        <IoAdd  />
       </button>
-      <div className="overflow-x-auto">
-        <div className="row flex gap-2 min-w-full w-full">
-          <div className="w-100 px-5 py-5  font-bold">Product Code</div>
-          <div className="w-100 px-5 py-5  font-bold">Description</div>
-          <div className="w-100 px-5 py-5  font-bold">UOM</div>
-          <div className="w-100 px-5 py-5  font-bold">Quantity</div>
-          <div className="w-100 px-5 py-5  font-bold">List Price</div>
-          <div className="w-100 px-5 py-5  font-bold">Value</div>
-          <div className="w-100 px-5 py-5  font-bold">Discount</div>
-          <div className="w-100 px-5 py-5  font-bold">GST</div>
-          <div className="w-100 px-5 py-5  font-bold">GST Amount</div>
-          <div className="w-100 px-5 py-5  font-bold">Total Amount</div>
-          <div className="w-100 px-5 py-5  font-bold">Stock In Hand</div>
-          <div className="w-100 px-5 py-5  font-bold">Actions</div>
+      <div className="overflow-x-auto pb-4  ">
+        <div className="flex gap-2 ">
+          <div className="min-w-48 py-4 px-2  font-bold">Product Code</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Description</div>
+          <div className="min-w-48 py-4 px-2  font-bold">UOM</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Quantity</div>
+          <div className="min-w-48 py-4 px-2  font-bold">List Price</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Value</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Discount</div>
+          <div className="min-w-48 py-4 px-2  font-bold">GST</div>
+          <div className="min-w-48 py-4 px-2  font-bold">GST Amount</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Total Amount</div>
+          <div className="min-w-48 py-4 px-2  font-bold">Stock In Hand</div>
+          <div className=" min-w-20 py-4 px-2  font-bold">Actions</div>
         </div>
         <div className="min-w-full ">
           {items.map((item, index) => (
@@ -199,12 +213,12 @@ const ProductForm = () => {
                   className="p-2 border rounded"
                 />
               </div>
-              <div className="w-50">
+              <div className="w-50 mx-5 flex justify-center items-center">
                 <button
                   onClick={() => deleteItem(item.id)}
-                  className="px-4 py-2 bg-red-500 text-white rounded"
+                  className="px-4 py-2 m-auto bg-red-500 text-white rounded"
                 >
-                  Delete
+                  <IoTrash />
                 </button>
               </div>
             </div>
