@@ -35,6 +35,8 @@ export interface FormField {
   label: string;
   type:
     | "text"
+    | "br"
+    | "label"
     | "email"
     | "password"
     | "richTextEditor"
@@ -47,7 +49,8 @@ export interface FormField {
     | "number"
     | "textarea"
     | "choose"
-    | "stringNumeric";
+    | "stringNumeric"
+    | "productForm";
   value?: any;
   rows?: number;
   min?: number;

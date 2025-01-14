@@ -57,11 +57,11 @@ export const endpoints: Record<
     operations: operations,
   },
   Ledger: {
-    create: "api/party", // to create a party
-    delete: "api/party/", // to delete a party
-    update: "api/party/", // to update a party
-    read: "api/party/", // to get a party
-    fetchAll: "api/party", // to fetch all partys
+    create: "api/ledger", // to create a party
+    delete: "api/ledger/", // to delete a party
+    update: "api/ledger/", // to update a party
+    read: "api/ledger/", // to get a party
+    fetchAll: "api/ledger", // to fetch all partys
     operations: operations,
   },
   Lead: {

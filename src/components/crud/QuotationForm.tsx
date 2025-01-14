@@ -3,15 +3,15 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
-import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
-import { LedgerType } from "./formInput/ledgerFormType";
+import {  QuotationFieldsType } from "./formInput/quotationFormType";
 import {
   updateFormData,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
 } from "@/hooks/general";
+import CustomeForm from "../common/CustomeForm";
 
 interface LedgerProps {
   data?: any;
@@ -21,20 +21,20 @@ interface LedgerProps {
   setFilteredData?: any;
 }
 
-const LedgerForm: React.FC<LedgerProps> = (props: any) => {
+const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
-    data?._id ? populateFormFields(LedgerType, data) : LedgerType
+    data?._id ? populateFormFields(QuotationFieldsType, data) : QuotationFieldsType
   );
   const [formData, setFormData] = useState<any>(
-    data?._id ? populateFormData(LedgerType, data) : {}
+    data?._id ? populateFormData(QuotationFieldsType, data) : {}
   );
-  console.log("hey");
+
   useEffect(() => {
-    const fetchEmployees = async () => {
+    const fetchRoles = async () => {
       try {
         const response: any = await Fetch(
           "/api/user/public-role/Salesperson",
@@ -57,7 +57,7 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
         setLoading(false);
       }
     };
-    fetchEmployees();
+    fetchRoles();
     // eslint-disable-next-line
   }, []);
 
@@ -69,19 +69,20 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
 
       setSubmitting(true);
       const obj = [
-        "city"
-        // city: updatedData.city,
-        // line1: updatedData.line1,
-        // state: updatedData.state,
-        // street: updatedData.street,
-        // pinCode: updatedData.pinCode,
-        // country: updatedData.country,
-        // landmark: updatedData.landmark,
+        "city",
+        "line1",
+        "state",
+        "street",
+        "pinCode",
+        "country",
+        "landmark",
+        "latitude",
+        "longitude",
       ];
-      updateFormData(updatedData, "address1", obj, obj);
+      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
       const response: any = data?._id
-        ? await Put(url, updatedData)
-        : await Post(url, updatedData);
+        ? await Put(url, updatedFormData)
+        : await Post(url, updatedFormData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -102,18 +103,23 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
   return (
     <div>
       {!loading && (
-        <DynamicForm
-          returnAs="object"
-          fields={formField}
-          formData={formData}
+        // <DynamicForm
+        //   returnAs="object"
+        //   fields={formField}
+          // formData={formData}
+          // submitting={submitting}
+          // onClose={props?.onClose}
+          // setFormData={setFormData}
+          // makeApiCall={makeApiCall}
+        // />
+        <CustomeForm fields={QuotationFieldsType}   formData={formData}
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}
-          makeApiCall={makeApiCall}
-        />
+          makeApiCall={makeApiCall}/>
       )}
     </div>
   );
 };
 
-export default LedgerForm;
+export default QuotationForm;
