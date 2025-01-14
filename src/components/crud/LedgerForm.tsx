@@ -34,10 +34,10 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
   );
 
   useEffect(() => {
-    const fetchRoles = async () => {
+    const fetchEmployees = async () => {
       try {
         const response: any = await Fetch(
-          "/api/role/public",
+          "/api/user/public-role/Salesperson",
           {},
           5000,
           true,
@@ -46,7 +46,7 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
         if (response.success && response?.data.length > 0) {
           const selectData = getSelectFormattedData(response.data);
           const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "role") return { ...obj, options: selectData };
+            if (obj.name === "groupBy") return { ...obj, options: selectData };
             return obj;
           });
           setFormFields(updatedFormField);
@@ -57,7 +57,7 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
         setLoading(false);
       }
     };
-    fetchRoles();
+    fetchEmployees();
     // eslint-disable-next-line
   }, []);
 

@@ -54,6 +54,7 @@ export interface FormField {
   max?: number;
   minDate?: any;
   maxDate?: any;
+  options?: any;
   accept?: string;
   maxFiles?: number;
   maxSizeMB?: number;
@@ -66,5 +67,4 @@ export interface FormField {
   placeholder?: string;
   confirmPlaceholder?: string;
   validation?: (value: any) => string | null;
-  options?: { label: string; value: string | number }[];
 }

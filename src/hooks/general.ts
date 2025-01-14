@@ -388,8 +388,9 @@ export const updateFormData = (
 
 export const getSelectFormattedData = (data: any) => {
   const response = data.map((option: any) => ({
-    value: option?.name,
     label: option?._id,
+    value: option?.name,
+    email: option?.email,
   }));
   return response;
 };
