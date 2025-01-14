@@ -30,13 +30,16 @@ export interface FilterOption {
   value: string;
 }
 
+
 export interface FormField {
+  customClasses: any;
   name: string;
   label: string;
   type:
     | "text"
-    | "br"
     | "label"
+    | "br"
+    | "button"
     | "email"
     | "password"
     | "richTextEditor"
@@ -70,4 +73,5 @@ export interface FormField {
   placeholder?: string;
   confirmPlaceholder?: string;
   validation?: (value: any) => string | null;
+  isDisabled?: boolean; 
 }

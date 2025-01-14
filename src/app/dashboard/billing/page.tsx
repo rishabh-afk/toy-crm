@@ -10,16 +10,14 @@ import Wrapper from "@/components/common/Wrapper";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "quotationNo", label: "Quotation ID" },
-  { key: "preparedBy", label: "Assignee" },
-  { key: "totalQuantity", label: "Quantity" },
-  { key: "discountAmount", label: "Discount", isCurrency: "₹" },
-  { key: "freightAmount", label: "Freight", isCurrency: "₹" },
-  { key: "igstAmount", label: "IGST (Tax)", isCurrency: "₹" },
-  { key: "totalValue", label: "Total Amt.", isCurrency: "₹" },
-  { key: "taxableAmount", label: "Taxable", isCurrency: "₹" },
-  { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
-  { key: "quotationDate", label: "Send On", sortable: true, isDate: true },
+  { key: "billNumber", label: "Billing Number" },
+  { key: "billDate", label: "Bill Date" },
+  { key: "referenceNo", label: "Reference Number" },
+  { key: "invoiceTo", label: "Invoice To" },
+  { key: "shipTo", label: "Ship To" },
+  { key: "preparedBy", label: "PreparedBy" },
+  { key: "quotationNo", label: "Quotation No"},
+ 
 ];
 
 const filterOptions = [
@@ -30,7 +28,7 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Billing"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
@@ -43,7 +41,7 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Quotation"
+          type="Billing"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

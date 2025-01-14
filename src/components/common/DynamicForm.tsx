@@ -5,7 +5,7 @@ import Email from "../input/Email";
 import Radio from "../input/Radio";
 import Number from "../input/Number";
 import Select from "../input/Select";
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import Checkbox from "../input/Checkbox";
 import Password from "../input/Password";
 import TextArea from "../input/TextArea";
@@ -117,6 +117,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               field?.type === "textarea" && "col-span-2"
             } ${field?.type === "password" && "col-span-2"}`}
           >
+            <div></div>
+
             {field.type === "select" && (
               <Select
                 field={{ ...field, value: formData[field?.name] || "" }}
@@ -129,6 +131,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 <label className="font-semibold text-gray-700" htmlFor={field?.name}>{field?.label}</label>
               </div>
             )}
+
+            {field.type === "br" && <br />}
+            <div className="flex flex-col">
+              {field.type === "label" && (
+                <label className="block text-lg font-semibold text-gray-700 underline w-full mt-4">
+                  {field.label}
+                </label>
+              )}
+            </div>
 
             {field.type === "radio" && (
               <Radio field={field} handleInputChange={handleInputChange} />
@@ -149,6 +160,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <Text
                 field={{ ...field, value: formData[field?.name] || "" }}
                 handleInputChange={handleInputChange}
+                
               />
             )}
 
@@ -171,6 +183,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <Number
                 field={{ ...field, value: formData[field?.name] || "" }}
                 handleInputChange={handleInputChange}
+              />
+            )}
+            {field.type === "button" && (
+              <Button
+                text={field.label}
+                type="button"
+                classes="bg-red-500 w-1/5 text-white rounded-xl hover:bg-red-700"
               />
             )}
 

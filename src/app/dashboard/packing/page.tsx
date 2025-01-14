@@ -10,16 +10,14 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "quotationNo", label: "Quotation ID" },
-  { key: "preparedBy", label: "Assignee" },
+  { key: "packingNo", label: "Packaging No" },
+  { key: "quotationNo", label: "Quotation No" },
+  { key: "packingDate", label: "Packaging Date" },
   { key: "totalQuantity", label: "Quantity" },
-  { key: "discountAmount", label: "Discount", isCurrency: "₹" },
-  { key: "freightAmount", label: "Freight", isCurrency: "₹" },
-  { key: "igstAmount", label: "IGST (Tax)", isCurrency: "₹" },
-  { key: "totalValue", label: "Total Amt.", isCurrency: "₹" },
-  { key: "taxableAmount", label: "Taxable", isCurrency: "₹" },
-  { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
-  { key: "quotationDate", label: "Send On", sortable: true, isDate: true },
+  { key: "netPackedQuantity", label: "Net Packed" },
+  { key: "customer", label: "Customer"},
+  { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
+  { key: "packedBy", label: "Packed By"},
 ];
 
 const filterOptions = [
@@ -43,7 +41,7 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Quotation"
+          type="Packing"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

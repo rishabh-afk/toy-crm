@@ -9,6 +9,7 @@ interface TextProps {
     placeholder?: string;
     isDisabled?: boolean;
     defaultValue?: string;
+    disabled?: boolean;
   };
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
