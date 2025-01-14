@@ -7,10 +7,11 @@ import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { LeadFormType } from "./formInput/LeadFormType";
 import {
-  updateFormData,
+  nestFields,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
+  removeSuffixInNestedObject,
 } from "@/hooks/general";
 
 interface LeadFormProps {
@@ -29,22 +30,6 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   const [formField, setFormField] = useState<any>(
     data?._id ? populateFormFields(LeadFormType, data) : LeadFormType
   );
-
-  const address = data.address;
-  const companyAddress = data.companyAddress;
-
-  for (const i in address) {
-    if (i === "_id" || i === "id") continue;
-    data[i] = address[i];
-  }
-  delete data.address;
-
-  for (const i in companyAddress) {
-    if (i === "_id" || i === "id") continue;
-    const keyName = `EMP${i}`;
-    data[keyName] = companyAddress[i];
-  }
-  delete data.companyAddress;
 
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(LeadFormType, data) : {}
@@ -86,9 +71,9 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
       let url = "";
       if (data?._id) url = `${endpoints[formType].update}${data?._id}`;
       else url = `${endpoints[formType].create}`;
-      console.log(url);
+
       setSubmitting(true);
-      const obj = [
+      const nestedObj = nestFields(updatedData, "address", [
         "city",
         "line1",
         "state",
@@ -96,31 +81,26 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
         "pinCode",
         "country",
         "landmark",
-        "latitude",
-        "longitude",
-      ];
-      const companyAddressObj = [
-        "EMPcity",
-        "EMPline1",
-        "EMPstate",
-        "EMPstreet",
-        "EMPpinCode",
-        "EMPcountry",
-        "EMPlandmark",
-        "EMPlatitude",
-        "EMPlongitude",
-      ];
-      let updatedFormData = updateFormData(updatedData, "address", obj, obj);
-      updatedFormData = updateFormData(
-        updatedFormData,
+      ]);
+      let nestedObj2 = nestFields(nestedObj, "companyAddress", [
+        "cityCompany",
+        "line1Company",
+        "stateCompany",
+        "streetCompany",
+        "pinCodeCompany",
+        "countryCompany",
+        "landmarkCompany",
+      ]);
+
+      nestedObj2 = removeSuffixInNestedObject(
+        nestedObj2,
         "companyAddress",
-        companyAddressObj,
-        companyAddressObj
+        "Company"
       );
 
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, nestedObj2)
+        : await Post(url, nestedObj2);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -142,9 +122,9 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
     <div>
       {!loading && (
         <DynamicForm
+          returnAs="object"
           fields={formField}
           formData={formData}
-          returnAs="formData"
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}

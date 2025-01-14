@@ -13,23 +13,21 @@ const columns = [
   { key: "_id", label: "Ledger ID" },
   { key: "ledgerType", label: "Ledger Type", sortable: true },
   { key: "contactPerson", label: "Contact Person", sortable: true },
-  { key: "companyName", label: "Company", sortable: true },
-  { key: "jobWork", label: "Job Work", sortable: true },
-  { key: "country", label: "Country", sortable: true },
-  { key: "bankName", label: "Bank Name", sortable: true },
-  { key: "ifscCode", label: "IFSC Code", sortable: true },
-  { key: "branchAddress", label: "Branch Address", sortable: true },
+  { key: "email", label: "Email Address", sortable: true },
+  { key: "mobileNo", label: "Mobile Number", sortable: true },
+  { key: "country", label: "Country" },
+  { key: "state", label: "State" },
+  { key: "companyName", label: "Company Name", sortable: true },
+  { key: "groupUnderName", label: "Assignee Name" },
+  { key: "groupedUnderEmail", label: "Assignee Email" },
   { key: "createdAt", label: "Date", sortable: true, isDate: true },
 ];
 
 const Users: React.FC = () => {
-
-
-  
   const { data, loading, error } = useFetch(endpoints["Ledger"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data?.pagination;
-console.log(data)
+
   const { user } = useAuth();
   const operationsAllowed = getAccessPoints(user, "Manage Ledger");
 

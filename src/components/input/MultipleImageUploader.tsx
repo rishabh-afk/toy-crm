@@ -115,13 +115,19 @@ const MultipleImageUpload: React.FC<MultipleImageUploadProps> = ({
             onClick={() =>
               selectedImages.length < maxImages && fileInputRef.current?.click()
             }
-            className={`flex bg-gray-200 flex-col w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 ${
+            className={`flex bg-gray-100 flex-col w-full h-40 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-300 ${
               selectedImages.length < maxImages
                 ? "border-gray-400 hover:border-gray-500"
                 : "border-red-500 cursor-not-allowed"
             }`}
           >
             <div className="flex flex-col justify-center items-center h-full text-gray-500">
+              <h2 className="text-black-400 font-bold">
+                Files Types We Accept
+              </h2>
+              <p className="text-gray-600 text-sm py-2">
+                JPG, JPEG, PNG (Max file size: 1MB)
+              </p>
               <span>
                 <IoCloudUpload size={50} className="text-gray-500" />
               </span>

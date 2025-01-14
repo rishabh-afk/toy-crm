@@ -5,7 +5,7 @@ import Email from "../input/Email";
 import Radio from "../input/Radio";
 import Number from "../input/Number";
 import Select from "../input/Select";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import Checkbox from "../input/Checkbox";
 import Password from "../input/Password";
 import TextArea from "../input/TextArea";
@@ -17,7 +17,6 @@ import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
-
 
 interface DynamicFormProps {
   onClose: any;
@@ -100,7 +99,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             else data.append(key, value);
           } else data.append(key, String(value));
         });
-        console.log(data)
+        console.log(data);
         makeApiCall(data);
       } else makeApiCall(formData);
     }
@@ -117,7 +116,11 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               field?.type === "textarea" && "col-span-2"
             } ${field?.type === "password" && "col-span-2"}`}
           >
-            <div></div>
+            {field.type === "br" && (
+              <h2 className="text-2xl uppercase tracking-tighter my-3 py-2 bg-primary text-white font-bold text-center">
+                {field?.label}
+              </h2>
+            )}
 
             {field.type === "select" && (
               <Select
@@ -125,14 +128,18 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 handleInputChange={handleInputChange}
               />
             )}
-            {field.type === "br" && <br />}
+
             {field.type === "label" && (
               <div key={field.label}>
-                <label className="font-semibold text-gray-700" htmlFor={field?.name}>{field?.label}</label>
+                <label
+                  className="font-semibold text-gray-700"
+                  htmlFor={field?.name}
+                >
+                  {field?.label}
+                </label>
               </div>
             )}
 
-            {field.type === "br" && <br />}
             <div className="flex flex-col">
               {field.type === "label" && (
                 <label className="block text-lg font-semibold text-gray-700 underline w-full mt-4">
@@ -160,10 +167,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <Text
                 field={{ ...field, value: formData[field?.name] || "" }}
                 handleInputChange={handleInputChange}
-                
               />
             )}
-
 
             {field.type === "textarea" && (
               <TextArea
@@ -249,19 +254,19 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             )}
           </div>
         ))}
-            
+
       <div className="col-span-3 flex justify-end space-x-2">
         <Button
           text="Submit"
           type="submit"
           isLoading={submitting}
-          classes="bg-primary w-1/5 text-white rounded-xl"
+          classes="bg-primary w-1/5 py-3 text-white text-xl rounded-xl"
         />
         <Button
           text="Cancel"
           type="button"
           onClick={onClose}
-          classes="bg-red-500 w-1/5 text-white rounded-xl hover:bg-red-700"
+          classes="bg-red-500 w-1/5 py-3 text-white rounded-xl text-xl hover:bg-red-700"
         />
       </div>
     </form>

@@ -1,257 +1,200 @@
 import { FormField } from "@/hooks/types";
 
-
-
 export const ProductFormType: FormField[] = [
+  {
+    name: "name",
+    type: "text",
+    label: "product Name",
+    required: true,
+    placeholder: "Enter product name",
+  },
   {
     name: "productCode",
     type: "text",
     required: true,
     label: "Product Code",
-    placeholder: "Provide product code",
-    customClasses: undefined,
+    placeholder: "Enter product code",
   },
   {
     name: "type",
     type: "select",
-    required: true,
-
     label: "Type",
-    placeholder: "Select type",
-    customClasses: undefined,
+    required: true,
+    placeholder: "Select Product type",
     options: [
       { label: "Finished", value: "Finished" },
       { label: "Raw Material", value: "Raw Material" },
     ],
   },
   {
-    name: "name",
-    type: "text",
-    required: true,
-
-    label: "Name",
-    placeholder: "Provide product name",
-    customClasses: undefined,
+    name: "description",
+    type: "textarea",
+    required: false,
+    widthFull: true,
+    label: "Description",
+    placeholder: "Enter product description",
   },
   {
     name: "barCode",
     type: "text",
     required: true,
-
     label: "Bar Code",
-    placeholder: "Provide barcode",
-    customClasses: undefined,
+    placeholder: "Enter barcode",
+  },
+  {
+    name: "sku",
+    type: "text",
+    required: true,
+    label: "SKU",
+    placeholder: "Enter the SKU",
   },
   {
     name: "productSeries",
     type: "text",
-    required: true,
-
     label: "Product Series",
-    placeholder: "Provide product series",
-    customClasses: undefined,
+    placeholder: "Enter product series",
   },
   {
     name: "productCategory",
     type: "select",
     required: true,
-
     label: "Product Category",
-    placeholder: "Provide product category",
-    customClasses: undefined,
+    placeholder: "Enter product category",
     options: [],
   },
   {
     name: "brand",
     type: "select",
-    required: true,
-
     label: "Brand",
-    placeholder: "Provide brand",
-    customClasses: undefined,
+    required: true,
+    placeholder: "Enter Brand Name",
     options: [],
   },
   {
     name: "uom",
     type: "select",
-    required: true,
-
     label: "UOM",
+    required: true,
     placeholder: "Select UOM",
-    customClasses: undefined,
     options: [],
   },
-
   {
     name: "baseQuantity",
     type: "number",
-    required: true,
-
     label: "Base Quantity",
-    placeholder: "Provide base quantity",
-    customClasses: undefined,
+    placeholder: "Enter base quantity",
+  },
+  {
+    type: "br",
+    name: "specification",
+    label: "Price / Specification Details",
+    widthFull: true,
   },
   {
     name: "weight",
     type: "number",
-    required: true,
-
     label: "Weight",
-    placeholder: "Provide weight",
-    customClasses: undefined,
+    placeholder: "Enter weight",
   },
   {
     name: "grossWeight",
     type: "number",
-    required: true,
-
     label: "Gross Weight",
-    placeholder: "Provide gross weight",
-    customClasses: undefined,
+    placeholder: "Enter gross weight",
   },
   {
     name: "purchaseRate",
     type: "number",
-    required: true,
-
     label: "Purchase Rate",
-    placeholder: "Provide purchase rate",
-    customClasses: undefined,
+    placeholder: "Enter purchase rate",
   },
   {
     name: "yob",
     type: "number",
-    required: true,
-
     label: "YOB",
-    placeholder: "Provide year of birth or year of product",
-    customClasses: undefined,
+    placeholder: "Enter year of birth or year of product",
   },
   {
     name: "cb",
     type: "number",
-    required: true,
-
     label: "CB",
-    placeholder: "Provide CB",
-    customClasses: undefined,
+    placeholder: "Enter CB",
   },
   {
     name: "ourPrice",
     type: "number",
-    required: true,
-
     label: "Our Price",
-    placeholder: "Provide our price",
-    customClasses: undefined,
+    placeholder: "Enter our price",
   },
   {
     name: "minLevel",
     type: "number",
-    required: true,
-
     label: "Min Level",
-    placeholder: "Provide minimum level",
-    customClasses: undefined,
+    placeholder: "Enter minimum level",
   },
   {
     name: "maxLevel",
     type: "number",
-    required: true,
-
     label: "Max Level",
-    placeholder: "Provide maximum level",
-    customClasses: undefined,
+    placeholder: "Enter maximum level",
   },
   {
     name: "mrp",
     type: "number",
-    required: true,
-
     label: "Rate",
-    placeholder: "Provide MRP",
-    customClasses: undefined,
+    placeholder: "Enter MRP",
   },
   {
     name: "reOrderLevel",
     type: "number",
-    required: true,
-
     label: "Re-order Level",
-    placeholder: "Provide re-order level",
-    customClasses: undefined,
+    placeholder: "Enter re-order level",
   },
   {
     name: "buyerRefNo",
     type: "text",
-    required: true,
-
     label: "Buyer Ref No",
-    placeholder: "Provide buyer reference number",
-    customClasses: undefined,
+    placeholder: "Enter buyer reference number",
   },
-
-  {
-    name: "sku",
-    type: "text",
-    required: true,
-
-    label: "KU",
-    placeholder: "Provide the SKU",
-    customClasses: undefined,
-  },
-
   {
     name: "cgst",
     type: "number",
-    required: true,
-
     label: "CGST",
-    placeholder: "Provide cgst",
-    customClasses: undefined,
+    placeholder: "Enter cgst",
   },
-
   {
     name: "igst",
     type: "number",
-    required: true,
-
     label: "IGST",
-    placeholder: "Provide igst",
-    customClasses: undefined,
+    placeholder: "Enter igst",
   },
-
   {
     name: "sgst",
     type: "number",
-    required: true,
-
     label: "SGST",
-    placeholder: "Provide SGST",
-    customClasses: undefined,
+    placeholder: "Enter SGST",
   },
   {
-    name: "description",
-    type: "textarea",
-    required: false,
-
-    label: "Description",
-    placeholder: "Provide description",
-    customClasses: undefined,
+    type: "br",
+    name: "upload",
+    label: "Upload Documents",
+    widthFull: true,
   },
-
   {
-    name: "images",
     type: "file",
+    name: "images",
+    multiple: true,
     required: false,
-
+    widthFull: true,
     label: "Images",
-    placeholder: undefined,
-    customClasses: undefined,
+  },
+  {
+    name: "coverImage",
+    label: "Product Cover Image",
+    type: "file",
+    required: true,
   },
 ];
-
-
 
 // Product forms ends here
 
@@ -263,7 +206,6 @@ export const ProductBrandType: FormField[] = [
     widthFull: true,
     label: "Brand Name",
     placeholder: "Enter brand name",
-    customClasses: undefined
   },
   {
     rows: 5,
@@ -273,7 +215,6 @@ export const ProductBrandType: FormField[] = [
     label: "Brand Name",
     name: "description",
     placeholder: "Enter brand description",
-    customClasses: undefined
   },
   {
     name: "status",
@@ -281,7 +222,6 @@ export const ProductBrandType: FormField[] = [
     type: "choose",
     widthFull: true,
     required: false,
-    customClasses: undefined
   },
 ];
 
@@ -292,7 +232,6 @@ export const ProductCategoryType: FormField[] = [
     required: true,
     label: "Category Name",
     placeholder: "Enter category name",
-    customClasses: undefined
   },
   {
     rows: 1,
@@ -301,54 +240,51 @@ export const ProductCategoryType: FormField[] = [
     name: "description",
     label: "Category Description",
     placeholder: "Enter category description",
-    customClasses: undefined
   },
-  {
-    type: "text",
-    required: true,
-    name: "hsnCode",
-    label: "HSN Code",
-    placeholder: "Enter category HSN Code",
-    customClasses: undefined
-  },
-  {
-    name: "igst",
-    maxLength: 2,
-    type: "number",
-    label: "Integrated Goods and Services Tax (IGST)",
-    placeholder: "Enter IGST",
-    customClasses: undefined
-  },
-  {
-    name: "cgst",
-    maxLength: 2,
-    type: "number",
-    label: "Central Goods and Services Tax (CGST)",
-    placeholder: "Enter CGST",
-    customClasses: undefined
-  },
-  {
-    name: "sgst",
-    maxLength: 2,
-    type: "number",
-    label: "State Goods and Services Tax (SGST)",
-    placeholder: "Enter SGST",
-    customClasses: undefined
-  },
+  // {
+  //   type: "text",
+  //   required: true,
+  //   name: "hsnCode",
+  //   label: "HSN Code",
+  //   placeholder: "Enter category HSN Code",
+  //   customClasses: undefined
+  // },
+  // {
+  //   name: "igst",
+  //   maxLength: 2,
+  //   type: "number",
+  //   label: "Integrated Goods and Services Tax (IGST)",
+  //   placeholder: "Enter IGST",
+  //   customClasses: undefined
+  // },
+  // {
+  //   name: "cgst",
+  //   maxLength: 2,
+  //   type: "number",
+  //   label: "Central Goods and Services Tax (CGST)",
+  //   placeholder: "Enter CGST",
+  //   customClasses: undefined
+  // },
+  // {
+  //   name: "sgst",
+  //   maxLength: 2,
+  //   type: "number",
+  //   label: "State Goods and Services Tax (SGST)",
+  //   placeholder: "Enter SGST",
+  //   customClasses: undefined
+  // },
   {
     name: "parentCategory",
     label: "Wanna connect to Category (optional) ?",
     type: "select",
     placeholder: "Select category",
     options: [],
-    customClasses: undefined
   },
   {
     name: "status",
     label: "Do you want to activate this Category?",
     type: "choose",
     required: false,
-    customClasses: undefined
   },
 ];
 
@@ -359,7 +295,6 @@ export const ProductUOMType: FormField[] = [
     required: true,
     label: "Unit of Measure Short Name",
     placeholder: "Enter UOM a short name",
-    customClasses: undefined
   },
   {
     type: "text",
@@ -367,13 +302,11 @@ export const ProductUOMType: FormField[] = [
     name: "longName",
     label: "Unit of Measure Long Name",
     placeholder: "Enter UOM a long name",
-    customClasses: undefined
   },
   {
     name: "status",
     label: "Do you want to activate this Unit of Measure (UOM)?",
     type: "choose",
     required: false,
-    customClasses: undefined
   },
 ];

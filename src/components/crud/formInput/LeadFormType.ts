@@ -1,118 +1,7 @@
+import { countries } from "@/data/data";
 import { FormField } from "@/hooks/types";
-import { formatDate } from "@/hooks/general";
 import { includes } from "@/hooks/polyfills";
-
-const addressFields: FormField[] = [
-  {
-    name: "line1",
-    type: "text",
-    label: "Street Name",
-    placeholder: "Enter street name",
-    customClasses: "",
-  },
-  {
-    name: "street",
-    type: "text",
-    label: "Street Address",
-    placeholder: "Enter street address",
-    customClasses: "",
-  },
-  {
-    name: "city",
-    type: "text",
-    required: true,
-    label: "City",
-    placeholder: "Enter city",
-    customClasses: "",
-  },
-  {
-    name: "state",
-    type: "text",
-    required: true,
-    label: "State",
-    placeholder: "Enter state",
-    customClasses: "",
-  },
-  {
-    name: "pinCode",
-    type: "text",
-    required: true,
-    label: "Pincode",
-    placeholder: "Enter pincode",
-    customClasses: "",
-  },
-  {
-    name: "landmark",
-    type: "text",
-    label: "Landmark",
-    placeholder: "Enter landmark",
-    customClasses: "",
-  },
-  {
-    name: "country",
-    type: "text",
-    required: true,
-    label: "Country",
-    placeholder: "Enter country",
-    customClasses: "",
-  },
-];
-
-const EmployeeaddressFields: FormField[] = [
-  {
-    name: "EMPline1",
-    type: "text",
-    label: "Street Name",
-    placeholder: "Enter street name",
-    customClasses: "",
-  },
-  {
-    name: "EMPstreet",
-    type: "text",
-    label: "Street Address",
-    placeholder: "Enter street address",
-    customClasses: "",
-  },
-  {
-    name: "EMPcity",
-    type: "text",
-    required: true,
-    label: "City",
-    placeholder: "Enter city",
-    customClasses: "",
-  },
-  {
-    name: "EMPstate",
-    type: "text",
-    required: true,
-    label: "State",
-    placeholder: "Enter state",
-    customClasses: "",
-  },
-  {
-    name: "EMPpinCode",
-    type: "text",
-    required: true,
-    label: "Pincode",
-    placeholder: "Enter pincode",
-    customClasses: "",
-  },
-  {
-    name: "EMPlandmark",
-    type: "text",
-    label: "Landmark",
-    placeholder: "Enter landmark",
-    customClasses: "",
-  },
-  {
-    name: "EMPcountry",
-    type: "text",
-    required: true,
-    label: "Country",
-    placeholder: "Enter country",
-    customClasses: "",
-  },
-];
+import { formatDate, getSelectFormattedData } from "@/hooks/general";
 
 export const LeadFormType: FormField[] = [
   {
@@ -121,7 +10,6 @@ export const LeadFormType: FormField[] = [
     required: true,
     label: "First Name",
     placeholder: "Enter user name",
-    customClasses: "",
   },
   {
     name: "lastName",
@@ -129,7 +17,6 @@ export const LeadFormType: FormField[] = [
     required: true,
     label: "Last Name",
     placeholder: "Enter user name",
-    customClasses: "",
   },
   {
     name: "phone",
@@ -138,7 +25,6 @@ export const LeadFormType: FormField[] = [
     type: "stringNumeric",
     placeholder: "Enter your mobile number",
     required: true,
-    customClasses: "",
   },
 
   {
@@ -148,46 +34,88 @@ export const LeadFormType: FormField[] = [
     required: true,
     placeholder: "Enter your email",
     validation: (value) => (includes(value, "@") ? null : "Invalid email"),
-    customClasses: "",
   },
   {
     name: "dateOfBirth",
     label: "Date of Birth",
     type: "date",
-    required: false,
     maxDate: formatDate(new Date()),
     placeholder: "Enter date of birth",
-    customClasses: "",
   },
 
   {
     name: "gender",
     type: "select",
-    required: true,
     label: "Gender",
     placeholder: "Enter your gender",
-    customClasses: "",
     options: [
       { label: "Male", value: "Male" },
       { label: "Female", value: "Female" },
       { label: "Other", value: "Other" },
     ],
   },
+  { type: "br", name: "Address", label: "Address Details", widthFull: true },
+  {
+    type: "text",
+    name: "line1",
+    label: "Address 1",
+    required: true,
+    placeholder: "Enter Line 1",
+  },
+  {
+    name: "street",
+    type: "text",
+    label: "Street Address",
+    placeholder: "Enter street address",
+  },
+  {
+    name: "city",
+    type: "text",
+    label: "City",
+    required: true,
+    placeholder: "Enter city",
+  },
+  {
+    name: "state",
+    type: "text",
+    required: true,
+    label: "State",
+    placeholder: "Enter state",
+  },
+  {
+    name: "pinCode",
+    maxLength: 15,
+    label: "Pin Code",
+    required: true,
+    type: "stringNumeric",
+    placeholder: "Enter pin code",
+  },
+  {
+    type: "select",
+    name: "country",
+    required: true,
+    label: "Country",
+    placeholder: "Select Country",
+    options: getSelectFormattedData(countries),
+  },
+  {
+    name: "landmark",
+    type: "text",
+    label: "Landmark",
+    placeholder: "Enter landmark",
+  },
+  { type: "br", name: "lead", label: "Lead information", widthFull: true },
   {
     name: "source",
     type: "text",
-    required: true,
     label: "Source",
     placeholder: "Enter source",
-    customClasses: "",
   },
   {
     name: "status",
     type: "select",
-    required: true,
     label: "Status",
-    // placeholder: "Enter pending",
-    customClasses: "",
+    placeholder: "Enter lead status",
     options: [
       { label: "Pending", value: "Pending" },
       { label: "Contacted", value: "Contacted" },
@@ -195,15 +123,12 @@ export const LeadFormType: FormField[] = [
       { label: "Converted", value: "Converted" },
       { label: "Closed", value: "Closed" },
     ],
-    value: "Pending",
   },
   {
     name: "priorityLevel",
     type: "select",
-    required: true,
     label: "Priority Level",
-    placeholder: "Enter pending",
-    customClasses: "",
+    placeholder: "Enter priority level",
     options: [
       { label: "Low", value: "Low" },
       { label: "Medium", value: "Medium" },
@@ -214,95 +139,102 @@ export const LeadFormType: FormField[] = [
   {
     name: "assignedSalesPerson",
     type: "select",
-    required: true,
     label: "Assigned Sales Person",
     placeholder: "Enter Assigned Sales Person",
-    customClasses: "",
     options: [], // This will hold the options for the Select component
   },
-
-  {
-    name: "statusUpdate",
-    type: "text",
-    required: true,
-    label: "Status Update",
-    placeholder: "Enter Status",
-    customClasses: "",
-  },
-
-  ...addressFields,
-
-  {
-    name: "label",
-    type: "label",
-    required: false,
-    label: "Company Details",
-    placeholder: "Enter company name",
-    customClasses: "",
-  },
-
-  {
-    name: "br",
-    type: "br",
-    required: false,
-    label: "br",
-    placeholder: "Enter company name",
-    customClasses: "",
-  },
-  {
-    name: "br1",
-    type: "br",
-    required: false,
-    label: "br",
-    placeholder: "Enter company name",
-    customClasses: "",
-  },
-
+  // {
+  //   name: "statusUpdate",
+  //   type: "text",
+  //   label: "Status Update",
+  //   placeholder: "Enter Status",
+  // },
+  { type: "br", name: "Company", label: "Company Details", widthFull: true },
   {
     name: "companyName",
     type: "text",
     required: true,
     label: "Company Name",
     placeholder: "Enter company name",
-    customClasses: "",
   },
-
-  //
-
-  //
-
   {
     name: "designation",
     type: "text",
-    required: true,
     label: "Designation",
     placeholder: "Enter designation",
-    customClasses: "",
   },
   {
     name: "industry",
     type: "text",
-    required: true,
     label: "Industry",
     placeholder: "Enter industry",
-    customClasses: "",
   },
   {
     name: "website",
     type: "text",
-    required: true,
     label: "Website",
     placeholder: "Enter website",
-    customClasses: "",
   },
   {
+    maxLength: 15,
+    type: "stringNumeric",
     name: "companyPhoneNo",
+    label: "Company PhoneNo",
+    placeholder: "Enter phone number",
+  },
+  {
+    type: "br",
+    name: "Company Address",
+    label: "Company Address Details",
+    widthFull: true,
+  },
+  {
+    type: "text",
+    name: "line1Company",
+    label: "Address 1",
+    required: true,
+    placeholder: "Enter Line 1",
+  },
+  {
+    name: "streetCompany",
+    type: "text",
+    label: "Street Address",
+    placeholder: "Enter street address",
+  },
+  {
+    name: "cityCompany",
+    type: "text",
+    label: "City",
+    required: true,
+    placeholder: "Enter city",
+  },
+  {
+    name: "stateCompany",
     type: "text",
     required: true,
-    label: "Company PhoneNo",
-    placeholder: "Enter website",
-    customClasses: "",
+    label: "State",
+    placeholder: "Enter state",
   },
-
-  ...EmployeeaddressFields,
+  {
+    name: "pinCodeCompany",
+    maxLength: 15,
+    label: "Pin Code",
+    required: true,
+    type: "stringNumeric",
+    placeholder: "Enter pin code",
+  },
+  {
+    type: "select",
+    name: "countryCompany",
+    required: true,
+    label: "Country",
+    placeholder: "Select Country",
+    options: getSelectFormattedData(countries),
+  },
+  {
+    name: "landmarkCompany",
+    type: "text",
+    label: "Landmark",
+    placeholder: "Enter landmark",
+  },
 ];

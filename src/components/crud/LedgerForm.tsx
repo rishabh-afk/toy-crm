@@ -7,7 +7,7 @@ import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { LedgerType } from "./formInput/ledgerFormType";
 import {
-  updateFormData,
+  nestFields,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
@@ -32,17 +32,12 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(LedgerType, data) : {}
   );
-  console.log("hey");
+
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response: any = await Fetch(
-          "/api/user/public-role/Salesperson",
-          {},
-          5000,
-          true,
-          false
-        );
+        const url = "/api/user/public-role/Salesperson";
+        const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data.length > 0) {
           const selectData = getSelectFormattedData(response.data);
           const updatedFormField = formField.map((obj: any) => {
@@ -68,20 +63,18 @@ const LedgerForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const obj = [
-        "city"
-        // city: updatedData.city,
-        // line1: updatedData.line1,
-        // state: updatedData.state,
-        // street: updatedData.street,
-        // pinCode: updatedData.pinCode,
-        // country: updatedData.country,
-        // landmark: updatedData.landmark,
-      ];
-      updateFormData(updatedData, "address1", obj, obj);
+      const nestedObj = nestFields(updatedData, "address", [
+        "city",
+        "line1",
+        "state",
+        "street",
+        "pinCode",
+        "country",
+        "landmark",
+      ]);
       const response: any = data?._id
-        ? await Put(url, updatedData)
-        : await Post(url, updatedData);
+        ? await Put(url, nestedObj)
+        : await Post(url, nestedObj);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;

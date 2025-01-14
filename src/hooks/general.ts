@@ -410,3 +410,50 @@ export const getSelectFormattedData = (data: any) => {
   return response;
 };
 
+export function nestFields(
+  obj: Record<string, any>,
+  key: string,
+  fieldsToNest: string[]
+): Record<string, any> {
+  const nestedObject: Record<string, any> = {};
+  const updatedObject: Record<string, any> = { ...obj };
+
+  fieldsToNest.forEach((field) => {
+    if (field in updatedObject) {
+      nestedObject[field] = updatedObject[field];
+      delete updatedObject[field];
+    }
+  });
+  updatedObject[key] = nestedObject;
+  return updatedObject;
+}
+
+type NestedObject = {
+  [key: string]: any;
+};
+
+export function removeSuffixInNestedObject(
+  obj: NestedObject,
+  nestedKey: string,
+  suffix: string
+): NestedObject {
+  const nestedObj = obj[nestedKey];
+
+  if (!nestedObj || typeof nestedObj !== "object") {
+    return obj; // Return the original object if nestedKey is invalid
+  }
+
+  const updatedNestedObj = Object.entries(nestedObj).reduce(
+    (acc: NestedObject, [key, value]) => {
+      const newKey = key.replace(new RegExp(`${suffix}$`), ""); // Remove the suffix
+      acc[newKey] = value;
+      return acc;
+    },
+    {}
+  );
+
+  return {
+    ...obj,
+    [nestedKey]: updatedNestedObj, // Update the nested object
+  };
+}

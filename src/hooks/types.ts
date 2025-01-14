@@ -32,7 +32,7 @@ export interface FilterOption {
 
 
 export interface FormField {
-  customClasses: any;
+  customClasses?: any;
   name: string;
   label: string;
   type:
