@@ -6,12 +6,11 @@ import { endpoints } from "@/data/endpoints";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { QuotationFieldsType } from "./formInput/quotationFormType";
 import {
-  updateFormData,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
 } from "@/hooks/general";
-import CustomeForm from "../common/CustomeForm";
+import DynamicForm from "../common/DynamicForm";
 
 interface LedgerProps {
   data?: any;
@@ -70,21 +69,21 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const obj = [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-        "latitude",
-        "longitude",
-      ];
-      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
+      // const obj = [
+      //   "city",
+      //   "line1",
+      //   "state",
+      //   "street",
+      //   "pinCode",
+      //   "country",
+      //   "landmark",
+      //   "latitude",
+      //   "longitude",
+      // ];
+      // const updatedFormData = updateFormData(updatedData, "address", obj, obj);
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -105,22 +104,14 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   return (
     <div>
       {!loading && (
-        // <DynamicForm
-        //   returnAs="object"
-        //   fields={formField}
-        // formData={formData}
-        // submitting={submitting}
-        // onClose={props?.onClose}
-        // setFormData={setFormData}
-        // makeApiCall={makeApiCall}
-        // />
-        <CustomeForm
+        <DynamicForm
+          returnAs="object"
+          fields={formField}
           formData={formData}
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}
           makeApiCall={makeApiCall}
-          fields={QuotationFieldsType}
         />
       )}
     </div>

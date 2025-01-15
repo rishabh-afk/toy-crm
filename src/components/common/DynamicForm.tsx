@@ -17,6 +17,7 @@ import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
+import ProductForm from "./ProductForm";
 
 interface DynamicFormProps {
   onClose: any;
@@ -26,6 +27,22 @@ interface DynamicFormProps {
   submitting: boolean;
   fields?: FormField[];
   returnAs?: "object" | "formData";
+}
+interface Item {
+  id: number;
+  productCode: string;
+  uom: string;
+  quantity: number;
+  listPrice: number;
+  value: number;
+  discount: number;
+  discountAmount: number;
+  cGst: number;
+  sGst: number;
+  iGst: number;
+  gstAmount: number;
+  totalAmount: number;
+  stockInHand: number;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -38,6 +55,12 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   makeApiCall,
 }) => {
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
+  const [productItems, setProductItems] = useState<Item[]>([]); // State for ProductForm items
+
+  const handleItemsChange = (items: Item[]) => {
+    setProductItems(items); // Update product items state
+    console.log(items)
+  };
 
   const handleInputChange = (e: any) => {
     const { name, type, value, checked, options, multiple, files } = e.target;
@@ -89,19 +112,21 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
+      const combinedFormData = { ...formData, productItems }; // Combine form data and items
       if (returnAs === "formData") {
         const data = new FormData();
-        Object.keys(formData).forEach((key) => {
-          const value = formData[key];
+        Object.keys(combinedFormData).forEach((key) => {
+          const value = combinedFormData[key];
           if (value instanceof File || Array.isArray(value)) {
             if (Array.isArray(value))
               value.forEach((file) => data.append(key, file));
             else data.append(key, value);
           } else data.append(key, String(value));
         });
-        console.log(data);
         makeApiCall(data);
-      } else makeApiCall(formData);
+      } else {
+        makeApiCall(combinedFormData);
+      }
     }
   };
 
@@ -252,6 +277,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 {errors[field.name]}
               </span>
             )}
+
+            {field.type === "productForm" && (
+              
+      
+                <ProductForm key={field.name} onItemsChange={handleItemsChange} />
+           
+            )}
+
           </div>
         ))}
 

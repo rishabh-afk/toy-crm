@@ -22,10 +22,12 @@ export const QuotationFieldsType: FormField[] = [
     required: false,
     label: "Customer",
     placeholder: "Select customer",
-    options:[{
-      label: "Customer 1",
-      value: "Customer 1"
-    }]
+    options: [
+      {
+        label: "Customer 1",
+        value: "Customer 1",
+      },
+    ],
   },
 
   {
@@ -34,10 +36,12 @@ export const QuotationFieldsType: FormField[] = [
     required: false,
     label: "Lead",
     placeholder: "Provide lead source",
-    options:[{
-      label: "Lead 1",
-      value:"Lead 1"
-    }]
+    options: [
+      {
+        label: "Lead 1",
+        value: "Lead 1",
+      },
+    ],
   },
 
   {
@@ -70,12 +74,13 @@ export const QuotationFieldsType: FormField[] = [
     required: true,
     label: "Prepared By",
     placeholder: "Select prepared by",
-    options:[{
-      label: "Prepared By 1",
-      value: "Prepared By 1"
-    }]
+    options: [
+      {
+        label: "Prepared By 1",
+        value: "Prepared By 1",
+      },
+    ],
   },
-
 
   {
     name: "packing",
@@ -83,10 +88,12 @@ export const QuotationFieldsType: FormField[] = [
     required: false,
     label: "Packing",
     placeholder: "Select packing",
-    options:[{
-      label: "Packing 1",
-      value: "Packing 1"
-    }]
+    options: [
+      {
+        label: "Packing 1",
+        value: "Packing 1",
+      },
+    ],
   },
 
   // Product Details Start
@@ -103,48 +110,48 @@ export const QuotationFieldsType: FormField[] = [
   //   required: false,
   //   label: ""
   // },
-  
 
   {
     name: "productLabel",
-    type: "label",
+    type: "br",
     required: false,
     label: "Product Details",
     placeholder: "",
-    options:[{
-      label: "Product 1",
-      value: "Product 1"
-    }]
+    options: [
+      {
+        label: "Product 1",
+        value: "Product 1",
+      },
+    ],
   },
 
-
-  // {
-  //   name: "br11",
-  //   type: "br",
-  //   required: false,
-  //   label: ""
-  // },
-
-  {
-    name: "productForm",
-    type: "productForm",
-    required: false,
-    label: "Product Details",
-    placeholder: "",
- 
-  },
   {
     name: "isTaxed",
     type: "checkbox",
     required: false,
     label: "Tax Details",
     placeholder: "",
-    options:[{
-      label: "Without Tax",
-      value: ''
-    }]
+    options: [
+      {
+        label: "Without Tax",
+        value: "",
+      },
+    ],
   },
-  
+  {
+    name: "br15",
+    type: "label",
+    required: false,
+    label: "",
+  },
+  {
+    name: "product",
+    type: "productForm",
+    widthFull: true,
+    required: false,
+    label: "Product Details",
+    placeholder: "",
+  },
 
   // Product Details End
 
@@ -174,8 +181,9 @@ export const QuotationFieldsType: FormField[] = [
   // Total Cost Start
   {
     name: "total",
-    type: "label",
+    type: "br",
     required: false,
+    widthFull:true,
     label: "Total Details:",
     placeholder: "",
   },
@@ -282,9 +290,11 @@ export const QuotationFieldsType: FormField[] = [
     required: true,
     label: "Status",
     placeholder: "Select Status",
-    options:[{
-      label: 'Pending',
-      value: 'Pending'
-    }]
+    options: [
+      {
+        label: "Pending",
+        value: "Pending",
+      },
+    ],
   },
 ];
