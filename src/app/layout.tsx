@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
-import { Raleway } from "next/font/google";
+import { Lato } from "next/font/google";
 import Sidebar from "@/components/common/Sidebar";
 import { AuthProvider } from "@/context/AuthContext";
 
@@ -26,21 +26,12 @@ export const metadata: Metadata = {
   description: "The ledger is connected to the blockchain.",
 };
 
-const raleway = Raleway({
-  subsets: ["latin"], // Specify the subset
-  weight: [
-    "100", // Thin
-    "200", // Extra Light
-    "300", // Light
-    "400", // Regular
-    "500", // Medium
-    "600", // Semi-Bold
-    "700", // Bold
-    "800", // Extra-Bold
-    "900", // Black
-  ],
-  style: ["normal", "italic"], // Include both normal and italic styles
-  display: "swap", // Use `swap` for better performance and UX
+const lato = Lato({
+  subsets: ['latin'], // Specify the subset
+  weight: ['100', '300', '400', '700', '900'], // Only supported weights
+  variable: '--font-lato', // CSS variable for the font
+  style: ['normal', 'italic'], // Include both normal and italic styles
+  display: 'swap', // Use swap for better performance
 });
 
 export default function RootLayout({
@@ -51,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${raleway.className} relative antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${lato.className} relative antialiased`}
       >
         <AuthProvider>
           <div className="flex">
