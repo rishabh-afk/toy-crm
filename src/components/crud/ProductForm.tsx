@@ -1,17 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { ProductFormType } from "./formInput/productFromType";
-// import { ProductFormType } from "./formInput/productFromType";
-import {
-  updateFormData,
-  populateFormData,
-  populateFormFields,
-} from "@/hooks/general";
+import { populateFormData, populateFormFields } from "@/hooks/general";
 
 interface ProductProps {
   data?: any;
@@ -127,16 +122,12 @@ const ProductForm: React.FC<ProductProps> = (props: any) => {
       let url = "";
       if (data?._id) url = `${endpoints[formType].update}${data?._id}`;
       else url = `${endpoints[formType].create}`;
-      console.log(url);
+
       setSubmitting(true);
 
-      const updatedFormData = updateFormData(updatedData, " ", [], []);
-
-      //    let updateFormData(formData: FormData, nestedFieldKey: string, nestedFields: string[], fieldsToRemove: string[]): FormData
-
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;

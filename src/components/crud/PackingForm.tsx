@@ -94,6 +94,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       }
     };
     if (formData.quotationId) fetchQuotationDetails();
+    // eslint-disable-next-line
   }, [formData.quotationId]);
 
   useEffect(() => {
@@ -128,6 +129,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       }
     };
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   const handlePackaging = (data: any) => {

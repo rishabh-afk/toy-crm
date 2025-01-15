@@ -4,7 +4,7 @@ export const ProductFormType: FormField[] = [
   {
     name: "name",
     type: "text",
-    label: "product Name",
+    label: "Product Name",
     required: true,
     placeholder: "Enter product name",
   },
@@ -103,12 +103,6 @@ export const ProductFormType: FormField[] = [
     placeholder: "Enter gross weight",
   },
   {
-    name: "purchaseRate",
-    type: "number",
-    label: "Purchase Rate",
-    placeholder: "Enter purchase rate",
-  },
-  {
     name: "yob",
     type: "number",
     label: "YOB",
@@ -121,22 +115,16 @@ export const ProductFormType: FormField[] = [
     placeholder: "Enter CB",
   },
   {
+    name: "purchaseRate",
+    type: "number",
+    label: "Purchase Rate",
+    placeholder: "Enter purchase rate",
+  },
+  {
     name: "ourPrice",
     type: "number",
     label: "Our Price",
     placeholder: "Enter our price",
-  },
-  {
-    name: "minLevel",
-    type: "number",
-    label: "Min Level",
-    placeholder: "Enter minimum level",
-  },
-  {
-    name: "maxLevel",
-    type: "number",
-    label: "Max Level",
-    placeholder: "Enter maximum level",
   },
   {
     name: "mrp",
@@ -157,16 +145,28 @@ export const ProductFormType: FormField[] = [
     placeholder: "Enter buyer reference number",
   },
   {
-    name: "cgst",
+    name: "minLevel",
     type: "number",
-    label: "CGST",
-    placeholder: "Enter cgst",
+    label: "Min Level",
+    placeholder: "Enter minimum level",
+  },
+  {
+    name: "maxLevel",
+    type: "number",
+    label: "Max Level",
+    placeholder: "Enter maximum level",
   },
   {
     name: "igst",
     type: "number",
     label: "IGST",
-    placeholder: "Enter igst",
+    placeholder: "Enter IGST",
+  },
+  {
+    name: "cgst",
+    type: "number",
+    label: "CGST",
+    placeholder: "Enter CGST",
   },
   {
     name: "sgst",
@@ -186,7 +186,7 @@ export const ProductFormType: FormField[] = [
     multiple: true,
     required: false,
     widthFull: true,
-    label: "Images",
+    label: "Product Images",
   },
   {
     name: "coverImage",
@@ -195,8 +195,6 @@ export const ProductFormType: FormField[] = [
     required: true,
   },
 ];
-
-// Product forms ends here
 
 export const ProductBrandType: FormField[] = [
   {
@@ -241,38 +239,6 @@ export const ProductCategoryType: FormField[] = [
     label: "Category Description",
     placeholder: "Enter category description",
   },
-  // {
-  //   type: "text",
-  //   required: true,
-  //   name: "hsnCode",
-  //   label: "HSN Code",
-  //   placeholder: "Enter category HSN Code",
-  //   customClasses: undefined
-  // },
-  // {
-  //   name: "igst",
-  //   maxLength: 2,
-  //   type: "number",
-  //   label: "Integrated Goods and Services Tax (IGST)",
-  //   placeholder: "Enter IGST",
-  //   customClasses: undefined
-  // },
-  // {
-  //   name: "cgst",
-  //   maxLength: 2,
-  //   type: "number",
-  //   label: "Central Goods and Services Tax (CGST)",
-  //   placeholder: "Enter CGST",
-  //   customClasses: undefined
-  // },
-  // {
-  //   name: "sgst",
-  //   maxLength: 2,
-  //   type: "number",
-  //   label: "State Goods and Services Tax (SGST)",
-  //   placeholder: "Enter SGST",
-  //   customClasses: undefined
-  // },
   {
     name: "parentCategory",
     label: "Wanna connect to Category (optional) ?",

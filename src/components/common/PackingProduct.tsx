@@ -30,10 +30,12 @@ const PackingProduct = ({
       }))
     );
     customFunc(items);
+    // eslint-disable-next-line
   }, [initialData]);
 
   useEffect(() => {
     customFunc(items);
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (

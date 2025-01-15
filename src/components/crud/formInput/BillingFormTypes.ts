@@ -7,8 +7,6 @@ export const BillingFormType: FormField[] = [
     required: true,
     label: "Bill Number",
     placeholder: "Enter Bill Number",
-    customClasses: undefined,
-    // isDisabled: true,
   },
   {
     name: "billDate",
@@ -16,7 +14,6 @@ export const BillingFormType: FormField[] = [
     required: true,
     label: "Bill Date",
     placeholder: "Select Bill Date",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -25,7 +22,6 @@ export const BillingFormType: FormField[] = [
     required: true,
     label: "Invoice To",
     placeholder: "Select Invoice To",
-    customClasses: undefined,
     isDisabled: false,
     options: [],
   },
@@ -35,7 +31,6 @@ export const BillingFormType: FormField[] = [
     required: true,
     label: "Reference No.",
     placeholder: "Enter Reference No.",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -44,7 +39,6 @@ export const BillingFormType: FormField[] = [
     required: true,
     label: "Ship To",
     placeholder: "Select Ship To",
-    customClasses: undefined,
     isDisabled: true,
     options: [],
   },
@@ -55,7 +49,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Vehicle Dtl.",
     placeholder: "Enter Vehicle Details",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -64,7 +57,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Driver Dtl.",
     placeholder: "Enter Driver Details",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -73,7 +65,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Dispatch Mode",
     placeholder: "Select Dispatch Mode",
-    customClasses: undefined,
     isDisabled: false,
     options: [],
   },
@@ -83,7 +74,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Prepare By",
     placeholder: "Enter Name",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -92,7 +82,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Place of Supply",
     placeholder: "Enter Place of Supply",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -101,7 +90,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Transport Through",
     placeholder: "Enter Transport Details",
-    customClasses: undefined,
     isDisabled: false,
   },
   {
@@ -110,7 +98,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "GR/LR No",
     placeholder: "Enter GR/LR Number",
-    customClasses: undefined,
     isDisabled: false,
   },
 
@@ -120,7 +107,6 @@ export const BillingFormType: FormField[] = [
     required: false,
     label: "Remarks",
     placeholder: "Enter Remarks",
-    customClasses: undefined,
     isDisabled: false,
   },
 ];

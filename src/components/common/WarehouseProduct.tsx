@@ -31,6 +31,7 @@ const WarehouseProduct = ({
 
   useEffect(() => {
     customFunc(items);
+    // eslint-disable-next-line
   }, []);
 
   const handleChange = (
