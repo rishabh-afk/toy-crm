@@ -37,13 +37,11 @@ const Actions: React.FC<ActionsProps> = ({
   const [selectIdForDeletion, setSelectIdForDeletion] = useState<string>("");
 
   const handleEdit = async (id?: string) => {
-    
     if (!id) return;
 
     try {
       const endpoint = endpoints[type]?.read;
-      
-      console.log(" this is the Id:", endpoints);
+
       if (!endpoint) return;
 
       const response: any = await Fetch(`${endpoint}${id}`, {}, 5000, true);
@@ -54,7 +52,6 @@ const Actions: React.FC<ActionsProps> = ({
         setData(response.data.result ? response.data.result : response.data);
       } else setData({});
       setIsModalVisible(true);
-
     } catch (error) {
       console.log("Handle Edit", error);
     }

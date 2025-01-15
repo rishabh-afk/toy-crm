@@ -12,12 +12,10 @@ import TableComponent from "@/components/common/Table";
 const columns = [
   { key: "packingNo", label: "Packaging No" },
   { key: "quotationNo", label: "Quotation No" },
-  { key: "packingDate", label: "Packaging Date" },
-  { key: "totalQuantity", label: "Quantity" },
-  { key: "netPackedQuantity", label: "Net Packed" },
-  { key: "customer", label: "Customer"},
+  { key: "customer", label: "Customer" },
+  { key: "packedBy", label: "Packed By" },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
-  { key: "packedBy", label: "Packed By"},
+  { key: "packingDate", label: "Packaging Date", isDate: true },
 ];
 
 const filterOptions = [
@@ -28,12 +26,12 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Packing"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Packing");
+  const operationsAllowed = getAccessPoints(user, "Manage Warehouse");
 
   if (loading && !updatedData && !error) return <Loader />;
 

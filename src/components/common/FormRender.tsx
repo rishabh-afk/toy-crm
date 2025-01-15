@@ -10,6 +10,7 @@ import ConfirmationModal from "../crud/ConfirmationModal";
 import Packingform from "../crud/PackingForm";
 import BillingForm from "../crud/BillingForm";
 import QuotationForm from "../crud/QuotationForm";
+import WarehouseForm from "../crud/WareHouseForm";
 
 interface FormRendererProps {
   data: any;
@@ -43,6 +44,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <ManageRoleForm {...props} />;
     case "UOM":
       return <UOMForm {...props} />;
+    case "Warehouse":
+      return <WarehouseForm {...props} />;
     case "Quotation":
       return <QuotationForm {...props} />;
     default:

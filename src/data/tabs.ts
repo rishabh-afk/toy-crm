@@ -4,7 +4,11 @@ import { GiBoxUnpacking } from "react-icons/gi";
 import { BsChatQuoteFill } from "react-icons/bs";
 import { TbBrandBebo, TbRulerMeasure2 } from "react-icons/tb";
 import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
-import { FaProductHunt, FaMoneyBillTransfer } from "react-icons/fa6";
+import {
+  FaWarehouse,
+  FaProductHunt,
+  FaMoneyBillTransfer,
+} from "react-icons/fa6";
 import { BiSolidPurchaseTagAlt, BiSolidCategory } from "react-icons/bi";
 import { MdManageAccounts, MdOutlineContactSupport } from "react-icons/md";
 
@@ -97,11 +101,21 @@ export const tabs = [
   },
   {
     id: 8,
-    icon: GiBoxUnpacking,
-    label: "Manage Packing",
-    pageTitle: "All Packing",
-    href: "/dashboard/packing",
-    permission: "Manage Packing",
+    icon: FaWarehouse,
+    label: "Manage Warehouse",
+    pageTitle: "All Warehouse",
+    href: "/dashboard/warehouse",
+    permission: "Manage Warehouse",
+    tabs: [
+      {
+        id: 1,
+        icon: GiBoxUnpacking,
+        label: "Manage Packing",
+        pageTitle: "All Packing",
+        permission: "Manage Packing",
+        href: "/dashboard/warehouse/packing",
+      },
+    ],
   },
   {
     id: 9,

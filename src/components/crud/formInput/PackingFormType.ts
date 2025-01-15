@@ -1,68 +1,60 @@
 import { FormField } from "@/hooks/types";
-
-
+import { formatDate } from "@/hooks/general";
 
 export const PackingFormType: FormField[] = [
   {
-    name: "packingNo",
-    type: "text",
+    name: "quotationId",
+    type: "select",
     required: true,
-    label: "Packing No.",
-    placeholder: "Enter Packing No.",
-    customClasses: undefined,
-    isDisabled: true,
+    label: "Select Quotation",
+    placeholder: "Select Quotation ID",
+    options: [], // This will hold the options for the Select component
+  },
+  {
+    name: "warehouseId",
+    type: "select",
+    required: true,
+    label: "Select Warehouse",
+    placeholder: "Select Warehouse",
+    options: [], // This will hold the options for the Select component
+  },
+  {
+    type: "select",
+    name: "packedBy",
+    required: true,
+    label: "Packed by",
+    placeholder: "Enter packed by",
+    options: [], // This will hold the options for the Select component
   },
   {
     name: "packingDate",
     type: "date",
     required: true,
-    label: "Packing Date",
-    placeholder: "Select Packing Date",
-    customClasses: undefined,
+    label: "Estimated Packed Date",
+    minDate: formatDate(new Date()),
+    placeholder: "Select Packed Date",
   },
   {
-    name: "customer",
     type: "text",
     required: true,
+    name: "customer",
     label: "Customer",
     placeholder: "Enter Customer Name",
-    customClasses: undefined,
+  },
+  {
+    maxLength: 6,
     isDisabled: true,
+    type: "stringNumeric",
+    name: "totalQuantity",
+    label: "Total Quantity",
+    placeholder: "Enter total quantity",
   },
   {
-    name: "enquiryDate",
-    type: "date",
-    required: false,
-    label: "Enq. Date",
-    placeholder: "Select Enquiry Date",
-    customClasses: undefined,
-  },
-  {
-    name: "nagPacking",
-    type: "text",
-    required: false,
-    label: "Nag Packing",
-    placeholder: "Enter Nag Packing Details",
-    customClasses: undefined,
-  },
-  {
-    name: "quotation",
-    type: "select",
-    required: true,
-
-    label: "Select Quotation",
-    placeholder: "Select quotation",
-    customClasses: undefined,
-    options: [],
-  },
-
-  {
-    name: "packedBy",
-    type: "text",
-    required: true,
-    label: "Packed By",
-    placeholder: "Enter Packed By Name",
-    customClasses: undefined,
+    maxLength: 6,
+    type: "stringNumeric",
+    name: "netPackedQuantity",
+    label: "Net Packed Quantity",
+    placeholder: "Enter packed quantity",
   },
   {
     name: "transport",
@@ -70,14 +62,19 @@ export const PackingFormType: FormField[] = [
     required: false,
     label: "Transport",
     placeholder: "Enter Transport Details",
-    customClasses: undefined,
   },
   {
     name: "remarks",
-    type: "textarea",
+    type: "text",
     required: false,
     label: "Remarks",
     placeholder: "Enter Remarks",
-    customClasses: undefined,
+  },
+  {
+    name: "packing",
+    type: "packing",
+    widthFull: true,
+    label: "Packing Management",
+    options: [],
   },
 ];

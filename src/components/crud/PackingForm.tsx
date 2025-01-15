@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { PackingFormType } from "./formInput/PackingFormType";
 import {
-  updateFormData,
   populateFormData,
   populateFormFields,
+  getSelectFormattedData,
 } from "@/hooks/general";
-import TableComponent from "../common/Table";
 
 interface PackingProps {
   data?: any;
@@ -21,19 +20,11 @@ interface PackingProps {
   setFilteredData?: any;
 }
 
-interface TableData {
-  slNo: number;
-  itemCode: string;
-  description: string;
-  uom: string;
-  quotationQty: number;
-  packQty: number;
-}
 const PackingForm: React.FC<PackingProps> = (props: any) => {
   const data = props.data;
 
-  
   const formType = props.formType;
+  const [stock, setStock] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -51,16 +42,21 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       if (data?._id) url = `${endpoints[formType].update}${data?._id}`;
       else url = `${endpoints[formType].create}`;
 
-      console.log(url);
       setSubmitting(true);
 
-      const updatedFormData = updateFormData(updatedData, " ", [], []);
+      const productData = stock.reduce(
+        (acc: Record<string, number>, s: any) => {
+          acc[s.id] = s.productQuantity;
+          return acc;
+        },
+        {}
+      );
 
-      //    let updateFormData(formData: FormData, nestedFieldKey: string, nestedFields: string[], fieldsToRemove: string[]): FormData
+      updatedData = { ...updatedData, products: productData };
 
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -78,117 +74,70 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
     }
   };
 
-  const [tableData] = useState<TableData[]>([
-    {
-      slNo: 1,
-      itemCode: "A001",
-      description: "Item A",
-      uom: "pcs",
-      quotationQty: 100,
-      packQty: 50,
-    },
-    {
-      slNo: 2,
-      itemCode: "B002",
-      description: "Item B",
-      uom: "kg",
-      quotationQty: 200,
-      packQty: 150,
-    },
-    {
-      slNo: 3,
-      itemCode: "C003",
-      description: "Item C",
-      uom: "box",
-      quotationQty: 300,
-      packQty: 250,
-    },
-  ]);
-
-const [columns] = useState([
-  { key: "slNo", label: "Sl.No." },
-  { key: "itemCode", label: "Item Code" },
-  { key: "description", label: "Description" },
-  { key: "uom", label: "UOM" },
-  { key: "quotationQty", label: "Quotation Qty." },
-  { key: "packQty", label: "Pack Qty." },
-]);
-
-
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Fetch UOM data
-      const uomResponse: any = await Fetch(
-        "/api/quotation/public",
-        {},
-        5000,
-        true,
-        false
-      );
-      
-      if (data.quotationNo) {
-          
-          // Modify the formField for 'quotation' if quotationNo is present
+  useEffect(() => {
+    const fetchQuotationDetails = async () => {
+      try {
+        const url = `/api/quotation/${formData.quotationId}`;
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response.success && response?.data) {
           const updatedFormField = formField.map((obj: any) => {
-              if (obj.name === "quotation") {
-              console.log("this is the data", data.quotationNo);
-            return {
-              ...obj,
-              isDisabled: true, // Disable the field
-            //   options: [{ label: data.quotationNo, value: data.quotationNo }], // Set UOM options
-               value: data.quotationNo, // Set the value to data.quotationNo
-            };
-          }
-          return obj;
-        });
-
-        setFormField(updatedFormField); // Update the form field with the changes
-        console.log(
-          "Updated form field with disabled quotation:",
-          updatedFormField
-        );
+            if (obj.name === "packing")
+              return { ...obj, options: response?.data?.products };
+            return obj;
+          });
+          setFormField(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading(false);
       }
+    };
+    if (formData.quotationId) fetchQuotationDetails();
+  }, [formData.quotationId]);
 
-      if (uomResponse.success && uomResponse?.data.length > 0) {
-        // Transform the UOM API data into select options
-        const uomOptions = uomResponse.data.map((item: any) => ({
-          label: item._id, // Show shortName in the dropdown
-          value: item.quotationNo, // Use quotationNo as the option's value
-        }));
-
-        // Update the formField state with UOM options
-        const updatedFormField = formField.map((obj: any) => {
-          if (obj.name === "quotation") {
-            return { ...obj, options: uomOptions }; // Set UOM options
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url = "/api/packing/public/base-fields";
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        const mappings = [
+          { key: "packedBy", fieldName: "packedBy" },
+          { key: "warehouse", fieldName: "warehouseId" },
+          { key: "quotation", fieldName: "quotationId" },
+        ];
+        const updatedFormField = formField.map((field: any) => {
+          const mapping = mappings.find((m) => m.fieldName === field.name);
+          if (
+            mapping &&
+            Array.isArray(response.data[mapping.key]) &&
+            response.data[mapping.key].length > 0
+          ) {
+            const selectData = getSelectFormattedData(
+              response.data[mapping.key]
+            );
+            return { ...field, options: selectData };
           }
-          return obj;
+          return field;
         });
-
-        setFormField(updatedFormField); // Set the updated form field with UOM options
-        console.log("UOM options:", uomOptions); // Debugging UOM
+        setFormField(updatedFormField);
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.log("Error: ", error);
-    } finally {
-      setLoading(false);
-    }
+    };
+    fetchData();
+  }, []);
+
+  const handlePackaging = (data: any) => {
+    setStock(data);
   };
-
-  fetchData(); // Trigger the data fetch process
-  // eslint-disable-next-line
-}, []);
-
 
   return (
     <div>
       {!loading && (
         <>
-          <TableComponent
-            data={tableData} // Pass tableData to TableComponent
-            columns={columns} // Pass columns to TableComponent
-            operationsAllowed={undefined}
-          />
           <DynamicForm
             fields={formField}
             formData={formData}
@@ -197,6 +146,7 @@ useEffect(() => {
             onClose={props?.onClose}
             setFormData={setFormData}
             makeApiCall={makeApiCall}
+            customFunc={handlePackaging}
           />
         </>
       )}

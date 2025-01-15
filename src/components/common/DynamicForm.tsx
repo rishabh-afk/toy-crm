@@ -12,15 +12,18 @@ import TextArea from "../input/TextArea";
 import { FormField } from "@/hooks/types";
 import ToggleButton from "../input/Toggle";
 import RichTextEditor from "./RichTextEditor";
+import WarehouseProduct from "./WarehouseProduct";
 import NumericStringInput from "../input/NumericString";
 import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
+import PackingProduct from "./PackingProduct";
 
 interface DynamicFormProps {
   onClose: any;
   formData?: any;
+  customFunc?: any;
   makeApiCall?: any;
   setFormData?: any;
   submitting: boolean;
@@ -34,6 +37,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   returnAs,
   formData,
   submitting,
+  customFunc,
   setFormData,
   makeApiCall,
 }) => {
@@ -117,7 +121,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             } ${field?.type === "password" && "col-span-2"}`}
           >
             {field.type === "br" && (
-              <h2 className="text-2xl uppercase tracking-tighter my-3 py-2 bg-primary text-white font-bold text-center">
+              <h2 className="text-lg my-3 py-1 bg-primary text-white font-bold text-center">
                 {field?.label}
               </h2>
             )}
@@ -167,6 +171,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <Text
                 field={{ ...field, value: formData[field?.name] || "" }}
                 handleInputChange={handleInputChange}
+              />
+            )}
+
+            {field.type === "warehouse" && (
+              <WarehouseProduct
+                customFunc={customFunc}
+                initialData={field?.options}
+              />
+            )}
+
+            {field.type === "packing" && field?.options.length > 0 && (
+              <PackingProduct
+                customFunc={customFunc}
+                initialData={field?.options}
               />
             )}
 
