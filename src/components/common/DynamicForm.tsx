@@ -27,6 +27,7 @@ interface DynamicFormProps {
   submitting: boolean;
   fields?: FormField[];
   returnAs?: "object" | "formData";
+//  onQuotationDataChange :(data:any)=>void
 }
 interface Item {
   id: number;
@@ -37,12 +38,21 @@ interface Item {
   value: number;
   discount: number;
   discountAmount: number;
-  cGst: number;
-  sGst: number;
-  iGst: number;
+  cgst: number;
+  sgst: number;
+  igst: number;
   gstAmount: number;
   totalAmount: number;
   stockInHand: number;
+}
+interface ConsolidatedData {
+  items: Item[];
+  totals: {
+    totalValue: number;
+    totalDiscountAmount: number;
+    totalGstAmount: number;
+    totalAmount: number;
+  };
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -53,13 +63,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   submitting,
   setFormData,
   makeApiCall,
+// onQuotationDataChange
 }) => {
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
-  const [productItems, setProductItems] = useState<Item[]>([]); // State for ProductForm items
+  const [productItems,] = useState<ConsolidatedData>(); // State for ProductForm items
 
-  const handleItemsChange = (items: Item[]) => {
-    setProductItems(items); // Update product items state
-    console.log(items)
+  const handleProductDataChange = (data: ConsolidatedData) => {
+    console.log(data)
+    // onQuotationDataChange(data); // Pass data to QuotationForm
   };
 
   const handleInputChange = (e: any) => {
@@ -91,7 +102,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     fields.forEach((field) => {
       const value = formData[field.name];
-
+console.log(value)
       if (field.required && !value) {
         newErrors[field.name] = `${field.label} is required`;
         valid = false;
@@ -279,12 +290,8 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             )}
 
             {field.type === "productForm" && (
-              
-      
-                <ProductForm key={field.name} onItemsChange={handleItemsChange} />
-           
+              <ProductForm key={field.name} onProductDataChange={handleProductDataChange} />
             )}
-
           </div>
         ))}
 

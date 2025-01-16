@@ -110,31 +110,40 @@ export const QuotationFieldsType: FormField[] = [
   //   required: false,
   //   label: ""
   // },
+    //  Payment Details Start
+
+    {
+      name: "paymentTerms",
+      type: "text",
+      required: false,
+      label: "Payment Terms",
+      placeholder: "Provide payment terms",
+    },
+    // Payment Details End
+  
+    // Transport Details Start
+  
+    {
+      name: "transport",
+      type: "number",
+      required: false,
+      label: "Transport",
+      placeholder: "Provide transport",
+    },
+  
+    // Transport Details End
 
   {
     name: "productLabel",
     type: "br",
     required: false,
     label: "Product Details",
+    widthFull:true,
     placeholder: "",
     options: [
       {
         label: "Product 1",
         value: "Product 1",
-      },
-    ],
-  },
-
-  {
-    name: "isTaxed",
-    type: "checkbox",
-    required: false,
-    label: "Tax Details",
-    placeholder: "",
-    options: [
-      {
-        label: "Without Tax",
-        value: "",
       },
     ],
   },
@@ -155,28 +164,7 @@ export const QuotationFieldsType: FormField[] = [
 
   // Product Details End
 
-  //  Payment Details Start
 
-  {
-    name: "paymentTerms",
-    type: "text",
-    required: false,
-    label: "Payment Terms",
-    placeholder: "Provide payment terms",
-  },
-  // Payment Details End
-
-  // Transport Details Start
-
-  {
-    name: "transport",
-    type: "number",
-    required: false,
-    label: "Transport",
-    placeholder: "Provide transport",
-  },
-
-  // Transport Details End
 
   // Total Cost Start
   {

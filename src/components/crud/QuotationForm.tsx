@@ -20,6 +20,32 @@ interface LedgerProps {
   setFilteredData?: any;
 }
 
+interface Item {
+  id: number;
+  productCode: string;
+  uom: string;
+  quantity: number;
+  listPrice: number;
+  value: number;
+  discount: number;
+  discountAmount: number;
+  cgst: number;
+  sgst: number;
+  igst: number;
+  gstAmount: number;
+  totalAmount: number;
+  stockInHand: number;
+}
+interface ConsolidatedData {
+  items: Item[];
+  totals: {
+    totalValue: number;
+    totalDiscountAmount: number;
+    totalGstAmount: number;
+    totalAmount: number;
+  };
+}
+
 const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
@@ -34,7 +60,22 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     data?._id ? populateFormData(QuotationFieldsType, data) : {}
   );
 
+  const [quotationData, setQuotationData] = useState<ConsolidatedData | null>(
+    null
+  );
+
+  
+  const handleQuotationDataChange = (data: ConsolidatedData) => {
+    setQuotationData(data); // Store the final data
+  };
+
+  handleQuotationDataChange(data)
+
+
   useEffect(() => {
+    console.log(JSON.stringify(quotationData, null, 2));
+    console.log(quotationData);
+
     const fetchRoles = async () => {
       try {
         const response: any = await Fetch(
@@ -63,6 +104,8 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   }, []);
 
   const makeApiCall = async (updatedData: any) => {
+    console.log(JSON.stringify(quotationData, null, 2));
+    console.log(quotationData);
     try {
       let url = "";
       if (data?._id) url = `${endpoints[formType].update}${data?._id}`;
@@ -112,6 +155,7 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
           onClose={props?.onClose}
           setFormData={setFormData}
           makeApiCall={makeApiCall}
+          // onQuotationDataChange={handleQuotationDataChange}
         />
       )}
     </div>

@@ -25,6 +25,9 @@ const filterOptions = [
   { label: "Role", value: "role" },
 ];
 
+
+
+
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);
   const updatedData = data?.data.result;
@@ -34,6 +37,9 @@ const Contacts: React.FC = () => {
   const operationsAllowed = getAccessPoints(user, "Manage Quotations");
 
   if (loading && !updatedData && !error) return <Loader />;
+
+
+  
 
   return (
     <AuthGuard>
