@@ -29,7 +29,7 @@ const Filters: React.FC<FiltersProps> = ({
   fetchFilteredData,
 }) => {
   return (
-    <div className="flex gap-5 bg-white p-5 rounded-2xl justify-between items-end mb-4">
+    <div className="flex gap-5 bg-whiteBg p-5 rounded-2xl justify-between items-end mb-4">
       {/* Search Filter */}
       <SearchFilter
         searchTerm={searchTerm}

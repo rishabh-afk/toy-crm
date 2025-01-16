@@ -20,13 +20,13 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   const [selectedOption, setSelectedOption] = React.useState("");
   return (
     <div>
-      <p className="flex text-black font-medium gap-2 items-center pb-1">
+      <p className="flex text-iconBlack font-medium gap-2 items-center pb-1">
         <BsFilterLeft size={25} /> Filters
       </p>
       <div className="flex">
         {filterOptions && filterOptions?.length > 0 && (
           <select
-            className="rounded-l-xl border border-r-0 outline-none focus:outline-none border-gray-200 p-2"
+            className="rounded-l-xl border border-r-0 outline-none focus:outline-none bg-whiteBg text-iconBlack border-secondary p-2"
             value={selectedOption}
             onChange={(e) => {
               setSearchTerm("");
@@ -51,11 +51,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
             filterOptions && filterOptions.length > 0
               ? "border border-l-0 rounded-xl rounded-l-none focus:ring-0"
               : "border rounded-xl focus:ring-2 focus:ring-primary/50"
-          } px-4 text-lg py-2 placeholder:text-black outline-none text-black border-gray-200 w-full`}
+          } px-4 text-lg bg-whiteBg text-iconBlack py-2 placeholder:text-iconBlack outline-none border-secondary w-full`}
         />
         <button
           type="button"
-          className="border px-4 ml-2 text-lg py-2 rounded-xl text-black border-gray-200 bg-white hover:bg-primary hover:text-white"
+          className="border px-4 ml-2 text-lg py-2 rounded-xl text-iconBlack border-secondary bg-whiteBg"
           onClick={debounce(() => fetchFilteredData(), 500)}
         >
           Search

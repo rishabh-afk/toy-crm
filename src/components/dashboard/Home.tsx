@@ -39,9 +39,9 @@ const Home: FC = () => {
       <section className="">
         <h2 className="text-xl font-bold text-iconBlack">CRM Dashboard</h2>
         <div className="grid grid-cols-2 gap-5 mt-6 md:grid-cols-4">
-          <div className="p-4 flex gap-2 bg-white rounded-lg">
+          <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
-              <p className="text-lg inline-flex items-center text-gray-500 font-bold">
+              <p className="text-lg inline-flex items-center text-iconBlack font-bold">
                 1.23% <FaArrowUp />
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
@@ -65,9 +65,9 @@ const Home: FC = () => {
               </div>
             </div>
           </div>
-          <div className="p-4 flex gap-2 bg-white rounded-lg">
+          <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
-              <p className="text-lg inline-flex items-center text-gray-500 font-bold">
+              <p className="text-lg inline-flex items-center text-iconBlack font-bold">
                 0.3% <FaArrowDown />
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
@@ -91,9 +91,9 @@ const Home: FC = () => {
               </div>
             </div>
           </div>
-          <div className="p-4 flex gap-2 bg-white rounded-lg">
+          <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
-              <p className="text-lg inline-flex items-center text-gray-500 font-bold">
+              <p className="text-lg inline-flex items-center text-iconBlack font-bold">
                 5.3% <FaArrowUp />
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
@@ -117,9 +117,9 @@ const Home: FC = () => {
               </div>
             </div>
           </div>
-          <div className="p-4 flex gap-2 bg-white rounded-lg">
+          <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
-              <p className="text-lg inline-flex items-center text-gray-500 font-bold">
+              <p className="text-lg inline-flex items-center text-iconBlack font-bold">
                 1.2% <FaArrowDown />
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
@@ -148,33 +148,33 @@ const Home: FC = () => {
         <div className="grid grid-cols-3 my-5 gap-5 rounded-xl">
           <div className="col-span-2">
             {/* Revenue Chart (example) */}
-            <div className="bg-white p-4 rounded-xl h-full">
-              <h3 className="text-xl text-iconBlack font-semibold border-b border-info pb-4">
+            <div className="bg-whiteBg p-4 rounded-xl h-full">
+              <h3 className="text-xl text-iconBlack font-semibold border-b border-secondary pb-4">
                 Revenue Statistics
               </h3>
               <div className="mt-4 bg-infobg p-4 rounded-xl">
                 <div className="flex flex-wrap justify-center items-center">
-                  <div className="w-1/3 text-center text-sm text-gray-500 font-semibold">
+                  <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Total Revenue:{" "}
-                    <span className="text-xl font-extrabold text-black">
+                    <span className="text-lg font-extrabold text-iconBlack">
                       {crmStats.profitReport.revenue}
                     </span>
                   </div>
-                  <div className="w-1/3 text-center text-sm text-gray-500 font-semibold">
+                  <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Total Income:{" "}
-                    <span className="text-xl font-extrabold text-black">
+                    <span className="text-lg font-extrabold text-iconBlack">
                       {crmStats.profitReport.revenue}
                     </span>
                   </div>
-                  <div className="w-1/3 text-center text-sm text-gray-500 font-semibold">
+                  <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Conversion Rate:{" "}
-                    <span className="text-xl font-extrabold text-black">
+                    <span className="text-lg font-extrabold text-iconBlack">
                       {crmStats.conversionRatio}
                     </span>
                   </div>
-                  <div className="w-1/3 text-center text-sm text-gray-500 font-semibold">
+                  <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Change:{" "}
-                    <span className="text-xl font-extrabold text-black">
+                    <span className="text-lg font-extrabold text-iconBlack">
                       {crmStats.profitReport.revenue}
                     </span>
                   </div>
@@ -184,9 +184,11 @@ const Home: FC = () => {
             </div>
           </div>
           <div className="col-span-1 h-full">
-            <div className="p-5 rounded-xl bg-white">
+            <div className="p-5 rounded-xl bg-whiteBg">
               <div className="flex justify-between items-center">
-                <h3 className="text-base font-semibold">Profit Report</h3>
+                <h3 className="text-base font-semibold text-iconBlack">
+                  Profit Report
+                </h3>
                 <button className="bg-blue-500 text-white rounded-md px-4 py-1">
                   View Details
                 </button>
@@ -205,7 +207,7 @@ const Home: FC = () => {
                           {crmStats.profitReport.profit}
                         </p>
                         <h4 className="text-sm font-semibold">Profit</h4>
-                        <p className="text-xs inline-flex items-center text-gray-500 font-bold">
+                        <p className="text-xs inline-flex items-center text-iconBlack font-bold">
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">
@@ -225,7 +227,7 @@ const Home: FC = () => {
                           {crmStats.profitReport.revenue}
                         </p>
                         <h4 className="text-sm font-semibold">Revenue</h4>
-                        <p className="text-xs inline-flex items-center text-gray-500 font-bold">
+                        <p className="text-xs inline-flex items-center text-iconBlack font-bold">
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">
@@ -245,7 +247,7 @@ const Home: FC = () => {
                           {crmStats.profitReport.expenses}
                         </p>
                         <h4 className="text-sm font-semibold">Expenses</h4>
-                        <p className="text-xs inline-flex items-center text-gray-500 font-bold">
+                        <p className="text-xs inline-flex items-center text-iconBlack font-bold">
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">

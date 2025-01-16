@@ -24,11 +24,11 @@ const Pagination: React.FC<PaginationProps> = ({
           100
         )}
         disabled={paginate.currentPage === 1}
-        className="border border-primary text-black rounded-md px-4 py-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        className="border border-primary text-iconBlack rounded-md px-4 py-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         Previous
       </button>
-      <span className="font-semibold text-gray-700">
+      <span className="font-semibold text-iconBlack">
         Showing {(paginate.currentPage - 1) * paginate.itemsPerPage + 1} to{" "}
         {paginate.totalItems < paginate.itemsPerPage * paginate.currentPage
           ? paginate.totalItems
@@ -41,7 +41,7 @@ const Pagination: React.FC<PaginationProps> = ({
           100
         )}
         disabled={paginate.currentPage === paginate.totalPages}
-        className="border border-primary hover:bg-primary hover:text-white text-black rounded-md px-4 py-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        className="border border-primary hover:bg-primary hover:text-white text-iconBlack rounded-md px-4 py-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
       >
         Next
       </button>

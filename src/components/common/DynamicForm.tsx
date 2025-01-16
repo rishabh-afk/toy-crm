@@ -284,7 +284,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           text="Submit"
           type="submit"
           isLoading={submitting}
-          classes="bg-primary w-1/5 py-3 text-white text-xl rounded-xl"
+          classes="bg-blue-500 hover:!bg-blue-700 w-1/5 py-3 text-white text-xl rounded-xl"
         />
         <Button
           text="Cancel"

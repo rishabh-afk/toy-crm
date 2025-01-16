@@ -66,7 +66,7 @@ const ConcentricCircleGraph = () => {
   };
 
   return (
-    <div className="w-full h-80 sm:h-96 bg-white">
+    <div className="w-full h-80 sm:h-96 bg-whiteBg">
       <Doughnut data={data} options={options as ChartOptions<"doughnut">} />
     </div>
   );

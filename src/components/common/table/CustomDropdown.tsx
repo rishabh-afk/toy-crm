@@ -27,11 +27,11 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
 
   return (
     <div className="flex flex-col gap-1">
-      {label && <label className="text-black font-medium">{label}:</label>}
+      {label && <label className="text-iconBlack font-medium">{label}:</label>}
       <select
         value={selectedValue}
         onChange={(e) => onChange(e.target.value)}
-        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-black border-gray-200"
+        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-iconBlack bg-whiteBg border-secondary"
       >
         <option value="">{placeholder}</option>
         {options.map((option) => (

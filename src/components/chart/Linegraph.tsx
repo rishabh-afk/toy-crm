@@ -74,7 +74,7 @@ const LineGraph = ({ borderColor }: { borderColor: string }) => {
   };
 
   return (
-    <div className="w-full h-20 bg-white">
+    <div className="w-full h-20 bg-whiteBg">
       <Line data={chartData} options={options} />
     </div>
   );

@@ -18,7 +18,7 @@ const DateFilter: React.FC<DateFilterProps> = ({
   return (
     <div className="flex space-x-2">
       <div className="flex flex-col gap-1">
-        <label className="text-black font-medium">Start Time:</label>
+        <label className="text-iconBlack font-medium">Start Time:</label>
         <input
           type="date"
           value={startDate}
@@ -28,11 +28,11 @@ const DateFilter: React.FC<DateFilterProps> = ({
             if (endDate) fetchFilteredData({ start: value });
           }}
           max={endDate}
-          className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-black border-gray-200"
+          className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-iconBlack bg-whiteBg border-secondary"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-black font-medium">End Time:</label>
+        <label className="text-iconBlack font-medium">End Time:</label>
         <input
           type="date"
           value={endDate}
@@ -42,7 +42,7 @@ const DateFilter: React.FC<DateFilterProps> = ({
             if (startDate) fetchFilteredData({ end: value });
           }}
           min={startDate}
-          className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-black border-gray-200"
+          className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-iconBlack bg-whiteBg border-secondary"
         />
       </div>
     </div>

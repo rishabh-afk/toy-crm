@@ -23,9 +23,9 @@ const Header: React.FC<HeaderProps> = ({
   operationsAllowed,
 }) => {
   return (
-    <div className="flex bg-white p-5 rounded-2xl justify-between items-center">
+    <div className="flex bg-whiteBg p-5 rounded-2xl justify-between items-center">
       {/* Title */}
-      <h2 className="text-3xl text-black font-semibold w-fit">
+      <h2 className="text-3xl text-iconBlack font-semibold w-fit">
         All {type} <span className="font-normal text-xl">{suffix}</span>
       </h2>
 
@@ -38,9 +38,9 @@ const Header: React.FC<HeaderProps> = ({
         <button
           type="button"
           onClick={debounce(handleReset, 1000)}
-          className="bg-white text-black border flex gap-2 justify-center items-center border-gray-200 outline-none px-4 text-lg py-2 hover:border-primary rounded-xl hover:bg-primary hover:text-white"
+          className="bg-secondary text-white flex gap-2 justify-center items-center outline-none px-4 text-lg py-2 rounded-xl"
         >
-          Clear filters <FaFilter />
+          Clear filters <FaFilter className="text-sm" />
         </button>
 
         {/* Add Button */}
@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = ({
           <button
             type="button"
             onClick={handleAdd}
-            className="bg-primary text-white px-4 py-1 rounded-xl"
+            className="bg-secondary text-white px-4 py-1 rounded-xl"
           >
             Add {type}
             <sup>+</sup>

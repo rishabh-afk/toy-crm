@@ -15,11 +15,11 @@ const ItemsPage: React.FC<ItemsPageProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-1">
-      <label className="text-black font-medium">Page:</label>
+      <label className="text-iconBlack font-medium">Page:</label>
       <select
         value={paginate.itemsPerPage}
         onChange={(e) => fetchFilteredData({ limit: Number(e.target.value) })}
-        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-black border-gray-200"
+        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 bg-whiteBg text-iconBlack border-secondary"
       >
         {[5, 10, 20, 50, 100].map((items) => (
           <option key={items} value={items}>

@@ -8,14 +8,14 @@ const Notification = () => {
       <span className="bg-orange-400 flex justify-center items-center absolute -top-0.5 -right-0.5 text-[10px] text-white w-4 h-4 min-w-4 min-h-4 aspect-square rounded-full">
         2
       </span>
-      <div className="opacity-0 hidden w-80 overflow-hidden group-hover:block group-hover:opacity-100 bg-white shadow-md border absolute right-0 rounded-xl">
-        <div className="p-4 bg-gray-50 flex border-b justify-between items-center">
+      <div className="opacity-0 hidden w-80 overflow-hidden group-hover:block group-hover:opacity-100 bg-whiteBg shadow-md border absolute right-0 rounded-xl">
+        <div className="p-4 bg-whiteBg flex border-b justify-between items-center">
           <span className="font-bold">Notifications</span>
           <span className="px-4 py-1 rounded text-white bg-green-500 whitespace-nowrap text-xs">
             2 Unread
           </span>
         </div>
-        <div className="bg-white p-4 space-y-2">
+        <div className="bg-whiteBg p-4 space-y-2">
           <div className="flex items-start gap-3">
             <div className="bg-blue-200 p-1.5 w-fit rounded-full">
               <div className="bg-blue-500 w-fit p-1.5 rounded-full">
