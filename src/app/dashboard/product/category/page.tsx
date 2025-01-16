@@ -11,12 +11,9 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "_id", label: "Category ID" },
-  // { key: "hsnCode", label: "HSN Code", sortable: true },
   { key: "name", label: "Category Name", sortable: true },
   { key: "description", label: "Category Description" },
-  // { key: "igst", label: "IGST", isPercent: "%", sortable: true },
-  // { key: "cgst", label: "CGST", isPercent: "%", sortable: true },
-  // { key: "sgst", label: "SGST", isPercent: "%", sortable: true },
+  { key: "status", label: "Active Status", sortable: true },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
 ];
