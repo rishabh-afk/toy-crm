@@ -3,15 +3,14 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
+import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { QuotationFieldsType } from "./formInput/quotationFormType";
 import {
-  updateFormData,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
 } from "@/hooks/general";
-import CustomeForm from "../common/CustomeForm";
 
 interface LedgerProps {
   data?: any;
@@ -38,13 +37,8 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response: any = await Fetch(
-          "/api/user/public-role/Salesperson",
-          {},
-          5000,
-          true,
-          false
-        );
+        const url = "/api/user/public-role/Salesperson";
+        const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data.length > 0) {
           const selectData = getSelectFormattedData(response.data);
           const updatedFormField = formField.map((obj: any) => {
@@ -70,21 +64,9 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const obj = [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-        "latitude",
-        "longitude",
-      ];
-      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
       const response: any = data?._id
-        ? await Put(url, updatedFormData)
-        : await Post(url, updatedFormData);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -102,25 +84,33 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     }
   };
 
+  const customFunc = (data: any) => {
+    const updated = populateFormData(QuotationFieldsType, data);
+    setFormData(updated);
+  };
+
+  // useEffect(() => {
+  //   if (formData?.freightAmount) {
+  //     const updated = { ...formData };
+  //     updated.freightAmount = parseFloat(formData.freightAmount);
+  //     updated.netAmount =
+  //       parseFloat(formData.netAmount) - parseFloat(formData.freightAmount);
+  //     setFormData(updated);
+  //   }
+  // }, [formData?.freightAmount]);
+
   return (
     <div>
       {!loading && (
-        // <DynamicForm
-        //   returnAs="object"
-        //   fields={formField}
-        // formData={formData}
-        // submitting={submitting}
-        // onClose={props?.onClose}
-        // setFormData={setFormData}
-        // makeApiCall={makeApiCall}
-        // />
-        <CustomeForm
+        <DynamicForm
+          returnAs="object"
+          fields={formField}
           formData={formData}
           submitting={submitting}
+          customFunc={customFunc}
           onClose={props?.onClose}
           setFormData={setFormData}
           makeApiCall={makeApiCall}
-          fields={QuotationFieldsType}
         />
       )}
     </div>

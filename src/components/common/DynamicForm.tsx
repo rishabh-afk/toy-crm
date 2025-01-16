@@ -6,19 +6,20 @@ import Radio from "../input/Radio";
 import Number from "../input/Number";
 import Select from "../input/Select";
 import React, { useState } from "react";
+import ProductForm from "./ProductForm";
 import Checkbox from "../input/Checkbox";
 import Password from "../input/Password";
 import TextArea from "../input/TextArea";
 import { FormField } from "@/hooks/types";
 import ToggleButton from "../input/Toggle";
 import RichTextEditor from "./RichTextEditor";
+import PackingProduct from "./PackingProduct";
 import WarehouseProduct from "./WarehouseProduct";
 import NumericStringInput from "../input/NumericString";
 import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
-import PackingProduct from "./PackingProduct";
 
 interface DynamicFormProps {
   onClose: any;
@@ -40,6 +41,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
   customFunc,
   setFormData,
   makeApiCall,
+  // onQuotationDataChange
 }) => {
   const [errors, setErrors] = useState<{ [key: string]: string | null }>({});
 
@@ -72,7 +74,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
     fields.forEach((field) => {
       const value = formData[field.name];
-
       if (field.required && !value) {
         newErrors[field.name] = `${field.label} is required`;
         valid = false;
@@ -103,9 +104,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             else data.append(key, value);
           } else data.append(key, String(value));
         });
-        console.log(data);
         makeApiCall(data);
-      } else makeApiCall(formData);
+      } else {
+        makeApiCall(formData);
+      }
     }
   };
 
@@ -269,6 +271,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <span className="text-red-500 text-sm mt-1">
                 {errors[field.name]}
               </span>
+            )}
+
+            {field.type === "productForm" && (
+              <ProductForm key={field.name} onProductDataChange={customFunc} />
             )}
           </div>
         ))}

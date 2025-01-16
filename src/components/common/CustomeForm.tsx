@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ProductForm from "./ProductForm";
 import { FormField } from "@/hooks/types";
 
 interface CustomFormProps {
@@ -46,7 +45,7 @@ const CustomeForm: React.FC<CustomFormProps> = ({
     <form onSubmit={handleSubmit} className="p-4 border rounded">
       {" "}
       
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         {" "}
         {fields?.map((field) => (
           <div key={field.name} className="flex flex-col">
@@ -65,7 +64,7 @@ const CustomeForm: React.FC<CustomFormProps> = ({
         ))}{" "}
       </div>{" "}
       <h3 className="text-xl font-bold mt-4 mb-2">Product Details</h3>{" "}
-      <ProductForm />{" "}
+      {/* <ProductForm />{" "} */}
       <h3 className="text-xl font-bold mt-4 mb-2">Total Details</h3>{" "}
       {/* Add total details fields here */}{" "}
       <button
