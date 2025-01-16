@@ -25,7 +25,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
 
   const formType = props.formType;
   const [stock, setStock] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
   const [formField, setFormField] = useState<any>(
@@ -46,7 +46,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
 
       const productData = stock.reduce(
         (acc: Record<string, number>, s: any) => {
-          acc[s.id] = s.productQuantity;
+          acc[s.id] = s.packedQuantity;
           return acc;
         },
         {}
@@ -69,7 +69,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       console.log("Error: ", error);
       return toast.error("Something went wrong!");
     } finally {
-      props.onClose?.();
+      // props.onClose?.();
       setSubmitting(false);
     }
   };
@@ -80,17 +80,52 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         const url = `/api/quotation/${formData.quotationId}`;
         const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data) {
-          const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "packing")
-              return { ...obj, options: response?.data?.products };
-            return obj;
+          const fieldUpdates: Record<string, any> = {
+            packing: { options: response?.data?.products },
+            customer: {
+              updateFormData: {
+                key: "customer",
+                value: response?.data?.customerName,
+              },
+              isDisabled: true,
+              value: response?.data?.customerName,
+            },
+            netPackedQuantity: {
+              updateFormData: {
+                value: 0,
+                key: "netPackedQuantity",
+              },
+              value: 0,
+              isDisabled: true,
+            },
+            totalQuantity: {
+              updateFormData: {
+                key: "totalQuantity",
+                value: response?.data?.totalQuantity,
+              },
+              isDisabled: true,
+              value: response?.data?.totalQuantity,
+            },
+          };
+
+          const updatedFormField = formField.map((field: any) => {
+            const update = fieldUpdates[field.name];
+            if (update) {
+              if (update.updateFormData) {
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [update.updateFormData.key]: update.updateFormData.value,
+                }));
+              }
+              return { ...field, ...update };
+            }
+            return field;
           });
+
           setFormField(updatedFormField);
         }
       } catch (error) {
         console.log("Error: ", error);
-      } finally {
-        setLoading(false);
       }
     };
     if (formData.quotationId) fetchQuotationDetails();
@@ -134,6 +169,13 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
 
   const handlePackaging = (data: any) => {
     setStock(data);
+    let totalQuantity = 0;
+    data.map((item: any) => (totalQuantity += item?.packedQuantity));
+    if (totalQuantity)
+      setFormData((prev: any) => ({
+        ...prev,
+        netPackedQuantity: totalQuantity,
+      }));
   };
 
   return (
@@ -141,9 +183,9 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       {!loading && (
         <>
           <DynamicForm
+            returnAs="object"
             fields={formField}
             formData={formData}
-            returnAs="formData"
             submitting={submitting}
             onClose={props?.onClose}
             setFormData={setFormData}

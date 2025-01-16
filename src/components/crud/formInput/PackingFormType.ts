@@ -43,7 +43,6 @@ export const PackingFormType: FormField[] = [
   },
   {
     maxLength: 6,
-    isDisabled: true,
     type: "stringNumeric",
     name: "totalQuantity",
     label: "Total Quantity",
@@ -51,6 +50,8 @@ export const PackingFormType: FormField[] = [
   },
   {
     maxLength: 6,
+    required: true,
+    isDisabled: true,
     type: "stringNumeric",
     name: "netPackedQuantity",
     label: "Net Packed Quantity",

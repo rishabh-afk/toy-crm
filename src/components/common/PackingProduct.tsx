@@ -21,7 +21,7 @@ const PackingProduct = ({
   useEffect(() => {
     setItems(
       initialData.map((data) => ({
-        id: data?._id ?? "",
+        id: data?.product ?? "",
         productUOM: data?.uom ?? "",
         productName: data?.name ?? "",
         productCode: data?.productCode ?? "",
