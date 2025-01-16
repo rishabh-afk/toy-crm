@@ -96,6 +96,22 @@ export const endpoints: Record<
     fetchAll: "api/packing/", // to fetch all products
     operations: operations,
   },
+  Purchase: {
+    create: "api/packing", // to create a product
+    read: "api/packing/", // to get a product
+    update: `api/packing/`, // to update a product
+    delete: "api/packing/", // to delete a product
+    fetchAll: "api/packing/", // to fetch all products
+    operations: operations,
+  },
+  Payment: {
+    create: "api/packing", // to create a product
+    read: "api/packing/", // to get a product
+    update: `api/packing/`, // to update a product
+    delete: "api/packing/", // to delete a product
+    fetchAll: "api/packing/", // to fetch all products
+    operations: operations,
+  },
   Warehouse: {
     create: "api/warehouse", // to create a product
     read: "api/warehouse/", // to get a product

@@ -30,7 +30,7 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Purchase"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
@@ -43,7 +43,7 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Quotation"
+          type="Purchase"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

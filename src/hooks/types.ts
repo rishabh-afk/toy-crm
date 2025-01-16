@@ -41,6 +41,7 @@ export interface FormField {
     | "button"
     | "warehouse"
     | "packing"
+    | "billing"
     | "email"
     | "password"
     | "richTextEditor"

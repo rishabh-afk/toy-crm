@@ -110,6 +110,64 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    const fetchQuotationDetails = async () => {
+      try {
+        const url = `/api/quotation/${formData.quotation}`;
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response.success && response?.data) {
+          const fieldUpdates: Record<string, any> = {
+            packing: { options: response?.data?.products },
+            customer: {
+              updateFormData: {
+                key: "customer",
+                value: response?.data?.customerName,
+              },
+              isDisabled: true,
+              value: response?.data?.customerName,
+            },
+            netPackedQuantity: {
+              updateFormData: {
+                value: 0,
+                key: "netPackedQuantity",
+              },
+              value: 0,
+              isDisabled: true,
+            },
+            totalQuantity: {
+              updateFormData: {
+                key: "totalQuantity",
+                value: response?.data?.totalQuantity,
+              },
+              isDisabled: true,
+              value: response?.data?.totalQuantity,
+            },
+          };
+
+          const updatedFormField = formField.map((field: any) => {
+            const update = fieldUpdates[field.name];
+            if (update) {
+              if (update.updateFormData) {
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [update.updateFormData.key]: update.updateFormData.value,
+                }));
+              }
+              return { ...field, ...update };
+            }
+            return field;
+          });
+
+          setFormFields(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    };
+    if (formData.quotation) fetchQuotationDetails();
+    // eslint-disable-next-line
+  }, [formData.quotation]);
+
   const handleStocks = (data: any) => {
     setStock(data);
   };
