@@ -117,7 +117,7 @@ const ManageRoleForm: React.FC<ManageRoleFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 p-2 border rounded-lg w-full outline-none"
+          className="mt-1 p-2 border text-black rounded-lg w-full outline-none"
           placeholder="Enter role name"
         />
       </div>
@@ -128,7 +128,7 @@ const ManageRoleForm: React.FC<ManageRoleFormProps> = ({
           required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="mt-1 p-2 border rounded-lg w-full outline-none"
+          className="mt-1 p-2 border text-black rounded-lg w-full outline-none"
           placeholder="Enter role description"
         />
       </div>
@@ -146,7 +146,7 @@ const ManageRoleForm: React.FC<ManageRoleFormProps> = ({
           <tbody>
             {permissions.map((perm, index) => (
               <tr key={index} className="border-b">
-                <td className="px-4 py-2 font-semibold uppercase">
+                <td className="px-4 py-2 font-semibold text-black uppercase">
                   {perm.module}
                 </td>
                 {Object.keys(perm.access).map((accessType) => (
