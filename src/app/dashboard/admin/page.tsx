@@ -15,7 +15,13 @@ const columns = [
   { key: "email", label: "Email ID", sortable: true },
   { key: "mobileNo", label: "Phone No.", sortable: true },
   { key: "role", label: "Role Assigned", sortable: true },
-  { key: "status", label: "Active Status", sortable: true },
+  {
+    key: "status",
+    sortable: true,
+    isMultiPurpose: true,
+    label: "Active Status",
+    multiPurposeProps: { type: "label" },
+  },
   { key: "createdAt", label: "Date", sortable: true, isDate: true },
 ];
 

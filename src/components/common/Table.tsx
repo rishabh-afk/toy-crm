@@ -156,7 +156,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   }, [isModalVisible]);
 
   const handleAdd = () => {
-    setData({name});
+    setData({ name });
     setIsModalVisible(true);
   };
 

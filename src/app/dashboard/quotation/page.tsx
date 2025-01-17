@@ -14,18 +14,16 @@ const columns = [
   { key: "customerName", label: "Customer Name" },
   { key: "preparedByName", label: "Assignee To (name)" },
   { key: "preparedByEmail", label: "Assignee To (email)" },
+  { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
   {
     key: "status",
     label: "Status",
     isMultiPurpose: true,
     multiPurposeProps: {
-      type: "label",
-      onClick: "",
-      options: "",
-      onSelectChange: "",
+      type: "select",
+      options: ["Approved", "Pending", "Cancelled"],
     },
   },
-  { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
 ];
 
 const filterOptions = [

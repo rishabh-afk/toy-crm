@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Actions from "./Actions";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import MultiPurposeComponent from "../MultiPurposeComponentProps";
+import { functionList } from "@/hooks/customFunction";
 
 interface Column {
   key: string;
@@ -62,17 +63,33 @@ const Table: React.FC<TableProps> = ({
       isCurrency?: string;
       isMultiPurpose?: boolean;
       multiPurposeProps?: {
-        onClick?: () => void;
         options?: string[];
         type: "label" | "button" | "select";
-        onSelectChange?: (value: string) => void;
       };
-    }
+    },
+    type: string
   ) => {
     const value = row[col.key];
 
-    if (col.isMultiPurpose && col.multiPurposeProps && value)
-      return <MultiPurposeComponent {...col.multiPurposeProps} text={value} />;
+    if (
+      col.isMultiPurpose &&
+      col.multiPurposeProps &&
+      value !== undefined &&
+      value !== null &&
+      value.toString()
+    ) {
+      const { multiPurposeProps } = col;
+      const onClickHandler = functionList[type];
+      return (
+        <MultiPurposeComponent
+          _id={row?._id}
+          {...multiPurposeProps}
+          text={value.toString()}
+          onClick={onClickHandler}
+          onSelectChange={onClickHandler}
+        />
+      );
+    }
 
     if (col.key === "_id") return value?.slice(-8);
     if (col.isDate && value) return dayjs(value).format("YYYY-MM-DD");
@@ -134,7 +151,7 @@ const Table: React.FC<TableProps> = ({
                     key={col.key}
                     className="text-sm border text-iconBlack whitespace-nowrap border-infobg px-4 py-3"
                   >
-                    {formatRowValue(row, col)}
+                    {formatRowValue(row, col, type)}
                   </td>
                 ))}
                 {operationsAllowed?.read && (

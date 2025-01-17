@@ -10,7 +10,6 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  // { key: "_id", label: "ID" },
   { key: "leadId", label: "Lead ID" },
   { key: "name", label: "UserName" },
   { key: "email", label: "User Email" },
@@ -19,10 +18,22 @@ const columns = [
   { key: "salesPersonName", label: "Sales Person Name" },
   { key: "salesPersonEmail", label: "Sales Person Email" },
   { key: "source", label: "Source", sortable: true },
-  { key: "priorityLevel", label: "Priority", sortable: true },
-  { key: "status", label: "Status", sortable: true },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  {
+    sortable: true,
+    label: "Priority",
+    key: "priorityLevel",
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
+  {
+    key: "status",
+    label: "Status",
+    sortable: true,
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
 ];
 
 const filterOptions = [

@@ -14,10 +14,15 @@ const columns = [
   { key: "slug", label: "Brand Slug", sortable: true },
   { key: "name", label: "Brand Name", sortable: true },
   { key: "description", label: "Brand Description" },
-  { key: "status", label: "Active Status", sortable: true },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
-  // { key: "deletedAt", label: "Deleted At", sortable: true, isDate: true },
+  {
+    key: "status",
+    sortable: true,
+    isMultiPurpose: true,
+    label: "Active Status",
+    multiPurposeProps: { type: "label" },
+  },
 ];
 
 const filterOptions = [
