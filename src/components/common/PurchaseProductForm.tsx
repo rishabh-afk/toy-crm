@@ -2,7 +2,7 @@ import { Fetch } from "@/hooks/apiUtils";
 import { debounce } from "@/hooks/general";
 import { useEffect, useState } from "react";
 
-const ProductForm = ({
+const PurchaseProductForm = ({
   initialData,
   onProductDataChange,
 }: {
@@ -215,6 +215,7 @@ const ProductForm = ({
         final.igstAmount = final.cgstAmount + final.sgstAmount;
       }
     });
+
     Object.keys(final).forEach((key) => {
       final[key as keyof typeof final] = parseFloat(
         final[key as keyof typeof final].toFixed(2)
@@ -247,7 +248,6 @@ const ProductForm = ({
                 "Product Code",
                 "UOM",
                 "List Price",
-                "Stock In Hand",
                 "Quantity",
                 "Value",
                 "Discount (%)",
@@ -298,24 +298,16 @@ const ProductForm = ({
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.listPrice ? "₹ " + item.listPrice : 0}
                   </td>
-                  <td className="border min-w-20 border-gray-300 p-2">
-                    {item.stockInHand}
-                  </td>
                   <td className="border border-gray-300">
                     <input
                       type="number"
                       min={1} // Minimum value is 1
-                      max={item.stockInHand} // Set the maximum value to stockInHand
                       value={item.quantity || ""}
                       placeholder="Qty"
                       onChange={(e) => {
                         const enteredValue = Number(e.target.value);
-                        const validatedValue = Math.min(
-                          enteredValue,
-                          item.stockInHand
-                        ); // Limit value to stockInHand
                         debounce(
-                          handleChange(item.id, "quantity", validatedValue),
+                          handleChange(item.id, "quantity", enteredValue),
                           1000
                         );
                       }}
@@ -328,6 +320,7 @@ const ProductForm = ({
                   <td className="border border-gray-300">
                     <input
                       type="number"
+                      min={0}
                       max={100} // Set the maximum value as 100
                       value={item.discountPercentage || ""}
                       placeholder="dis. (%)"
@@ -386,4 +379,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default PurchaseProductForm;

@@ -56,7 +56,8 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
 
       const productData = stock.reduce(
         (acc: Record<string, number>, s: any) => {
-          acc[s.id] = s.packedQuantity;
+          const key = s.id || s.product;
+          if (key) acc[key] = s.packedQuantity;
           return acc;
         },
         {}
@@ -77,7 +78,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       console.log("Error: ", error);
       return toast.error("Something went wrong!");
     } finally {
-      // props.onClose?.();
+      props.onClose?.();
       setSubmitting(false);
     }
   };
@@ -154,6 +155,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
           if (mapping) {
             if (mapping.key === "products" && Array.isArray(data?.products)) {
+              setStock(data?.products);
               return { ...field, options: data.products };
             }
             if (

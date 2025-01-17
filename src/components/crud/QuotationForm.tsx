@@ -1,10 +1,10 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
+import { useCallback, useEffect, useState } from "react";
 import { QuotationFieldsType } from "./formInput/quotationFormType";
 import {
   populateFormData,
@@ -123,14 +123,27 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     }
   };
 
-  const customFunc = (data: any, items?: any) => {
-    const updated = populateFormData(QuotationFieldsType, {
-      ...formData,
-      ...data,
-    });
-    setFormData(updated);
-    setProducts(items);
-  };
+  const customFunc = useCallback(
+    (data: any, items?: any) => {
+      setFormData((prevFormData: any) => {
+        const updated = populateFormData(QuotationFieldsType, {
+          ...prevFormData,
+          ...data,
+        });
+        if (JSON.stringify(updated) !== JSON.stringify(prevFormData))
+          return updated;
+        return prevFormData;
+      });
+
+      setProducts((prevProducts: any) => {
+        if (JSON.stringify(items) !== JSON.stringify(prevProducts))
+          return items || prevProducts;
+        return prevProducts;
+      });
+    },
+    // eslint-disable-next-line
+    [data]
+  );
 
   return (
     <div>

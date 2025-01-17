@@ -20,6 +20,7 @@ import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
+import PurchaseProductForm from "./PurchaseProductForm";
 
 interface DynamicFormProps {
   onClose: any;
@@ -275,6 +276,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
             {field.type === "productForm" && (
               <ProductForm
+                initialData={field?.options}
+                onProductDataChange={customFunc}
+              />
+            )}
+
+            {field.type === "purchaseForm" && (
+              <PurchaseProductForm
                 initialData={field?.options}
                 onProductDataChange={customFunc}
               />
