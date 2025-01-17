@@ -10,16 +10,15 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "quotationNo", label: "Quotation ID" },
-  { key: "preparedBy", label: "Assignee" },
-  { key: "totalQuantity", label: "Quantity" },
-  { key: "discountAmount", label: "Discount", isCurrency: "₹" },
-  { key: "freightAmount", label: "Freight", isCurrency: "₹" },
-  { key: "igstAmount", label: "IGST (Tax)", isCurrency: "₹" },
-  { key: "totalValue", label: "Total Amt.", isCurrency: "₹" },
-  { key: "taxableAmount", label: "Taxable", isCurrency: "₹" },
+  { key: "purchaseNo", label: "Purchase Number" },
+  { key: "vendor", label: "Supplier / Vendor" },
+  { key: "referenceNumber", label: "Reference Number" },
+  { key: "totalQuantity", label: "Total Qty" },
+  { key: "totalValue", label: "Total Value.", isCurrency: "₹" },
   { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
-  { key: "quotationDate", label: "Send On", sortable: true, isDate: true },
+  { key: "paymentMode", label: "Payment Mode" },
+  { key: "purchaseDate", label: "Purchase Date", sortable: true, isDate: true },
+  { key: "createdAt", label: "Created On", sortable: true, isDate: true },
 ];
 
 const filterOptions = [
