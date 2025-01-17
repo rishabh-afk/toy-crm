@@ -18,6 +18,8 @@ const PackingProduct = ({
 }) => {
   const [items, setItems] = useState<Item[]>([]);
 
+  console.log(initialData);
+
   useEffect(() => {
     setItems(
       initialData.map((data) => ({

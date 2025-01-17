@@ -1,34 +1,57 @@
 import { Fetch } from "@/hooks/apiUtils";
+import { debounce } from "@/hooks/general";
 import { useEffect, useState } from "react";
 
-const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
+const ProductForm = ({
+  initialData,
+  onProductDataChange,
+}: {
+  initialData: any;
+  onProductDataChange: any;
+}) => {
   const emptyProduct = {
+    _id: "",
     uom: "",
     cgst: 0,
     sgst: 0,
     igst: 0,
     value: 0,
     quantity: 0,
-    discount: 0,
     gstAmount: 0,
     listPrice: 0,
     totalAmount: 0,
     stockInHand: 0,
     productCode: "",
     discountAmount: 0,
+    discountPercentage: 0,
   };
   const [nextId, setNextId] = useState(2);
+  const [items, setItems] = useState<any>([]);
   const [products, setProducts] = useState<any>([]);
-  const [items, setItems] = useState<any>([{ ...emptyProduct, id: 1 }]);
 
   const addItem = () => {
-    setItems([...items, { id: nextId, ...emptyProduct }]);
+    const newItems = [...items, { id: nextId, ...emptyProduct }];
+    setItems(newItems);
     setNextId(nextId + 1);
+  };
+
+  const updateStockInHand = (shortArray: any[], longArray: any[]) => {
+    const updatedArray = shortArray.map((shortItem) => {
+      const matchedItem = longArray.find(
+        (longItem) => longItem._id === shortItem.product
+      );
+      if (matchedItem)
+        return { ...shortItem, stockInHand: matchedItem.stockInHand };
+      return shortItem;
+    });
+    return updatedArray;
   };
 
   const deleteItem = (id: number) => {
     const updatedItems = items.filter((item: any) => item.id !== id);
     setItems(updatedItems);
+    const data = calculatedFinal(updatedItems);
+    onProductDataChange(data, updatedItems);
   };
 
   useEffect(() => {
@@ -36,13 +59,20 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
       try {
         const url = "/api/product/public";
         const response: any = await Fetch(url, {}, 5000, true, false);
-        if (response.success) setProducts(response.data);
+        if (response.success) {
+          setProducts(response.data);
+          if (initialData && initialData.length > 0) {
+            const data = updateStockInHand(initialData, response.data);
+            setItems(data);
+          } else setItems([{ ...emptyProduct, id: 1 }]);
+        }
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }
     };
     fetchProducts();
-  }, []);
+    // eslint-disable-next-line
+  }, [initialData.length]);
 
   const getUpdatedCalculated = (data: any) => {
     const gstAmount =
@@ -52,7 +82,9 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
       100;
 
     const discountAmount =
-      ((data.discount || 0) * (data.quantity || 1) * (data.listPrice || 0)) /
+      ((data.discountPercentage || 0) *
+        (data.quantity || 1) *
+        (data.listPrice || 0)) /
       100;
 
     const taxableAmount =
@@ -62,20 +94,12 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
     const totalAmount = taxableAmount + gstAmount;
 
     return {
-      itemsData: {
-        ...data,
-        value: value.toFixed(2),
-        gstAmount: gstAmount.toFixed(2),
-        discountAmount: discountAmount.toFixed(2),
-        taxableAmount: taxableAmount.toFixed(2),
-        totalAmount: totalAmount.toFixed(2),
-      },
-      calculations: {
-        gstAmount,
-        discountAmount,
-        taxableAmount,
-        totalAmount,
-      },
+      ...data,
+      value: value.toFixed(2),
+      gstAmount: gstAmount.toFixed(2),
+      totalAmount: totalAmount.toFixed(2),
+      taxableAmount: taxableAmount.toFixed(2),
+      discountAmount: discountAmount.toFixed(2),
     };
   };
 
@@ -89,17 +113,18 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
         value: 0,
         id: rowId,
         quantity: 1,
-        discount: 0,
         gstAmount: 0,
         totalAmount: 0,
         taxableAmount: 0,
         discountAmount: 0,
+        discountPercentage: 0,
+        product: selectedProduct._id,
         uom: selectedProduct?.uom ?? "",
         cgst: selectedProduct?.cgst ?? 0,
         sgst: selectedProduct?.sgst ?? 0,
         igst: selectedProduct?.igst ?? 0,
         listPrice: selectedProduct?.ourPrice ?? 0,
-        stockInHand: selectedProduct?.stockInhand ?? 0,
+        stockInHand: selectedProduct?.stockInHand ?? 0,
         productCode: selectedProduct?.productCode ?? "",
       };
 
@@ -109,15 +134,17 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
         const existingItemIndex = prevItems.findIndex(
           (item: any) => item.id === rowId // Match by rowId
         );
-
+        let updatedItems;
         if (existingItemIndex !== -1) {
-          const updatedItems = [...prevItems];
+          updatedItems = [...prevItems];
           updatedItems[existingItemIndex] = {
             ...updatedItems[existingItemIndex],
-            ...calculated.itemsData,
+            ...calculated,
           };
-          return updatedItems;
-        } else return [...prevItems, calculated.itemsData];
+        } else updatedItems = [...prevItems, calculated];
+        const data = calculatedFinal(updatedItems);
+        onProductDataChange(data, updatedItems);
+        return updatedItems;
       });
     }
   };
@@ -141,11 +168,11 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
           updatedItems = [...prevItems];
           updatedItems[existingItemIndex] = {
             ...updatedItems[existingItemIndex],
-            ...calculated.itemsData,
+            ...calculated,
           };
-        } else updatedItems = [...prevItems, calculated.itemsData];
+        } else updatedItems = [...prevItems, calculated];
         const data = calculatedFinal(updatedItems);
-        onProductDataChange(data);
+        onProductDataChange(data, updatedItems);
         return updatedItems;
       });
     }
@@ -193,7 +220,7 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-6">
         <div>
           <p className="text-2xl font-extrabold uppercase text-primary">
             Select Product
@@ -210,7 +237,7 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
       <div className="overflow-x-auto no-scrollbar">
         <table className="table-auto border-collapse whitespace-nowrap border border-gray-300">
           <thead>
-            <tr className="bg-primary text-white text-left">
+            <tr className="bg-secondary text-white text-left">
               {[
                 "Product Code",
                 "UOM",
@@ -240,14 +267,17 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
           <tbody>
             {items.map((item: any, index: number) => {
               return (
-                <tr key={index} className="odd:bg-white even:bg-gray-50">
+                <tr
+                  key={index}
+                  className="odd:bg-white text-black even:bg-gray-50"
+                >
                   <td className="border border-gray-300">
                     <select
-                      value={item.productCode || ""}
+                      value={item.productCode}
                       onChange={(e) =>
                         handleProductChange(item.id, e.target.value)
                       }
-                      className="w-40 p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-40 p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                     >
                       <option value="">--Select Product--</option>
                       {products.map((product: any, index: number) => (
@@ -269,34 +299,46 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
                   <td className="border border-gray-300">
                     <input
                       type="number"
-                      min={1}
+                      min={1} // Minimum value is 1
+                      max={item.stockInHand} // Set the maximum value to stockInHand
                       value={item.quantity || ""}
+                      placeholder="Qty"
                       onChange={(e) => {
-                        handleChange(
-                          item.id,
-                          "quantity",
-                          Number(e.target.value)
+                        const enteredValue = Number(e.target.value);
+                        const validatedValue = Math.min(
+                          enteredValue,
+                          item.stockInHand
+                        ); // Limit value to stockInHand
+                        debounce(
+                          handleChange(item.id, "quantity", validatedValue),
+                          1000
                         );
                       }}
-                      className="w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                     />
                   </td>
-
                   <td className="border min-w-20 p-2 border-gray-300">
                     {item.value}
                   </td>
                   <td className="border border-gray-300">
                     <input
                       type="number"
-                      value={item.discount || ""}
+                      max={100} // Set the maximum value as 100
+                      value={item.discountPercentage || ""}
+                      placeholder="dis. (%)"
                       onChange={(e) => {
-                        handleChange(
-                          item.id,
-                          "discount",
-                          Number(e.target.value)
+                        const enteredValue = Number(e.target.value);
+                        const validatedValue = Math.min(enteredValue, 100); // Limit the value to 100
+                        debounce(
+                          handleChange(
+                            item.id,
+                            "discountPercentage",
+                            validatedValue
+                          ),
+                          500
                         );
                       }}
-                      className="w-full p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
                     />
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
@@ -324,7 +366,7 @@ const ProductForm = ({ onProductDataChange }: { onProductDataChange: any }) => {
                     <button
                       onClick={() => deleteItem(item.id)}
                       type="button"
-                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                      className="px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
                     >
                       Delete
                     </button>

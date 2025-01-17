@@ -59,7 +59,7 @@ const Password: FC<PasswordProps> = ({
             onChange={handlePasswordChange}
             type={showPassword ? "text" : "password"}
             placeholder={field.placeholder || "Enter your password"}
-            className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="border border-gray-300 rounded-lg p-2 w-full text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <span
             onClick={toggleShowPassword}

@@ -20,14 +20,21 @@ interface LedgerProps {
   setFilteredData?: any;
 }
 
+const isDisabledFields = ["lead", "customer", "preparedBy"];
+
 const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
     data?._id
-      ? populateFormFields(QuotationFieldsType, data)
+      ? populateFormFields(
+          QuotationFieldsType,
+          { ...data, lead: data?.lead ?? "" },
+          isDisabledFields
+        )
       : QuotationFieldsType
   );
   const [formData, setFormData] = useState<any>(
@@ -35,27 +42,57 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   );
 
   useEffect(() => {
-    const fetchRoles = async () => {
+    const fetchData = async () => {
       try {
-        const url = "/api/user/public-role/Salesperson";
+        const url = "/api/quotation/public/base-fields";
         const response: any = await Fetch(url, {}, 5000, true, false);
-        if (response.success && response?.data.length > 0) {
-          const selectData = getSelectFormattedData(response.data);
-          const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "groupBy") return { ...obj, options: selectData };
-            return obj;
-          });
-          setFormFields(updatedFormField);
-        }
+        const mappings = [
+          { key: "leads", fieldName: "lead" },
+          { key: "customers", fieldName: "customer" },
+          { key: "products", fieldName: "productForm" },
+          { key: "preparedBy", fieldName: "preparedBy" },
+        ];
+        const updatedFormField = formField.map((field: any) => {
+          const mapping = mappings.find((m) => m.fieldName === field.name);
+          if (mapping) {
+            const dataKey = response.data[mapping.key] || data?.[mapping.key];
+            if (Array.isArray(dataKey) && dataKey.length > 0) {
+              if (mapping.key === "products")
+                return { ...field, options: dataKey };
+              else {
+                const selectData = getSelectFormattedData(dataKey);
+                return { ...field, options: selectData };
+              }
+            }
+          }
+          return field;
+        });
+        setFormFields(updatedFormField);
       } catch (error) {
         console.log("Error: ", error);
       } finally {
         setLoading(false);
       }
     };
-    fetchRoles();
+    fetchData();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      const updatedFields = formField.map((field: any) => {
+        if (formData.customer && field.name === "lead")
+          return { ...field, isDisabled: true, value: "" };
+        else if (formData.lead && field.name === "customer")
+          return { ...field, isDisabled: true, value: "" };
+        else if (field.name === "customer" || field.name === "lead")
+          return { ...field, isDisabled: false };
+        return field;
+      });
+      setFormFields(updatedFields);
+    }
+    // eslint-disable-next-line
+  }, [formData.customer, formData.lead, loading]);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -64,9 +101,11 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
+      const updated = { products: products, ...updatedData };
+
       const response: any = data?._id
-        ? await Put(url, updatedData)
-        : await Post(url, updatedData);
+        ? await Put(url, updated)
+        : await Post(url, updated);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -84,20 +123,14 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     }
   };
 
-  const customFunc = (data: any) => {
-    const updated = populateFormData(QuotationFieldsType, data);
+  const customFunc = (data: any, items?: any) => {
+    const updated = populateFormData(QuotationFieldsType, {
+      ...formData,
+      ...data,
+    });
     setFormData(updated);
+    setProducts(items);
   };
-
-  // useEffect(() => {
-  //   if (formData?.freightAmount) {
-  //     const updated = { ...formData };
-  //     updated.freightAmount = parseFloat(formData.freightAmount);
-  //     updated.netAmount =
-  //       parseFloat(formData.netAmount) - parseFloat(formData.freightAmount);
-  //     setFormData(updated);
-  //   }
-  // }, [formData?.freightAmount]);
 
   return (
     <div>

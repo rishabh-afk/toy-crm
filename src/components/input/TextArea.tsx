@@ -38,7 +38,7 @@ const TextArea: FC<TextAreaProps> = ({
         placeholder={field.placeholder}
         onChange={handleInputChange}
         rows={field.rows ?? 4} // Default rows set to 4 if not specified
-        className={`border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
+        className={`border border-gray-300 rounded-lg p-2 w-full text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
       />
     </div>
   );

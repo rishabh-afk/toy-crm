@@ -36,18 +36,16 @@ const Select: FC<SelectProps> = ({ field, handleInputChange, className }) => {
         id={field.name}
         name={field.name}
         required={field.required}
-        value={field?.value ?? ""}
         disabled={field.isDisabled}
         multiple={field.isMultiple}
         onChange={handleInputChange}
-        className={`border border-gray-300 rounded-lg p-2.5 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className} ${
+        value={field.options && field.options.length > 0 ? field?.value : ""}
+        className={`border border-gray-300 rounded-lg p-2.5 w-full text-black placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className} ${
           field?.isMultiple && "h-36"
         }`}
       >
         {field.placeholder && field.options && field.options.length > 0 && (
-          <option value="" disabled>
-            {field.placeholder}
-          </option>
+          <option value="">{field.placeholder}</option>
         )}
         {field.options && field.options.length > 0 ? (
           field.options?.map((option, index) => (

@@ -123,7 +123,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             } ${field?.type === "password" && "col-span-2"}`}
           >
             {field.type === "br" && (
-              <h2 className="text-lg my-3 py-1 bg-primary text-white font-bold text-center">
+              <h2 className="text-lg my-3 py-1 bg-secondary text-white font-bold text-center">
                 {field?.label}
               </h2>
             )}
@@ -274,7 +274,10 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             )}
 
             {field.type === "productForm" && (
-              <ProductForm key={field.name} onProductDataChange={customFunc} />
+              <ProductForm
+                initialData={field?.options}
+                onProductDataChange={customFunc}
+              />
             )}
           </div>
         ))}

@@ -20,6 +20,14 @@ interface PackingProps {
   setFilteredData?: any;
 }
 
+const isDisabledFields = [
+  "packedBy",
+  "quotationId",
+  "warehouseId",
+  "customerName",
+  "totalQuantity",
+];
+
 const PackingForm: React.FC<PackingProps> = (props: any) => {
   const data = props.data;
 
@@ -29,7 +37,9 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const [submitting, setSubmitting] = useState(false);
 
   const [formField, setFormField] = useState<any>(
-    data?._id ? populateFormFields(PackingFormType, data) : PackingFormType
+    data?._id
+      ? populateFormFields(PackingFormType, data, isDisabledFields)
+      : PackingFormType
   );
 
   const [formData, setFormData] = useState<any>(
@@ -51,9 +61,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         },
         {}
       );
-
       updatedData = { ...updatedData, products: productData };
-
       const response: any = data?._id
         ? await Put(url, updatedData)
         : await Post(url, updatedData);
@@ -82,9 +90,9 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         if (response.success && response?.data) {
           const fieldUpdates: Record<string, any> = {
             packing: { options: response?.data?.products },
-            customer: {
+            customerName: {
               updateFormData: {
-                key: "customer",
+                key: "customerName",
                 value: response?.data?.customerName,
               },
               isDisabled: true,
@@ -121,14 +129,13 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
             }
             return field;
           });
-
           setFormField(updatedFormField);
         }
       } catch (error) {
         console.log("Error: ", error);
       }
     };
-    if (formData.quotationId) fetchQuotationDetails();
+    if (formData.quotationId && !data?._id) fetchQuotationDetails();
     // eslint-disable-next-line
   }, [formData.quotationId]);
 
@@ -141,18 +148,24 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
           { key: "packedBy", fieldName: "packedBy" },
           { key: "warehouse", fieldName: "warehouseId" },
           { key: "quotation", fieldName: "quotationId" },
+          { key: "products", fieldName: "packing" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
-          if (
-            mapping &&
-            Array.isArray(response.data[mapping.key]) &&
-            response.data[mapping.key].length > 0
-          ) {
-            const selectData = getSelectFormattedData(
-              response.data[mapping.key]
-            );
-            return { ...field, options: selectData };
+          if (mapping) {
+            if (mapping.key === "products" && Array.isArray(data?.products)) {
+              return { ...field, options: data.products };
+            }
+            if (
+              mapping.key !== "products" &&
+              Array.isArray(response.data[mapping.key]) &&
+              response.data[mapping.key].length > 0
+            ) {
+              const selectData = getSelectFormattedData(
+                response.data[mapping.key]
+              );
+              return { ...field, options: selectData };
+            }
           }
           return field;
         });

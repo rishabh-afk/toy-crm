@@ -39,7 +39,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
         {field.required && <span className="text-red-500">*</span>}
       </label>
       <div className="flex gap-5 items-center">
-        <span className={`font-semibold`}>Active</span>
+        <span className={`font-semibold text-black`}>Active</span>
         <button
           type="button"
           onClick={handleClick}
@@ -53,7 +53,7 @@ const ToggleButton: FC<ToggleButtonProps> = ({
             }`}
           ></span>
         </button>
-        <span className={`font-semibold`}>InActive</span>
+        <span className={`font-semibold text-black`}>InActive</span>
       </div>
     </div>
   );

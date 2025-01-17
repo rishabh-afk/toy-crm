@@ -45,13 +45,13 @@ export const QuotationFieldsType: FormField[] = [
     minDate: formatDate(new Date()),
     placeholder: "Provide post office date",
   },
-  {
-    name: "isTaxed",
-    label: "Do you want to include tax?",
-    type: "choose",
-    value: true,
-    required: true,
-  },
+  // {
+  //   name: "isTaxed",
+  //   label: "Do you want to include tax?",
+  //   type: "choose",
+  //   value: true,
+  //   required: true,
+  // },
   {
     type: "text",
     name: "transport",
@@ -61,7 +61,7 @@ export const QuotationFieldsType: FormField[] = [
   {
     rows: 1,
     name: "remarks",
-    type: "text",
+    type: "textarea",
     label: "Remarks",
     placeholder: "Enter remarks",
   },
@@ -74,8 +74,9 @@ export const QuotationFieldsType: FormField[] = [
     placeholder: "Enter payment terms",
   },
   {
-    name: "product",
+    options: [],
     widthFull: true,
+    name: "productForm",
     type: "productForm",
     label: "Add Product Details",
   },

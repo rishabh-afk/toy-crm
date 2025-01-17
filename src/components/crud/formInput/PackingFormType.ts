@@ -37,8 +37,8 @@ export const PackingFormType: FormField[] = [
   {
     type: "text",
     required: true,
-    name: "customer",
     label: "Customer",
+    name: "customerName",
     placeholder: "Enter Customer Name",
   },
   {
