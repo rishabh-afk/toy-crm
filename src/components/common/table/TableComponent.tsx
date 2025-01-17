@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Actions from "./Actions";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import MultiPurposeComponent from "../MultiPurposeComponentProps";
 
 interface Column {
   key: string;
@@ -59,9 +60,19 @@ const Table: React.FC<TableProps> = ({
       isDate?: boolean;
       isPercent?: string;
       isCurrency?: string;
+      isMultiPurpose?: boolean;
+      multiPurposeProps?: {
+        onClick?: () => void;
+        options?: string[];
+        type: "label" | "button" | "select";
+        onSelectChange?: (value: string) => void;
+      };
     }
   ) => {
     const value = row[col.key];
+
+    if (col.isMultiPurpose && col.multiPurposeProps && value)
+      return <MultiPurposeComponent {...col.multiPurposeProps} text={value} />;
 
     if (col.key === "_id") return value?.slice(-8);
     if (col.isDate && value) return dayjs(value).format("YYYY-MM-DD");

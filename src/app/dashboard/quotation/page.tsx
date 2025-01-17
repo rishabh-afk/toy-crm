@@ -14,7 +14,17 @@ const columns = [
   { key: "customerName", label: "Customer Name" },
   { key: "preparedByName", label: "Assignee To (name)" },
   { key: "preparedByEmail", label: "Assignee To (email)" },
-  { key: "status", label: "Status" },
+  {
+    key: "status",
+    label: "Status",
+    isMultiPurpose: true,
+    multiPurposeProps: {
+      type: "label",
+      onClick: "",
+      options: "",
+      onSelectChange: "",
+    },
+  },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
 ];
 
