@@ -89,7 +89,7 @@ export const LedgerType: FormField[] = [
     maxLength: 10,
     type: "number",
     label: "Credit Limit",
-    placeholder: "Enter credeit Limit",
+    placeholder: "Enter credit Limit",
   },
   { type: "br", name: "address", label: "Address Details", widthFull: true },
   {

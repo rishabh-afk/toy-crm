@@ -10,16 +10,27 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "quotationNo", label: "Quotation ID" },
-  { key: "preparedBy", label: "Assignee" },
-  { key: "totalQuantity", label: "Quantity" },
-  { key: "discountAmount", label: "Discount", isCurrency: "₹" },
-  { key: "freightAmount", label: "Freight", isCurrency: "₹" },
-  { key: "igstAmount", label: "IGST (Tax)", isCurrency: "₹" },
-  { key: "totalValue", label: "Total Amt.", isCurrency: "₹" },
-  { key: "taxableAmount", label: "Taxable", isCurrency: "₹" },
-  { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
-  { key: "quotationDate", label: "Send On", sortable: true, isDate: true },
+  { key: "transactionNo", label: "Transaction ID" },
+  { key: "ledgerName", label: "Customer / Supplier" },
+  { key: "employeeName", label: "Employee Name" },
+  { key: "netAmount", label: "Final Amt.", isCurrency: "₹", sortable: true },
+  { key: "transactionDate", label: "Txn. Date", sortable: true, isDate: true },
+  { key: "paymentType", label: "Payment Type", sortable: true },
+  { key: "paymentMethod", label: "Pyament Mode", sortable: true },
+  {
+    key: "paymentDirection",
+    label: "Received / Paid",
+    sortable: true,
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
+  {
+    key: "paymentStatus",
+    label: "Payment Status",
+    sortable: true,
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
 ];
 
 const filterOptions = [

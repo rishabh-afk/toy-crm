@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import Actions from "./Actions";
+import { functionList } from "@/hooks/customFunction";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import MultiPurposeComponent from "../MultiPurposeComponentProps";
-import { functionList } from "@/hooks/customFunction";
 
 interface Column {
   key: string;
@@ -104,7 +104,7 @@ const Table: React.FC<TableProps> = ({
 
     if (col.key === "_id") return value?.slice(-8);
     if (col.isDate && value) return dayjs(value).format("YYYY-MM-DD");
-    if (col.isCurrency) return `${col.isCurrency} ${value}`;
+    if (col.isCurrency && value) return `${col.isCurrency} ${value}`;
     if (col.isPercent) return `${value} ${col.isPercent}`;
 
     if (typeof value === "number") return value;

@@ -25,6 +25,7 @@ const colorMapping: Record<string, string> = {
   Rejected: "bg-red-500",
   Refunded: "bg-blue-500",
   Cancelled: "bg-red-500",
+  Received: "bg-blue-500",
   Accepted: "bg-green-500",
   Pending: "bg-yellow-500",
   Approved: "bg-green-500",

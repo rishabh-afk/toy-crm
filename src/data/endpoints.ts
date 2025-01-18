@@ -121,11 +121,11 @@ export const endpoints: Record<
     operations: operations,
   },
   StockTransfer: {
-    create: "api/warehouse/itemTransfer", // to create a product
-    read: "api/warehouse/itemTransfer/", // to get a product
-    update: `api/warehouse/itemTransfer/`, // to update a product
-    delete: "api/warehouse/itemTransfer/", // to delete a product
-    fetchAll: "api/warehouse/itemTransfer/", // to fetch all products
+    create: "api/item-transfer", // to create a product
+    read: "api/item-transfer/", // to get a product
+    update: `api/item-transfer/`, // to update a product
+    delete: "api/item-transfer/", // to delete a product
+    fetchAll: "api/item-transfer/", // to fetch all products
     operations: operations,
   },
   Warehouse: {
