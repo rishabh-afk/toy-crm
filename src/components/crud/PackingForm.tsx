@@ -32,7 +32,6 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const data = props.data;
 
   const formType = props.formType;
-  const [stock, setStock] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -45,6 +44,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(PackingFormType, data) : {}
   );
+  const [stock, setStock] = useState<any>(data?._id ? data?.products : null);
 
   const makeApiCall = async (updatedData: any) => {
     try {
