@@ -24,6 +24,14 @@ export const endpoints: Record<
     fetchAll: "api/brand", // to fetch all brands
     operations: operations,
   },
+  Billing: {
+    create: "api/invoice", // to create a product
+    read: "api/invoice/", // to get a product
+    update: `api/invoice/`, // to update a product
+    delete: "api/invoice/", // to delete a product
+    fetchAll: "api/invoice/", // to fetch all products
+    operations: operations,
+  },
   Category: {
     create: "api/product-category", // to create a product-category
     delete: "api/product-category/", // to delete a product-category
@@ -112,20 +120,20 @@ export const endpoints: Record<
     fetchAll: "api/transaction/", // to fetch all products
     operations: operations,
   },
+  StockTransfer: {
+    create: "api/warehouse/itemTransfer", // to create a product
+    read: "api/warehouse/itemTransfer/", // to get a product
+    update: `api/warehouse/itemTransfer/`, // to update a product
+    delete: "api/warehouse/itemTransfer/", // to delete a product
+    fetchAll: "api/warehouse/itemTransfer/", // to fetch all products
+    operations: operations,
+  },
   Warehouse: {
     create: "api/warehouse", // to create a product
     read: "api/warehouse/", // to get a product
     update: `api/warehouse/`, // to update a product
     delete: "api/warehouse/", // to delete a product
     fetchAll: "api/warehouse/", // to fetch all products
-    operations: operations,
-  },
-  Billing: {
-    create: "api/invoice", // to create a product
-    read: "api/invoice/", // to get a product
-    update: `api/invoice/`, // to update a product
-    delete: "api/invoice/", // to delete a product
-    fetchAll: "api/invoice/", // to fetch all products
     operations: operations,
   },
 };

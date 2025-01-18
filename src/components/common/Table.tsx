@@ -141,7 +141,7 @@ const TableComponent = <T extends { [key: string]: any }>({
 
     const fetchEndpoint = endpoints[type]?.fetchAll;
     if (fetchEndpoint) {
-      const response: any = await Fetch(`api/${fetchEndpoint}`, params);
+      const response: any = await Fetch(`${fetchEndpoint}`, params);
       if (response?.success) {
         setFilteredData(response?.data?.result || []);
         setPaginate(response?.data?.pagination);

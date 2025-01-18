@@ -6,7 +6,7 @@ interface MultiPurposeComponentProps {
   type: "label" | "button" | "select";
   onClick?: any; // Click handler for button
   options?: string[]; // Options for select dropdown
-  onSelectChange?: (value: string) => void; // Handler for select change
+  onSelectChange?: any; // Handler for select change
 }
 
 const colorMapping: Record<string, string> = {
@@ -65,7 +65,7 @@ const MultiPurposeComponent: React.FC<MultiPurposeComponentProps> = ({
           className={`${commonStyles} ${
             colorMapping[text] || colorMapping["Default"]
           } cursor-pointer hover:opacity-90`}
-          onClick={() => onClick(_id)}
+          onClick={() => onClick({ _id: _id })}
         >
           {text}
         </button>
@@ -79,7 +79,10 @@ const MultiPurposeComponent: React.FC<MultiPurposeComponentProps> = ({
             className={`${commonStyles} w-full appearance-none outline-none relative pr-8 ${
               colorMapping[text] || colorMapping["Default"]
             } text-black`}
-            onChange={(e) => onSelectChange && onSelectChange(e.target.value)}
+            onChange={(e) =>
+              onSelectChange &&
+              onSelectChange({ _id: _id, status: e.target.value })
+            }
           >
             <option value="" disabled>
               --Select--

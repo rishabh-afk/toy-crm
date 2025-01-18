@@ -2,8 +2,8 @@ import { FaHome } from "react-icons/fa";
 import { SiGoogleadmob } from "react-icons/si";
 import { GiBoxUnpacking } from "react-icons/gi";
 import { BsChatQuoteFill } from "react-icons/bs";
-import { TbBrandBebo, TbRulerMeasure2 } from "react-icons/tb";
 import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
+import { TbBrandBebo, TbRulerMeasure2, TbTransferIn } from "react-icons/tb";
 import {
   FaWarehouse,
   FaProductHunt,
@@ -114,6 +114,14 @@ export const tabs = [
         pageTitle: "All Packing",
         permission: "Manage Packing",
         href: "/dashboard/warehouse/packing",
+      },
+      {
+        id: 2,
+        icon: TbTransferIn,
+        label: "Transfer Material",
+        permission: "Manage Packing",
+        pageTitle: "Transfer Material",
+        href: "/dashboard/warehouse/transfer-material",
       },
     ],
   },

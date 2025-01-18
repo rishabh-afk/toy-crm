@@ -12,6 +12,7 @@ import BrandForm from "../crud/product/BrandForm";
 import WarehouseForm from "../crud/WareHouseForm";
 import CategoryForm from "../crud/product/CategoryForm";
 import ConfirmationModal from "../crud/ConfirmationModal";
+import StockTransferForm from "../crud/StockTransferForm";
 
 interface FormRendererProps {
   data: any;
@@ -47,6 +48,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <ManageRoleForm {...props} />;
     case "UOM":
       return <UOMForm {...props} />;
+    case "StockTransfer":
+      return <StockTransferForm {...props} />;
     case "Warehouse":
       return <WarehouseForm {...props} />;
     case "Quotation":

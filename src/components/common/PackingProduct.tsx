@@ -77,7 +77,7 @@ const PackingProduct = ({
           </thead>
           <tbody>
             {items.map((item, index: number) => (
-              <tr key={index} className="odd:bg-white text-sm even:bg-gray-50">
+              <tr key={index} className="odd:bg-white text-black text-sm even:bg-gray-50">
                 <td className="border px-2 bg-gray-50 border-gray-300">
                   {index + 1}.
                 </td>

@@ -66,8 +66,7 @@ const Table: React.FC<TableProps> = ({
         options?: string[];
         type: "label" | "button" | "select";
       };
-    },
-    type: string
+    }
   ) => {
     const value = row[col.key];
 
@@ -79,7 +78,19 @@ const Table: React.FC<TableProps> = ({
       value.toString()
     ) {
       const { multiPurposeProps } = col;
-      const onClickHandler = functionList[type];
+      const onClickHandler = async (data: any) => {
+        try {
+          const action = functionList[type];
+          if (!action) throw new Error(`No handler found for type: ${type}`);
+
+          const result = await action(data);
+          if (result) await fetchFilteredData({});
+          else console.log("Action failed to complete successfully.");
+        } catch (error) {
+          console.log("Error executing onClickHandler:", error);
+        }
+      };
+
       return (
         <MultiPurposeComponent
           _id={row?._id}
@@ -151,7 +162,7 @@ const Table: React.FC<TableProps> = ({
                     key={col.key}
                     className="text-sm border text-iconBlack whitespace-nowrap border-infobg px-4 py-3"
                   >
-                    {formatRowValue(row, col, type)}
+                    {formatRowValue(row, col)}
                   </td>
                 ))}
                 {operationsAllowed?.read && (
