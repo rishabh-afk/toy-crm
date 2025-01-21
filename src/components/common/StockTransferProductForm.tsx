@@ -17,7 +17,6 @@ const StockTransferProductForm = ({
     stockInHand: 0,
     productCode: "",
   };
-  console.log(initialData);
   const [nextId, setNextId] = useState(2);
   const [items, setItems] = useState<any>([]);
   const [products, setProducts] = useState<any>([]);
@@ -37,11 +36,11 @@ const StockTransferProductForm = ({
 
   useEffect(() => {
     if (initialData && initialData.length > 0) {
-      // setItems(initialData);
+      setItems([]);
       setProducts(initialData);
     }
     // eslint-disable-next-line
-  }, [initialData.length]);
+  }, [initialData]);
 
   const getUpdatedCalculated = (data: any) => {
     const value = (data.mrp || 0) * (data.quantity || 1);
