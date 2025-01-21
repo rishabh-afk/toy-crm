@@ -19,6 +19,15 @@ const columns = [
   { key: "paymentMode", label: "Payment Mode" },
   { key: "purchaseDate", label: "Purchase Date", sortable: true, isDate: true },
   { key: "createdAt", label: "Created On", sortable: true, isDate: true },
+  {
+    key: "stockAdded",
+    label: "Stock Added",
+    isMultiPurpose: true,
+    multiPurposeProps: {
+      type: "select",
+      options: ["true", "false"],
+    },
+  },
 ];
 
 const filterOptions = [
@@ -34,8 +43,9 @@ const Contacts: React.FC = () => {
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Purchase");
-
+  let operationsAllowed = getAccessPoints(user, "Manage Purchase");
+  operationsAllowed = { ...operationsAllowed, update: false };
+  
   if (loading && !updatedData && !error) return <Loader />;
 
   return (

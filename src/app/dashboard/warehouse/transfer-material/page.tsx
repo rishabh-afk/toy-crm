@@ -10,12 +10,12 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "packingNo", label: "Packaging No" },
-  { key: "quotationNo", label: "Quotation No" },
-  { key: "customer", label: "Customer" },
-  { key: "packedBy", label: "Packed By" },
-  { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
-  { key: "packingDate", label: "Packaging Date", isDate: true },
+  { key: "issueNumber", label: "Transfer ID" },
+  { key: "to", label: "Destination Warehouse" },
+  { key: "from", label: "Source Warehouse" },
+  { key: "totalQuantity", label: "Total Quantity" },
+  { key: "netAmount", label: "Net Amount (₹)", isCurrency: "₹" },
+  { key: "issueDate", label: "Issue Date", sortable: true, isDate: true },
 ];
 
 const filterOptions = [
@@ -33,7 +33,8 @@ const Contacts: React.FC = () => {
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Warehouse");
+  let operationsAllowed = getAccessPoints(user, "Manage Warehouse");
+  operationsAllowed = { ...operationsAllowed, read: false };
 
   if (loading && !updatedData && !error) return <Loader />;
 

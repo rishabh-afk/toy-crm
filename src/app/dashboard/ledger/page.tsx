@@ -11,24 +11,24 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "_id", label: "Ledger ID" },
-  { key: "ledgerType", label: "Ledger Type", sortable: true },
-  { key: "contactPerson", label: "Contact Person", sortable: true },
+  { key: "ledgerType", label: "Ledger Category", sortable: true },
+  { key: "contactPerson", label: "Primary Contact Person", sortable: true },
   { key: "email", label: "Email Address", sortable: true },
-  { key: "mobileNo", label: "Mobile Number", sortable: true },
-  { key: "country", label: "Country" },
-  { key: "state", label: "State" },
-  { key: "companyName", label: "Company Name", sortable: true },
-  { key: "groupUnderName", label: "Assignee Name" },
-  { key: "groupedUnderEmail", label: "Assignee Email" },
-  { key: "createdAt", label: "Date", sortable: true, isDate: true },
+  { key: "mobileNo", label: "Mobile Contact Number", sortable: true },
+  { key: "country", label: "Country of Operation" },
+  { key: "state", label: "State/Province" },
+  { key: "companyName", label: "Organization Name", sortable: true },
+  { key: "groupUnderName", label: "Assigned To (Name)" },
+  { key: "groupedUnderEmail", label: "Assigned To (Email)" },
+  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
 ];
 
 const filterOptions = [
-  { label: "Name", value: "name" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobileNo" },
-  { label: "Type", value: "ledgerType" },
-  { label: "Company", value: "companyName" },
+  { label: "Cont. Name", value: "name" },
+  { label: "Email ID", value: "email" },
+  { label: "Cont. Number", value: "mobileNo" },
+  { label: "Category", value: "ledgerType" },
+  { label: "Comp. Name", value: "companyName" },
   { label: "State", value: "state" },
 ];
 

@@ -11,10 +11,15 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "_id", label: "ID" },
-  { key: "name", label: "Role", sortable: true },
-  { key: "description", label: "Role Description" },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", isDate: true },
+  { key: "name", label: "Role Name", sortable: true },
+  { key: "description", label: "Detailed Role Description" },
+  { key: "createdAt", label: "Date Created", sortable: true, isDate: true },
+  { key: "updatedAt", label: "Last Updated On", isDate: true },
+];
+
+const filterOptions = [
+  { label: "Role", value: "name" },
+  { label: "Description", value: "description" },
 ];
 
 const Contacts: React.FC = () => {
@@ -34,6 +39,7 @@ const Contacts: React.FC = () => {
           type="Role"
           columns={columns}
           data={updatedData}
+          filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
         />

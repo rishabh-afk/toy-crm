@@ -10,11 +10,11 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "packingNo", label: "Packaging No" },
-  { key: "quotationNo", label: "Quotation No" },
-  { key: "customer", label: "Customer" },
-  { key: "packedBy", label: "Packed By" },
-  { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
+  { key: "packingNo", label: "Package Number" },
+  { key: "quotationNo", label: "Quotation Number" },
+  { key: "customer", label: "Customer Name" },
+  { key: "packedBy", label: "Packed By (Employee)" },
+  { key: "netAmount", label: "Net Amount (₹)", isCurrency: "₹" },
   { key: "packingDate", label: "Packaging Date", isDate: true },
 ];
 

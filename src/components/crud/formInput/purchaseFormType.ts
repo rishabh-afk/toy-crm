@@ -36,22 +36,22 @@ export const PurchaseFieldsType: FormField[] = [
   {
     name: "poNumber",
     type: "text",
-    label: "Post Office Number",
-    placeholder: "Enter post Office Number",
+    label: "Purchase Order Number",
+    placeholder: "Enter Purchase Order Number",
   },
   {
     name: "poDate",
     type: "date",
-    label: "Post Office Date",
+    label: "Purchase Order Date",
     minDate: formatDate(new Date()),
-    placeholder: "Provide post office date",
+    placeholder: "Provide Purchase Order date",
   },
   {
     type: "date",
     required: true,
     name: "purchaseDate",
-    label: "Post Office Date",
-    placeholder: "Provide post office date",
+    label: "Purchase Date",
+    placeholder: "Provide Purchase date",
   },
   {
     type: "select",
