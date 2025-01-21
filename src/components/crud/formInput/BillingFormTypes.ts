@@ -4,7 +4,7 @@ import { FormField } from "@/hooks/types";
 export const BillingFormType: FormField[] = [
   {
     type: "select",
-    required: true,
+    // required: true,
     name: "packing",
     label: "Packing ID",
     placeholder: "Select quotation",
@@ -12,7 +12,7 @@ export const BillingFormType: FormField[] = [
   },
   {
     type: "select",
-    required: true,
+    // required: true,
     name: "preparedBy",
     label: "Invoice Prepared By",
     placeholder: "Select Prepared By",
@@ -20,7 +20,7 @@ export const BillingFormType: FormField[] = [
   },
   {
     type: "date",
-    required: true,
+    // required: true,
     name: "billDate",
     label: "Invoice Date",
     minDate: formatDate(new Date()),
@@ -29,13 +29,13 @@ export const BillingFormType: FormField[] = [
   {
     name: "referenceNo",
     type: "text",
-    required: true,
+    // required: true,
     label: "Reference No.",
     placeholder: "Enter Reference No.",
   },
   {
     type: "select",
-    required: true,
+    // required: true,
     name: "invoiceTo",
     label: "Select Ledger / party",
     placeholder: "Select Ledger / party",
@@ -44,7 +44,7 @@ export const BillingFormType: FormField[] = [
   {
     name: "shipTo",
     type: "select",
-    required: true,
+    // required: true,
     label: "Ship To",
     placeholder: "Select Ship To",
     options: [],

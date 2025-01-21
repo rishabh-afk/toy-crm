@@ -4,7 +4,6 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 // Define API base URL
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: 10000, // Default timeout in milliseconds
@@ -50,16 +49,13 @@ const request = async <T>(
 
     clearTimeout(timeoutId);
     return response;
-  } catch (error) {
+  } catch (error: any) {
     clearTimeout(timeoutId);
-    if (axios.isAxiosError(error) && error.message === "canceled") {
-      throw new Error("Request aborted");
-    } else {
-      const status = (error as AxiosResponse)?.status;
-      const message =
-        (error as AxiosResponse)?.data?.message || (error as Error).message;
-      throw new Error(`Error ${status}: ${message}`);
-    }
+    const response = error?.response?.data;
+    const message = response?.message || "An unexpected error occurred.";
+
+    // Throw a detailed error with additional context for better debugging
+    throw new Error(`${message}`);
   }
 };
 
