@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 interface Item {
   id: number;
+  isPacked: boolean;
   productUOM: string;
   productCode: string;
   productName: string;
@@ -18,14 +19,13 @@ const PackingProduct = ({
 }) => {
   const [items, setItems] = useState<Item[]>([]);
 
-  console.log(initialData);
-
   useEffect(() => {
     setItems(
       initialData.map((data) => ({
         id: data?.product ?? "",
         productUOM: data?.uom ?? "",
         productName: data?.name ?? "",
+        isPacked: data?.isPacked ?? false,
         productCode: data?.productCode ?? "",
         productQuantity: data?.quantity ?? 0,
         packedQuantity: data?.packedQuantity ?? 0,
@@ -77,7 +77,10 @@ const PackingProduct = ({
           </thead>
           <tbody>
             {items.map((item, index: number) => (
-              <tr key={index} className="odd:bg-white text-black text-sm even:bg-gray-50">
+              <tr
+                key={index}
+                className="odd:bg-white text-black text-sm even:bg-gray-50"
+              >
                 <td className="border px-2 bg-gray-50 border-gray-300">
                   {index + 1}.
                 </td>
@@ -97,6 +100,7 @@ const PackingProduct = ({
                   <input
                     type="number"
                     min={0} // Allow 0 as a valid value
+                    disabled={item.isPacked}
                     value={item.packedQuantity}
                     onChange={(e) => {
                       const value =

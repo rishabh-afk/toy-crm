@@ -180,14 +180,14 @@ export const ProductFormType: FormField[] = [
     label: "Upload Documents",
     widthFull: true,
   },
-  {
-    type: "file",
-    name: "images",
-    multiple: true,
-    required: false,
-    widthFull: true,
-    label: "Product Images",
-  },
+  // {
+  //   type: "file",
+  //   name: "images",
+  //   multiple: true,
+  //   required: false,
+  //   widthFull: true,
+  //   label: "Product Images",
+  // },
   {
     name: "coverImage",
     label: "Product Cover Image",
@@ -245,6 +245,13 @@ export const ProductCategoryType: FormField[] = [
     type: "select",
     placeholder: "Select category",
     options: [],
+  },
+  {
+    required: true,
+    type: "text",
+    name: "hsnCode",
+    label: "HSN Code",
+    placeholder: "Enter hsn code",
   },
   {
     name: "status",

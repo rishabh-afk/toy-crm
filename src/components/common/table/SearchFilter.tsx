@@ -4,20 +4,28 @@ import { BsFilterLeft } from "react-icons/bs";
 import { FilterOption } from "@/hooks/types";
 
 interface SearchFilterProps {
+  handleSearch: any;
   searchTerm: string;
   filterOptions: FilterOption[];
-  fetchFilteredData: () => void;
   setSearchTerm: (value: string) => void;
 }
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
   searchTerm,
+  handleSearch,
   setSearchTerm,
   filterOptions,
-  fetchFilteredData,
 }) => {
-  console.log(filterOptions);
-  const [selectedOption, setSelectedOption] = React.useState("");
+  const [selectedOption, setSelectedOption] = React.useState(
+    Array.isArray(filterOptions) && filterOptions.length > 0
+      ? filterOptions[0]?.value
+      : ""
+  );
+
+  const handleSearchClick = () => {
+    handleSearch(searchTerm, selectedOption);
+  };
+
   return (
     <div>
       <p className="flex text-iconBlack font-medium gap-2 items-center pb-1">
@@ -56,7 +64,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <button
           type="button"
           className="border px-4 ml-2 text-lg py-2 rounded-xl text-iconBlack border-secondary bg-whiteBg"
-          onClick={debounce(() => fetchFilteredData(), 500)}
+          onClick={debounce(handleSearchClick, 1000)}
         >
           Search
         </button>

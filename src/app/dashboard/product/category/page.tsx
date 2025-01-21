@@ -12,6 +12,7 @@ import TableComponent from "@/components/common/Table";
 const columns = [
   { key: "_id", label: "Category ID" },
   { key: "name", label: "Category Name", sortable: true },
+  { key: "hsnCode", label: "HSN Code", sortable: true },
   { key: "description", label: "Category Description" },
   { key: "createdAt", label: "Created At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },

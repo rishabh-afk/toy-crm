@@ -35,13 +35,13 @@ export const QuotationFieldsType: FormField[] = [
   {
     name: "poNO",
     type: "text",
-    label: "Post Office Number",
+    label: "Purchase Order Number",
     placeholder: "Enter post Office Number",
   },
   {
     name: "poDate",
     type: "date",
-    label: "Post Office Date",
+    label: "Purchase Order Date",
     minDate: formatDate(new Date()),
     placeholder: "Provide post office date",
   },

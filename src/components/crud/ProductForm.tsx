@@ -6,7 +6,11 @@ import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { ProductFormType } from "./formInput/productFromType";
-import { populateFormData, populateFormFields } from "@/hooks/general";
+import {
+  getSelectFormattedData,
+  populateFormData,
+  populateFormFields,
+} from "@/hooks/general";
 
 interface ProductProps {
   data?: any;
@@ -32,88 +36,32 @@ const ProductForm: React.FC<ProductProps> = (props: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch UOM data
-        const uomResponse: any = await Fetch(
-          "/api/product-uom",
-          {},
-          5000,
-          true,
-          false
-        );
-
-        if (uomResponse.success && uomResponse?.data.result.length > 0) {
-          // Transform the UOM API data into select options
-          const uomOptions = uomResponse.data.result.map((item: any) => ({
-            label: item._id, // Show shortName in the dropdown
-            value: item.shortName, // Use _id as the option's value
-          }));
-
-          // Fetch Brand data after UOM is successfully fetched
-          const brandResponse: any = await Fetch(
-            "/api/brand/public",
-            {},
-            5000,
-            true,
-            false
-          );
-
-          if (brandResponse.success && brandResponse?.data.length > 0) {
-            // Transform the Brand API data into select options
-            const brandOptions = brandResponse.data.map((item: any) => ({
-              label: item._id, // Show brand name in the dropdown
-              value: item.name, // Use _id as the option's value
-            }));
-
-            // Fetch Product Category data after Brand is successfully fetched
-            const categoryResponse: any = await Fetch(
-              "/api/product-category",
-              {},
-              5000,
-              true,
-              false
-            );
-
-            if (
-              categoryResponse.success &&
-              categoryResponse?.data.result.length > 0
-            ) {
-              // Transform the Product Category API data into select options
-              const categoryOptions = categoryResponse.data.result.map(
-                (item: any) => ({
-                  label: item._id, // Show category name in the dropdown
-                  value: item.name, // Use _id as the option's value
-                })
-              );
-
-              // Update the formField state with UOM, Brand, and Category options
-              const updatedFormField = formField.map((obj: any) => {
-                if (obj.name === "uom") {
-                  return { ...obj, options: uomOptions }; // Set UOM options
-                }
-                if (obj.name === "brand") {
-                  return { ...obj, options: brandOptions }; // Set Brand options
-                }
-                if (obj.name === "productCategory") {
-                  return { ...obj, options: categoryOptions }; // Set Product Category options
-                }
-                return obj;
-              });
-
-              setFormField(updatedFormField); // Set the updated form field with options
-              console.log("UOM options:", uomOptions); // Debugging UOM
-              console.log("Brand options:", brandOptions); // Debugging Brand
-              console.log("Category options:", categoryOptions); // Debugging Category
+        const url = "/api/product/base-fields";
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        const mappings = [
+          { key: "uoms", fieldName: "uom" },
+          { key: "brands", fieldName: "brand" },
+          { key: "categories", fieldName: "productCategory" },
+        ];
+        const updatedFormField = formField.map((field: any) => {
+          const mapping = mappings.find((m) => m.fieldName === field.name);
+          if (mapping) {
+            const dataKey = response.data[mapping.key] || data?.[mapping.key];
+            if (Array.isArray(dataKey) && dataKey.length > 0) {
+              const selectData = getSelectFormattedData(dataKey);
+              return { ...field, options: selectData };
             }
           }
-        }
+          return field;
+        });
+        setFormField(updatedFormField);
       } catch (error) {
         console.log("Error: ", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchData(); // Trigger the data fetch process
+    fetchData();
     // eslint-disable-next-line
   }, []);
 

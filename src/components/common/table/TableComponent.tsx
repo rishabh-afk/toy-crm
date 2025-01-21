@@ -1,8 +1,11 @@
 import dayjs from "dayjs";
 import Actions from "./Actions";
+import { useState } from "react";
 import { functionList } from "@/hooks/customFunction";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import MultiPurposeComponent from "../MultiPurposeComponentProps";
+import Modal from "../Modal";
+import ConfirmModal from "@/components/crud/ConfirmModal";
 
 interface Column {
   key: string;
@@ -45,6 +48,8 @@ const Table: React.FC<TableProps> = ({
   operationsAllowed,
   fetchFilteredData,
 }) => {
+  const [confirmation, setConfirmation] = useState(false);
+  const [confirmationData, setConfirmationData] = useState<any>({});
   const handleSort = (key: string) => {
     let direction: "asc" | "desc" | null = "asc";
     if (sort.key === key && sort.direction === "asc") {
@@ -88,17 +93,37 @@ const Table: React.FC<TableProps> = ({
           else console.log("Action failed to complete successfully.");
         } catch (error) {
           console.log("Error executing onClickHandler:", error);
+        } finally {
+          onClose();
         }
       };
 
+      const handleConfirmation = (data: any) => {
+        setConfirmation(true);
+        setConfirmationData(data);
+      };
+
+      const onClose = () => {
+        setConfirmation(false);
+      };
+
       return (
-        <MultiPurposeComponent
-          _id={row?._id}
-          {...multiPurposeProps}
-          text={value.toString()}
-          onClick={onClickHandler}
-          onSelectChange={onClickHandler}
-        />
+        <>
+          <Modal isVisible={confirmation} width="w-fit" onClose={onClose}>
+            <ConfirmModal
+              onClose={onClose}
+              data={confirmationData}
+              handleAction={onClickHandler}
+            />
+          </Modal>
+          <MultiPurposeComponent
+            _id={row?._id}
+            {...multiPurposeProps}
+            text={value.toString()}
+            onClick={handleConfirmation}
+            onSelectChange={handleConfirmation}
+          />
+        </>
       );
     }
 

@@ -59,12 +59,12 @@ export const warehouseType: FormField[] = [
     label: "Landmark",
     placeholder: "Enter landmark",
   },
-  { type: "br", name: "stock", label: "Stock Management", widthFull: true },
-  {
-    name: "warehouse",
-    type: "warehouse",
-    widthFull: true,
-    label: "Stock Management",
-    options: [],
-  },
+  // { type: "br", name: "stock", label: "Stock Management", widthFull: true },
+  // {
+  //   name: "warehouse",
+  //   type: "warehouse",
+  //   widthFull: true,
+  //   label: "Stock Management",
+  //   options: [],
+  // },
 ];

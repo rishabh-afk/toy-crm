@@ -18,9 +18,10 @@ import WarehouseProduct from "./WarehouseProduct";
 import NumericStringInput from "../input/NumericString";
 import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
+import PurchaseProductForm from "./PurchaseProductForm";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
-import PurchaseProductForm from "./PurchaseProductForm";
+import StockTransferProductForm from "./StockTransferProductForm";
 
 interface DynamicFormProps {
   onClose: any;
@@ -276,6 +277,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
 
             {field.type === "productForm" && (
               <ProductForm
+                initialData={field?.options}
+                onProductDataChange={customFunc}
+              />
+            )}
+
+            {field.type === "stockTransferForm" && (
+              <StockTransferProductForm
                 initialData={field?.options}
                 onProductDataChange={customFunc}
               />

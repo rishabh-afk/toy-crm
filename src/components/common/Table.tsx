@@ -11,6 +11,7 @@ import Table from "./table/TableComponent";
 import Pagination from "./table/Pagination";
 import { endpoints } from "@/data/endpoints";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 interface TableColumn {
   key: string;
@@ -24,7 +25,6 @@ interface TableProps {
   data: any;
   type?: any;
   suffix?: string;
-  hideStatus?: boolean;
   filterOptions?: any;
   columns: TableColumn[];
   operationsAllowed: any;
@@ -43,7 +43,6 @@ const TableComponent = <T extends { [key: string]: any }>({
   type,
   suffix,
   columns,
-  hideStatus,
   filterOptions,
   pagination_data,
   operationsAllowed,
@@ -54,7 +53,6 @@ const TableComponent = <T extends { [key: string]: any }>({
     currentPage: pagination_data?.currentPage ?? 1,
     itemsPerPage: pagination_data?.itemsPerPage ?? 10,
   });
-  console.log(hideStatus);
   const [activeStatus, setActiveStatus] = useState<
     "all" | "active" | "inactive"
   >("all");
@@ -69,8 +67,8 @@ const TableComponent = <T extends { [key: string]: any }>({
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedField, setSelectedField] = useState("");
   const [formConfig, setFormConfig] = useState<any>("");
-  const [organisationId, setOrganisationId] = useState<any>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [filteredData, setFilteredData] = useState<Array<T>>(data ?? []);
 
@@ -79,11 +77,19 @@ const TableComponent = <T extends { [key: string]: any }>({
     setIsModalVisible(false);
   };
 
+  const handleSearch = (searchTerm: string, selectedOption: string) => {
+    if (searchTerm && searchTerm.length < 4)
+      return toast.warn("Search term must be at least 4 characters");
+    setSearchTerm(searchTerm);
+    setSelectedField(selectedOption);
+    fetchFilteredData({ search: searchTerm, selectedField: selectedOption });
+  };
+
   const handleReset = async () => {
     setEndDate("");
     setStartDate("");
     setSearchTerm("");
-    setOrganisationId("");
+    setSelectedField("");
     setActiveStatus("all");
     await fetchFilteredData({
       limit: 10,
@@ -96,55 +102,79 @@ const TableComponent = <T extends { [key: string]: any }>({
     });
   };
 
-  const fetchFilteredData = async (filterParams?: any) => {
+  const fetchFilteredData = async (filterParams: any = {}) => {
+    // Build data object with fallback to existing state
     const data = {
-      end: filterParams?.end ?? endDate,
-      sortkey: filterParams?.key ?? sort.key,
-      start: filterParams?.start ?? startDate,
-      sortdir: filterParams?.dir ?? sort.direction,
-      status: filterParams?.status ?? activeStatus,
-      current: filterParams?.page ?? paginate.currentPage,
-      limit: filterParams?.limit ?? paginate.itemsPerPage,
-      orgId: filterParams?.organisationId ?? "",
+      end: filterParams.end ?? endDate,
+      sortkey: filterParams.key ?? sort.key,
+      start: filterParams.start ?? startDate,
+      search: filterParams.search ?? searchTerm,
+      sortdir: filterParams.dir ?? sort.direction,
+      status: filterParams.status ?? activeStatus,
+      current: filterParams.page ?? paginate.currentPage,
+      limit: filterParams.limit ?? paginate.itemsPerPage,
+      searchkey: filterParams.selectedField ?? selectedField,
     };
 
+    // Update pagination state
     setPaginate({
       ...paginate,
       currentPage: data.current,
       itemsPerPage: data.limit,
     });
-    const params: any = { page: data.current, limit: data.limit };
 
-    if (searchTerm && searchTerm.length > 3)
-      Object.assign(params, { search: searchTerm });
-    if (activeStatus !== "all" && data?.status !== "all")
-      Object.assign(params, {
-        status: data?.status ? data.status : activeStatus,
-      });
+    // Initialize query params
+    const params: Record<string, any> = {
+      page: data.current,
+      limit: data.limit,
+    };
 
-    if (organisationId || data?.orgId)
-      Object.assign(params, { orgId: data?.orgId ?? organisationId });
-    if (startDate || data?.start)
-      Object.assign(params, {
-        startDate: dayjs(data?.start ?? startDate).format("YYYY-MM-DD"),
-      });
-    if (endDate || data?.end)
-      Object.assign(params, {
-        endDate: dayjs(data?.end ?? endDate).format("YYYY-MM-DD"),
-      });
+    // Add status if applicable
+    if (activeStatus !== "all" && data.status !== "all") {
+      params.status = data.status;
+    }
 
-    if (sort.key || data?.sortkey)
-      Object.assign(params, {
-        sortkey: data?.sortkey ?? sort.key,
-        sortdir: data?.sortdir ?? sort.direction,
-      });
+    // Add search if valid
+    if (data.search?.length > 3 && data.searchkey) {
+      params.search = data.search;
+      params.searchkey = data.searchkey;
+    }
 
+    // Add start date if valid
+    const start = data.start || startDate;
+    if (start) {
+      params.startDate = dayjs(start).format("YYYY-MM-DD");
+    }
+
+    // Add end date if valid
+    const end = data.end || endDate;
+    if (end) {
+      params.endDate = dayjs(end).format("YYYY-MM-DD");
+    }
+
+    // Add sorting details if valid
+    if (data.sortkey) {
+      params.sortkey = data.sortkey;
+      params.sortdir = data.sortdir;
+    }
+
+    // Fetch data from endpoint
     const fetchEndpoint = endpoints[type]?.fetchAll;
     if (fetchEndpoint) {
-      const response: any = await Fetch(`${fetchEndpoint}`, params);
-      if (response?.success) {
-        setFilteredData(response?.data?.result || []);
-        setPaginate(response?.data?.pagination);
+      try {
+        const response: any = await Fetch(
+          fetchEndpoint,
+          params,
+          5000,
+          true,
+          false
+        );
+        if (response?.success) {
+          setFilteredData(response?.data?.result || []);
+          setPaginate(response?.data?.pagination);
+        }
+      } catch (error) {
+        console.error("Error fetching filtered data:", error);
       }
     }
   };
@@ -209,6 +239,7 @@ const TableComponent = <T extends { [key: string]: any }>({
           startDate={startDate}
           searchTerm={searchTerm}
           setEndDate={setEndDate}
+          handleSearch={handleSearch}
           setStartDate={setStartDate}
           filterOptions={filterOptions}
           setSearchTerm={setSearchTerm}

@@ -31,7 +31,7 @@ const Contacts: React.FC = () => {
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Warehouse");
+  const operationsAllowed = getAccessPoints(user, "Manage Warehouse", true);
 
   if (loading && !updatedData && !error) return <Loader />;
 

@@ -2,6 +2,7 @@
 
 import useFetch from "@/hooks/useFetch";
 import { endpoints } from "@/data/endpoints";
+import { usePathname } from "next/navigation";
 import AuthGuard from "@/components/AuthGuard";
 import Loader from "@/components/common/Loader";
 import { useAuth } from "@/context/AuthContext";
@@ -10,16 +11,11 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "Product ID" },
-  { key: "productCode", label: "Code", sortable: true },
+  { key: "_id", label: "Warehouse ID" },
   { key: "name", label: "Name", sortable: true },
-  { key: "sku", label: "SKU", sortable: true },
-  { key: "barCode", label: "Bar Code" },
-  { key: "productCategory", label: "Category" },
-  { key: "brandName", label: "Brand" },
-  { key: "mrp", label: "MRP", sortable: true, isCurrency: "₹" },
-  { key: "ourPrice", label: "Price", sortable: true, isCurrency: "₹" },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
+  { key: "state", label: "Warehouse State" },
+  { key: "city", label: "Warehouse City" },
+  { key: "createdAt", label: "Register At", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
 ];
 
@@ -31,20 +27,25 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Product"].fetchAll);
+  const pathname = usePathname();
+  const warehouseID = pathname.split("/").pop(); // Assuming `id` is the last segment of the path
+
+  const { data, loading, error } = useFetch(
+    endpoints["Warehouse"].read + warehouseID
+  );
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Products", true);
+  let operationsAllowed = getAccessPoints(user, "Manage Warehouse", true);
 
   if (loading && !updatedData && !error) return <Loader />;
-
+  operationsAllowed = { ...operationsAllowed, delete: false, update: false };
   return (
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Product"
+          type="Warehouse"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

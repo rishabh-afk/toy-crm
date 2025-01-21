@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { LeadFormType } from "./formInput/LeadFormType";
 import {
-  nestFields,
+  updateFormData,
   populateFormData,
   populateFormFields,
   getSelectFormattedData,
-  removeSuffixInNestedObject,
 } from "@/hooks/general";
 
 interface LeadFormProps {
@@ -38,13 +37,8 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const response: any = await Fetch(
-          "/api/user/public-role/Salesperson",
-          {},
-          5000,
-          true,
-          false
-        );
+        const url = "/api/user/public-role/Salesperson";
+        const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data.length > 0) {
           const selectData = getSelectFormattedData(response.data);
           const updatedFormField = formField.map((obj: any) => {
@@ -71,7 +65,7 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const nestedObj = nestFields(updatedData, "address", [
+      const obj = [
         "city",
         "line1",
         "state",
@@ -79,26 +73,12 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
         "pinCode",
         "country",
         "landmark",
-      ]);
-      let nestedObj2 = nestFields(nestedObj, "companyAddress", [
-        "cityCompany",
-        "line1Company",
-        "stateCompany",
-        "streetCompany",
-        "pinCodeCompany",
-        "countryCompany",
-        "landmarkCompany",
-      ]);
-
-      nestedObj2 = removeSuffixInNestedObject(
-        nestedObj2,
-        "companyAddress",
-        "Company"
-      );
+      ];
+      const updatedFormData = updateFormData(updatedData, "address", obj, obj);
 
       const response: any = data?._id
-        ? await Put(url, nestedObj2)
-        : await Post(url, nestedObj2);
+        ? await Put(url, updatedFormData)
+        : await Post(url, updatedFormData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -116,12 +96,34 @@ const LeadForm: React.FC<LeadFormProps> = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    if (!loading) {
+      const updatedFields = formField.map((field: any) => {
+        if (
+          formData.leadType &&
+          formData.leadType === "Company" &&
+          (field.name === "companyName" || field.name === "companyPhoneNo")
+        )
+          return { ...field, required: true };
+        else if (
+          formData.leadType &&
+          formData.leadType === "Individual" &&
+          (field.name === "companyName" || field.name === "companyPhoneNo")
+        )
+          return { ...field, required: false };
+        return field;
+      });
+      setFormField(updatedFields);
+    }
+    // eslint-disable-next-line
+  }, [formData.leadType, loading]);
+
   return (
     <div>
       {!loading && (
         <DynamicForm
-          returnAs="object"
           fields={formField}
+          returnAs="formData"
           formData={formData}
           submitting={submitting}
           onClose={props?.onClose}

@@ -2,12 +2,13 @@ import React from "react";
 import ItemsPage from "./ItemsPage";
 import DateFilter from "./DateFilter";
 import SearchFilter from "./SearchFilter";
-import CustomDropdown from "./CustomDropdown";
+// import CustomDropdown from "./CustomDropdown";
 import { FilterOption } from "@/hooks/types";
 
 interface FiltersProps {
   endDate: string;
   startDate: string;
+  handleSearch: any;
   searchTerm: string;
   filterOptions: FilterOption[];
   paginate: { itemsPerPage: number };
@@ -25,6 +26,7 @@ const Filters: React.FC<FiltersProps> = ({
   setEndDate,
   setStartDate,
   setSearchTerm,
+  handleSearch,
   filterOptions,
   fetchFilteredData,
 }) => {
@@ -33,19 +35,19 @@ const Filters: React.FC<FiltersProps> = ({
       {/* Search Filter */}
       <SearchFilter
         searchTerm={searchTerm}
+        handleSearch={handleSearch}
         setSearchTerm={setSearchTerm}
         filterOptions={filterOptions}
-        fetchFilteredData={fetchFilteredData}
       />
 
-      <CustomDropdown
+      {/* <CustomDropdown
         options={[]}
         label="Status"
         selectedValue={""}
         placeholder={"Select"}
         onChange={() => {}}
         // hideDropdown={true}
-      />
+      /> */}
 
       {/* Pagination Filter */}
       <ItemsPage fetchFilteredData={fetchFilteredData} paginate={paginate} />

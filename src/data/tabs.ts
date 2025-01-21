@@ -59,10 +59,10 @@ export const tabs = [
   },
   {
     id: 6,
+    href: "",
     icon: FaProductHunt,
     label: "Manage Products",
     pageTitle: "All Products",
-    href: "/dashboard/product",
     permission: "Manage Products",
     tabs: [
       {
@@ -89,6 +89,14 @@ export const tabs = [
         href: "/dashboard/product/uom",
         permission: "Product UOM",
       },
+      {
+        id: 4,
+        icon: FaProductHunt,
+        label: "Manage Products",
+        pageTitle: "All Category",
+        permission: "Manage Products",
+        href: "/dashboard/product",
+      },
     ],
   },
   {
@@ -101,12 +109,20 @@ export const tabs = [
   },
   {
     id: 8,
+    href: "",
     icon: FaWarehouse,
     label: "Manage Warehouse",
     pageTitle: "All Warehouse",
-    href: "/dashboard/warehouse",
     permission: "Manage Warehouse",
     tabs: [
+      {
+        id: 3,
+        icon: FaWarehouse,
+        label: "Manage Inventory",
+        permission: "Manage Packing",
+        pageTitle: "Manage Inventory",
+        href: "/dashboard/warehouse",
+      },
       {
         id: 1,
         icon: GiBoxUnpacking,

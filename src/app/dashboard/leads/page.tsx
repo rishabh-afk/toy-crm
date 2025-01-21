@@ -28,9 +28,9 @@ const columns = [
     multiPurposeProps: { type: "label" },
   },
   {
-    key: "status",
-    label: "Status",
     sortable: true,
+    label: "Lead Type",
+    key: "leadType",
     isMultiPurpose: true,
     multiPurposeProps: { type: "label" },
   },

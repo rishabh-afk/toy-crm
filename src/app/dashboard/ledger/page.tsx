@@ -23,6 +23,15 @@ const columns = [
   { key: "createdAt", label: "Date", sortable: true, isDate: true },
 ];
 
+const filterOptions = [
+  { label: "Name", value: "name" },
+  { label: "Email", value: "email" },
+  { label: "Phone", value: "mobileNo" },
+  { label: "Type", value: "ledgerType" },
+  { label: "Company", value: "companyName" },
+  { label: "State", value: "state" },
+];
+
 const Users: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Ledger"].fetchAll);
   const updatedData = data?.data.result;
@@ -41,6 +50,7 @@ const Users: React.FC = () => {
           suffix="/party"
           columns={columns}
           data={updatedData}
+          filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
         />

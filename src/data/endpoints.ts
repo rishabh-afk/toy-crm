@@ -3,6 +3,7 @@ const operations = {
   create: true, // to create a new instance
   update: true, // to update existing instance
   delete: true, // to delete existing instance
+  viewStock: false, // to view the stock associated
 };
 
 export const endpoints: Record<
@@ -94,7 +95,7 @@ export const endpoints: Record<
     update: `api/product/`, // to update a product
     delete: "api/product/", // to delete a product
     fetchAll: "api/product", // to fetch all products
-    operations: operations,
+    operations: { ...operations, viewStock: true },
   },
   Packing: {
     create: "api/packing", // to create a product
@@ -134,7 +135,7 @@ export const endpoints: Record<
     update: `api/warehouse/`, // to update a product
     delete: "api/warehouse/", // to delete a product
     fetchAll: "api/warehouse/", // to fetch all products
-    operations: operations,
+    operations: { ...operations, viewStock: true },
   },
 };
 

@@ -44,7 +44,11 @@ export const debounce = (func: any, delay: number) => {
   };
 };
 
-export const getAccessPoints = (user: any, label: string) => {
+export const getAccessPoints = (
+  user: any,
+  label: string,
+  viewStock?: boolean
+) => {
   const userPermissions = user?.permissions ?? [];
   let accessPoints: any = userPermissions.filter(
     (e: any) => e.module === label
@@ -53,7 +57,8 @@ export const getAccessPoints = (user: any, label: string) => {
     accessPoints = accessPoints[0]?.access;
   else accessPoints = {};
 
-  return accessPoints;
+  if (viewStock) return { ...accessPoints, viewStock: viewStock };
+  else return accessPoints;
 };
 
 export const populateFormFields = (

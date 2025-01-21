@@ -10,7 +10,7 @@ import {
   populateFormFields,
   getSelectFormattedData,
 } from "@/hooks/general";
-import { PurchaseFieldsType } from "./formInput/purchaseFormType";
+import { StockPurchaseTypes } from "./formInput/stockPurchaseTypes";
 
 interface LedgerProps {
   data?: any;
@@ -20,8 +20,6 @@ interface LedgerProps {
   setFilteredData?: any;
 }
 
-const isDisabledFields = ["vendor", "warehouseId", "preparedBy"];
-
 const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
@@ -30,40 +28,29 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
     data?._id
-      ? populateFormFields(
-          PurchaseFieldsType,
-          { ...data, lead: data?.lead ?? "" },
-          isDisabledFields
-        )
-      : PurchaseFieldsType
+      ? populateFormFields(StockPurchaseTypes, data)
+      : StockPurchaseTypes
   );
   const [formData, setFormData] = useState<any>(
-    data?._id ? populateFormData(PurchaseFieldsType, data) : {}
+    data?._id ? populateFormData(StockPurchaseTypes, data) : {}
   );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "/api/purchase/public/base-fields";
+        const url = "/api/item-transfer/public/base-fields";
         const response: any = await Fetch(url, {}, 5000, true, false);
         const mappings = [
-          { key: "vendors", fieldName: "vendor" },
-          { key: "warehouse", fieldName: "warehouseId" },
-          { key: "products", fieldName: "purchaseForm" },
-          { key: "preparedBy", fieldName: "preparedBy" },
+          { key: "warehouses", fieldName: "issueTo" },
+          { key: "warehouses", fieldName: "issueFrom" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
           if (mapping) {
             const dataKey = response.data[mapping.key] || data?.[mapping.key];
             if (Array.isArray(dataKey) && dataKey.length > 0) {
-              if (mapping.key === "products") {
-                setProducts(dataKey);
-                return { ...field, options: dataKey };
-              } else {
-                const selectData = getSelectFormattedData(dataKey);
-                return { ...field, options: selectData };
-              }
+              const selectData = getSelectFormattedData(dataKey);
+              return { ...field, options: selectData };
             }
           }
           return field;
@@ -78,6 +65,38 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
     fetchData();
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const fetchWarehouseDetails = async () => {
+      try {
+        const url = `/api/warehouse/public/${formData.issueFrom}`;
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response.success && response?.data) {
+          const fieldUpdates: Record<string, any> = {
+            stockTransferForm: { options: response?.data?.product },
+          };
+          const updatedFormField = formField.map((field: any) => {
+            const update = fieldUpdates[field.name];
+            if (update) {
+              if (update.updateFormData) {
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [update.updateFormData.key]: update.updateFormData.value,
+                }));
+              }
+              return { ...field, ...update };
+            }
+            return field;
+          });
+          setFormFields(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    };
+    if (formData.issueFrom) fetchWarehouseDetails();
+    // eslint-disable-next-line
+  }, [formData.issueFrom]);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -111,7 +130,7 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
   const customFunc = useCallback(
     (data: any, items?: any) => {
       setFormData((prevFormData: any) => {
-        const updated = populateFormData(PurchaseFieldsType, {
+        const updated = populateFormData(StockPurchaseTypes, {
           ...prevFormData,
           ...data,
         });
