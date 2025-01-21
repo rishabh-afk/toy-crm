@@ -2,8 +2,8 @@ import React, { FC } from "react";
 
 interface Option {
   value: string | number;
-  email: string | number;
   label: string | number;
+  email?: string | number;
 }
 
 interface SelectProps {
