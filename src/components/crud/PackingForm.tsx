@@ -1,10 +1,10 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
+import { useCallback, useEffect, useState } from "react";
 import { PackingFormType } from "./formInput/PackingFormType";
 import {
   populateFormData,
@@ -182,16 +182,21 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
     // eslint-disable-next-line
   }, []);
 
-  const handlePackaging = (data: any) => {
+  const handlePackaging = useCallback((data: any) => {
     setStock(data);
-    let totalQuantity = 0;
-    data.map((item: any) => (totalQuantity += item?.packedQuantity));
-    if (totalQuantity)
-      setFormData((prev: any) => ({
-        ...prev,
-        netPackedQuantity: totalQuantity,
-      }));
-  };
+    const totalQuantity = data.reduce(
+      (total: number, item: any) => total + (item?.packedQuantity || 0),
+      0
+    );
+    if (totalQuantity > 0) {
+      setFormData((prev: any) => {
+        if (prev.netPackedQuantity !== totalQuantity) {
+          return { ...prev, netPackedQuantity: totalQuantity };
+        }
+        return prev;
+      });
+    }
+  }, []);
 
   return (
     <div>

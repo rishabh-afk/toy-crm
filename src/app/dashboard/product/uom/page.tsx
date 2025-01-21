@@ -13,22 +13,26 @@ const columns = [
   { key: "_id", label: "UOM ID" },
   { key: "shortName", label: "Short Name", sortable: true },
   { key: "longName", label: "Long Name", sortable: true },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
+  {
+    key: "updatedAt",
+    label: "Last Updated Date",
+    sortable: true,
+    isDate: true,
+  },
   {
     key: "status",
     sortable: true,
     isMultiPurpose: true,
-    label: "Active Status",
+    label: "Status",
     multiPurposeProps: { type: "label" },
   },
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "Name", value: "shortName" },
+  { label: "Long Name", value: "longName" },
+  { label: "Status", value: "status" },
 ];
 
 const Contacts: React.FC = () => {

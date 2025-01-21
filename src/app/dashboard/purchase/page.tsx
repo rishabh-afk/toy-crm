@@ -10,15 +10,15 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "purchaseNo", label: "Purchase Number" },
+  { key: "purchaseNo", label: "Purchase Order Number" },
   { key: "vendorName", label: "Supplier / Vendor" },
   { key: "referenceNumber", label: "Reference Number" },
-  { key: "totalQuantity", label: "Total Qty" },
-  { key: "totalValue", label: "Total Value.", isCurrency: "₹" },
-  { key: "netAmount", label: "Final Amt.", isCurrency: "₹" },
-  { key: "paymentMode", label: "Payment Mode" },
+  { key: "totalQuantity", label: "Total Quantity" },
+  { key: "totalValue", label: "Total Value", isCurrency: "₹" },
+  { key: "netAmount", label: "Final Amount", isCurrency: "₹" },
+  { key: "paymentMode", label: "Payment Method" },
   { key: "purchaseDate", label: "Purchase Date", sortable: true, isDate: true },
-  { key: "createdAt", label: "Created On", sortable: true, isDate: true },
+  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
   {
     key: "stockAdded",
     label: "Stock Added",
@@ -30,12 +30,7 @@ const columns = [
   },
 ];
 
-const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
-];
+const filterOptions = [{ label: "Purchase No.", value: "purchaseNo" }];
 
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Purchase"].fetchAll);
@@ -45,7 +40,7 @@ const Contacts: React.FC = () => {
   const { user } = useAuth();
   let operationsAllowed = getAccessPoints(user, "Manage Purchase");
   operationsAllowed = { ...operationsAllowed, update: false };
-  
+
   if (loading && !updatedData && !error) return <Loader />;
 
   return (

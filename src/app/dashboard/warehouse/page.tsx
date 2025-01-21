@@ -11,18 +11,27 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "_id", label: "Warehouse ID" },
-  { key: "name", label: "Name", sortable: true },
-  { key: "state", label: "Warehouse State" },
-  { key: "city", label: "Warehouse City" },
-  { key: "createdAt", label: "Register At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "name", label: "Warehouse Name", sortable: true },
+  { key: "state", label: "State" },
+  { key: "city", label: "City" },
+  {
+    key: "createdAt",
+    label: "Registration Date",
+    sortable: true,
+    isDate: true,
+  },
+  {
+    key: "updatedAt",
+    label: "Last Updated Date",
+    sortable: true,
+    isDate: true,
+  },
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "Name", value: "name" },
+  { label: "State", value: "state" },
+  { label: "City", value: "city" },
 ];
 
 const Contacts: React.FC = () => {

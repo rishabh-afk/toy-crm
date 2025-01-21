@@ -13,13 +13,18 @@ const columns = [
   { key: "transactionNo", label: "Transaction ID" },
   { key: "ledgerName", label: "Customer / Supplier" },
   { key: "employeeName", label: "Employee Name" },
-  { key: "netAmount", label: "Final Amt.", isCurrency: "₹", sortable: true },
-  { key: "transactionDate", label: "Txn. Date", sortable: true, isDate: true },
+  { key: "netAmount", label: "Final Amount", isCurrency: "₹", sortable: true },
+  {
+    key: "transactionDate",
+    label: "Transaction Date",
+    sortable: true,
+    isDate: true,
+  },
   { key: "paymentType", label: "Payment Type", sortable: true },
-  { key: "paymentMethod", label: "Pyament Mode", sortable: true },
+  { key: "paymentMethod", label: "Payment Mode", sortable: true },
   {
     key: "paymentDirection",
-    label: "Received / Paid",
+    label: "Payment Direction",
     sortable: true,
     isMultiPurpose: true,
     multiPurposeProps: { type: "label" },
@@ -33,12 +38,7 @@ const columns = [
   },
 ];
 
-const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
-];
+const filterOptions = [{ label: "Txn ID", value: "transactionNo" }];
 
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Payment"].fetchAll);

@@ -94,7 +94,7 @@ const Table: React.FC<TableProps> = ({
         } catch (error) {
           console.log("Error executing onClickHandler:", error);
         } finally {
-          onClose();
+          setConfirmation(false);
         }
       };
 
@@ -103,17 +103,17 @@ const Table: React.FC<TableProps> = ({
         setConfirmationData(data);
       };
 
-      const onClose = () => {
-        setConfirmation(false);
-      };
-
       return (
         <>
-          <Modal isVisible={confirmation} width="w-fit" onClose={onClose}>
+          <Modal
+            width="w-fit"
+            isVisible={confirmation}
+            onClose={() => setConfirmation(false)}
+          >
             <ConfirmModal
-              onClose={onClose}
               data={confirmationData}
               handleAction={onClickHandler}
+              onClose={() => setConfirmation(false)}
             />
           </Modal>
           <MultiPurposeComponent

@@ -14,22 +14,27 @@ const columns = [
   { key: "slug", label: "Brand Slug", sortable: true },
   { key: "name", label: "Brand Name", sortable: true },
   { key: "description", label: "Brand Description" },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
+  {
+    key: "updatedAt",
+    label: "Last Updated Date",
+    sortable: true,
+    isDate: true,
+  },
   {
     key: "status",
     sortable: true,
     isMultiPurpose: true,
-    label: "Active Status",
+    label: "Status",
     multiPurposeProps: { type: "label" },
   },
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "Name", value: "name" },
+  { label: "Status", value: "status" },
+  { label: "Slug", value: "slug" },
+  { label: "Desc.", value: "description" },
 ];
 
 const Contacts: React.FC = () => {

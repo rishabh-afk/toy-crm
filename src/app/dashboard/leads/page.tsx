@@ -10,19 +10,24 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "leadId", label: "Lead ID" },
-  { key: "name", label: "UserName" },
-  { key: "email", label: "User Email" },
-  { key: "phone", label: "User Phone" },
-  { key: "companyName", label: "Company" },
-  { key: "salesPersonName", label: "Sales Person Name" },
-  { key: "salesPersonEmail", label: "Sales Person Email" },
-  { key: "source", label: "Source", sortable: true },
-  { key: "createdAt", label: "Created At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "leadId", label: "Lead Identifier (ID)" },
+  { key: "name", label: "Full Name", sortable: true },
+  { key: "email", label: "Email Address", sortable: true },
+  { key: "phone", label: "Phone Number", sortable: true },
+  { key: "companyName", label: "Company Name" },
+  { key: "salesPersonName", label: "Salesperson Name" },
+  { key: "salesPersonEmail", label: "Salesperson Email" },
+  { key: "source", label: "Lead Source", sortable: true },
+  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
+  {
+    key: "updatedAt",
+    label: "Last Updated Date",
+    sortable: true,
+    isDate: true,
+  },
   {
     sortable: true,
-    label: "Priority",
+    label: "Priority Level",
     key: "priorityLevel",
     isMultiPurpose: true,
     multiPurposeProps: { type: "label" },
@@ -37,10 +42,9 @@ const columns = [
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
+  { label: "Company", value: "companyName" },
   { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "Phone", value: "phone" },
 ];
 
 const Contacts: React.FC = () => {

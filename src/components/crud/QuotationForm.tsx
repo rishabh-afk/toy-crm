@@ -123,27 +123,26 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     }
   };
 
-  const customFunc = useCallback(
-    (data: any, items?: any) => {
-      setFormData((prevFormData: any) => {
-        const updated = populateFormData(QuotationFieldsType, {
-          ...prevFormData,
-          ...data,
-        });
-        if (JSON.stringify(updated) !== JSON.stringify(prevFormData))
-          return updated;
-        return prevFormData;
+  const customFunc = useCallback((data: any, items?: any) => {
+    setFormData((prevFormData: any) => {
+      const updated = populateFormData(QuotationFieldsType, {
+        ...prevFormData,
+        ...data,
       });
 
-      setProducts((prevProducts: any) => {
-        if (JSON.stringify(items) !== JSON.stringify(prevProducts))
-          return items || prevProducts;
-        return prevProducts;
-      });
-    },
-    // eslint-disable-next-line
-    [data]
-  );
+      if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
+        return updated;
+      }
+      return prevFormData;
+    });
+
+    setProducts((prevProducts) => {
+      if (items && JSON.stringify(items) !== JSON.stringify(prevProducts)) {
+        return items;
+      }
+      return prevProducts;
+    });
+  }, []);
 
   return (
     <div>

@@ -18,12 +18,7 @@ const columns = [
   { key: "packingDate", label: "Packaging Date", isDate: true },
 ];
 
-const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
-];
+const filterOptions = [{ label: "Packing No.", value: "packingNo" }];
 
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Packing"].fetchAll);

@@ -19,7 +19,7 @@ const columns = [
 
 const filterOptions = [
   { label: "Role", value: "name" },
-  { label: "Description", value: "description" },
+  { label: "Desc.", value: "description" },
 ];
 
 const Contacts: React.FC = () => {

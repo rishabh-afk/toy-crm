@@ -10,12 +10,13 @@ interface MultiPurposeComponentProps {
 }
 
 const colorMapping: Record<string, string> = {
-  High: "bg-red-700",
+  High: "bg-red-600",
   New: "bg-blue-500",
   Low: "bg-green-500",
   Sent: "bg-blue-400",
   false: "bg-red-500",
   true: "bg-green-500",
+  Urgent: "bg-red-700",
   Draft: "bg-gray-500",
   Unpaid: "bg-red-500",
   Paid: "bg-green-500",

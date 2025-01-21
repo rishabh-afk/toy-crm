@@ -39,7 +39,6 @@ const StockTransferProductForm = ({
       setItems([]);
       setProducts(initialData);
     }
-    // eslint-disable-next-line
   }, [initialData]);
 
   const getUpdatedCalculated = (data: any) => {

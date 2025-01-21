@@ -19,10 +19,8 @@ const columns = [
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "ID", value: "issueNumber" },
+  { label: "Quantity", value: "totalQuantity" },
 ];
 
 const Contacts: React.FC = () => {
