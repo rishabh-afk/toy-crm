@@ -10,9 +10,9 @@ const StockTransferProductForm = ({
 }) => {
   const emptyProduct = {
     _id: "",
+    mrp: 0,
     value: 0,
     quantity: 0,
-    listPrice: 0,
     totalAmount: 0,
     stockInHand: 0,
     productCode: "",
@@ -44,7 +44,7 @@ const StockTransferProductForm = ({
   }, [initialData.length]);
 
   const getUpdatedCalculated = (data: any) => {
-    const value = (data.listPrice || 0) * (data.quantity || 1);
+    const value = (data.mrp || 0) * (data.quantity || 1);
     return {
       ...data,
       value: value.toFixed(2),
@@ -64,7 +64,7 @@ const StockTransferProductForm = ({
         quantity: 1,
         totalAmount: 0,
         product: selectedProduct._id,
-        listPrice: selectedProduct?.ourPrice ?? 0,
+        mrp: selectedProduct?.mrp ?? 0,
         stockInHand: selectedProduct?.stockInHand ?? 0,
         productCode: selectedProduct?.productCode ?? "",
       };
@@ -226,7 +226,7 @@ const StockTransferProductForm = ({
                     </select>
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
-                    {item.listPrice ? "₹ " + item.listPrice : 0}
+                    {item.mrp ? "₹ " + item.mrp : 0}
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.stockInHand}

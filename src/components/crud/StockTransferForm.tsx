@@ -105,11 +105,20 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const updated = { products: products, ...updatedData };
+
+      const productData = products.reduce(
+        (acc: Record<string, number>, s: any) => {
+          const key = s._id || s.product || s.id;
+          if (key) acc[key] = s.quantity;
+          return acc;
+        },
+        {}
+      );
+      updatedData = { ...updatedData, stock: productData };
 
       const response: any = data?._id
-        ? await Put(url, updated)
-        : await Post(url, updated);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -122,7 +131,7 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
       console.log("Error: ", error);
       return toast.error("Something went wrong!");
     } finally {
-      props.onClose?.();
+      // props.onClose?.();
       setSubmitting(false);
     }
   };
