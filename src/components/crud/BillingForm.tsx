@@ -6,7 +6,11 @@ import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { BillingFormType } from "./formInput/BillingFormTypes";
-import { populateFormData, populateFormFields } from "@/hooks/general";
+import {
+  getSelectFormattedData,
+  populateFormData,
+  populateFormFields,
+} from "@/hooks/general";
 
 interface BillingProps {
   data?: any;
@@ -62,63 +66,33 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch UOM data
-        const uomResponse: any = await Fetch(
-          "/api/ledger",
-          {},
-          5000,
-          true,
-          false
-        );
-
-        if (data.shipTo) {
-          // Modify the formField for 'quotation' if quotationNo is present
-          const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "shipTo") {
-              console.log("this is the data", data.quotationNo);
-              return {
-                ...obj,
-                isDisabled: true, // Disable the field
-                //   options: [{ label: data.quotationNo, value: data.quotationNo }], // Set UOM options
-                value: data.shipTo, // Set the value to data.quotationNo
-              };
+        const url = "/api/invoice/public/base-fields";
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        const mappings = [
+          { key: "ledgers", fieldName: "shipTo" },
+          { key: "users", fieldName: "preparedBy" },
+          { key: "packings", fieldName: "packing" },
+          { key: "ledgers", fieldName: "invoiceTo" },
+        ];
+        const updatedFormField = formField.map((field: any) => {
+          const mapping = mappings.find((m) => m.fieldName === field.name);
+          if (mapping) {
+            const dataKey = response.data[mapping.key] || data?.[mapping.key];
+            if (Array.isArray(dataKey) && dataKey.length > 0) {
+              const selectData = getSelectFormattedData(dataKey);
+              return { ...field, options: selectData };
             }
-            return obj;
-          });
-
-          setFormField(updatedFormField); // Update the form field with the changes
-          console.log(
-            "Updated form field with disabled quotation:",
-            updatedFormField
-          );
-        }
-
-        if (uomResponse.success && uomResponse?.data.length > 0) {
-          // Transform the UOM API data into select options
-          const uomOptions = uomResponse.data.map((item: any) => ({
-            label: item._id, // Show shortName in the dropdown
-            value: item.companyName, // Use quotationNo as the option's value
-          }));
-
-          // Update the formField state with UOM options
-          const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "shipTo") {
-              return { ...obj, options: uomOptions }; // Set UOM options
-            }
-            return obj;
-          });
-
-          setFormField(updatedFormField); // Set the updated form field with UOM options
-          console.log("UOM options:", uomOptions); // Debugging UOM
-        }
+          }
+          return field;
+        });
+        setFormField(updatedFormField);
       } catch (error) {
         console.log("Error: ", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchData(); // Trigger the data fetch process
+    fetchData();
     // eslint-disable-next-line
   }, []);
 

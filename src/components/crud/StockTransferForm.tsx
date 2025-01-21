@@ -131,7 +131,7 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
       console.log("Error: ", error);
       return toast.error("Something went wrong!");
     } finally {
-      // props.onClose?.();
+      props.onClose?.();
       setSubmitting(false);
     }
   };
