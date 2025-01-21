@@ -26,7 +26,7 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(data?._id ? data?.products : null);
   const [submitting, setSubmitting] = useState(false);
   const [formField, setFormFields] = useState<any>(
     data?._id
@@ -136,7 +136,7 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       return prevFormData;
     });
 
-    setProducts((prevProducts) => {
+    setProducts((prevProducts: any) => {
       if (items && JSON.stringify(items) !== JSON.stringify(prevProducts)) {
         return items;
       }
