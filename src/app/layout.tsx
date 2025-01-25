@@ -22,16 +22,17 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 export const metadata: Metadata = {
-  title: "INQERP | Ledger",
-  description: "The ledger is connected to the blockchain.",
+  title: "Maskeen Toys",
+  description:
+    "Maskeen Toys integrates cutting-edge blockchain technology to provide a secure and transparent ledger system, ensuring real-time tracking of all transactions and operations.",
 };
 
 const lato = Lato({
-  subsets: ['latin'], // Specify the subset
-  weight: ['100', '300', '400', '700', '900'], // Only supported weights
-  variable: '--font-lato', // CSS variable for the font
-  style: ['normal', 'italic'], // Include both normal and italic styles
-  display: 'swap', // Use swap for better performance
+  subsets: ["latin"], // Specify the subset
+  weight: ["100", "300", "400", "700", "900"], // Only supported weights
+  variable: "--font-lato", // CSS variable for the font
+  style: ["normal", "italic"], // Include both normal and italic styles
+  display: "swap", // Use swap for better performance
 });
 
 export default function RootLayout({
