@@ -80,7 +80,7 @@ const MultiPurposeComponent: React.FC<MultiPurposeComponentProps> = ({
         <div className="relative w-full">
           <select
             value={selectValue}
-            className={`${commonStyles} w-full appearance-none outline-none relative pr-8 ${
+            className={`${commonStyles} min-w-24 appearance-none outline-none relative pr-8 ${
               colorMapping[text] || colorMapping["Default"]
             } text-black`}
             onChange={(e) =>
@@ -101,7 +101,7 @@ const MultiPurposeComponent: React.FC<MultiPurposeComponentProps> = ({
               </option>
             ))}
           </select>
-          <span className="absolute inset-y-0 text-white right-2 flex items-center pointer-events-none">
+          <span className="absolute inset-y-0 text-white right-4 flex items-center pointer-events-none">
             ▼
           </span>
         </div>

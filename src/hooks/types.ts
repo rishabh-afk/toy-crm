@@ -43,6 +43,7 @@ export interface FormField {
     | "packing"
     | "billing"
     | "purchaseForm"
+    | "productBillingForm"
     | "stockTransferForm"
     | "email"
     | "password"

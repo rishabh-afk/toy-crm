@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
@@ -71,8 +71,8 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
         const mappings = [
           { key: "ledgers", fieldName: "shipTo" },
           { key: "users", fieldName: "preparedBy" },
-          { key: "packings", fieldName: "packing" },
           { key: "ledgers", fieldName: "invoiceTo" },
+          { key: "quotations", fieldName: "quotationId" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
@@ -96,6 +96,53 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    const fetchQuotationDetails = async () => {
+      try {
+        const url = `/api/quotation/${formData.quotationId}`;
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response.success && response?.data) {
+          const fieldUpdates: Record<string, any> = {
+            productBillingForm: { options: response?.data?.products },
+          };
+          const updatedFormField = formField.map((field: any) => {
+            const update = fieldUpdates[field.name];
+            if (update) {
+              if (update.updateFormData) {
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [update.updateFormData.key]: update.updateFormData.value,
+                }));
+              }
+              return { ...field, ...update };
+            }
+            return field;
+          });
+          setFormField(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    };
+    if (formData.quotationId && !data?._id) fetchQuotationDetails();
+    // eslint-disable-next-line
+  }, [formData.quotationId]);
+
+  const customFunc = useCallback((data: any, items?: any) => {
+    console.log(items);
+    setFormData((prevFormData: any) => {
+      const updated = populateFormData(BillingFormType, {
+        ...prevFormData,
+        ...data,
+      });
+
+      if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
+        return updated;
+      }
+      return prevFormData;
+    });
+  }, []);
+
   return (
     <div>
       {!loading && (
@@ -105,6 +152,7 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
             fields={formField}
             formData={formData}
             submitting={submitting}
+            customFunc={customFunc}
             onClose={props?.onClose}
             setFormData={setFormData}
             makeApiCall={makeApiCall}

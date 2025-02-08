@@ -157,29 +157,17 @@ export const ProductFormType: FormField[] = [
     placeholder: "Enter maximum level",
   },
   {
-    name: "igst",
+    name: "gst",
     type: "number",
-    label: "IGST",
+    label: "GST",
     placeholder: "Enter IGST",
   },
-  {
-    name: "cgst",
-    type: "number",
-    label: "CGST",
-    placeholder: "Enter CGST",
-  },
-  {
-    name: "sgst",
-    type: "number",
-    label: "SGST",
-    placeholder: "Enter SGST",
-  },
-  {
-    type: "br",
-    name: "upload",
-    label: "Upload Documents",
-    widthFull: true,
-  },
+  // {
+  //   type: "br",
+  //   name: "upload",
+  //   label: "Upload Documents",
+  //   widthFull: true,
+  // },
   // {
   //   type: "file",
   //   name: "images",
@@ -188,12 +176,12 @@ export const ProductFormType: FormField[] = [
   //   widthFull: true,
   //   label: "Product Images",
   // },
-  {
-    name: "coverImage",
-    label: "Product Cover Image",
-    type: "file",
-    required: true,
-  },
+  // {
+  //   name: "coverImage",
+  //   label: "Product Cover Image",
+  //   type: "file",
+  //   required: true,
+  // },
 ];
 
 export const ProductBrandType: FormField[] = [

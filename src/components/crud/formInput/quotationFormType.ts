@@ -110,27 +110,6 @@ export const QuotationFieldsType: FormField[] = [
     placeholder: "0.0",
     min: 0,
   },
-  // {
-  //   name: "additionalDiscountPercentage",
-  //   type: "number",
-  //   label: "Additional Discount Percentage",
-  //   placeholder: "0.0",
-  //   min: 0,
-  // },
-  // {
-  //   name: "additionalDiscountAmount",
-  //   type: "number",
-  //   label: "Additional Discount Amount",
-  //   placeholder: "0.0",
-  //   min: 0,
-  // },
-  // {
-  //   name: "freightAmount",
-  //   type: "number",
-  //   label: "Freight Amount",
-  //   placeholder: "0.0",
-  //   min: 0,
-  // },
   {
     name: "taxableAmount",
     type: "number",

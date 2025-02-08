@@ -14,7 +14,7 @@ const PurchaseProductForm = ({
     uom: "",
     cgst: 0,
     sgst: 0,
-    igst: 0,
+    gst: 0,
     value: 0,
     quantity: 0,
     gstAmount: 0,
@@ -76,10 +76,7 @@ const PurchaseProductForm = ({
 
   const getUpdatedCalculated = (data: any) => {
     const gstAmount =
-      (((data.cgst || 0) + (data.sgst || 0)) *
-        (data.quantity || 1) *
-        (data.listPrice || 0)) /
-      100;
+      ((data.gst || 0) * (data.quantity || 1) * (data.listPrice || 0)) / 100;
 
     const discountAmount =
       ((data.discountPercentage || 0) *
@@ -119,10 +116,8 @@ const PurchaseProductForm = ({
         discountAmount: 0,
         discountPercentage: 0,
         product: selectedProduct._id,
+        gst: selectedProduct?.gst ?? 0,
         uom: selectedProduct?.uom ?? "",
-        cgst: selectedProduct?.cgst ?? 0,
-        sgst: selectedProduct?.sgst ?? 0,
-        igst: selectedProduct?.igst ?? 0,
         listPrice: selectedProduct?.ourPrice ?? 0,
         stockInHand: selectedProduct?.stockInHand ?? 0,
         productCode: selectedProduct?.productCode ?? "",
@@ -182,9 +177,7 @@ const PurchaseProductForm = ({
     const final = {
       netAmount: 0,
       totalValue: 0,
-      igstAmount: 0,
-      cgstAmount: 0,
-      sgstAmount: 0,
+      gstAmount: 0,
       totalQuantity: 0,
       taxableAmount: 0,
       discountAmount: 0,
@@ -195,8 +188,7 @@ const PurchaseProductForm = ({
       const value = parseFloat(item.value) || 0;
       const totalAmount = parseFloat(item.totalAmount) || 0;
       const quantity = parseFloat(item.quantity) || 0;
-      const cgst = parseFloat(item.cgst) || 0;
-      const sgst = parseFloat(item.sgst) || 0;
+      const gst = parseFloat(item.gst) || 0;
 
       // Calculate the totals
       final.totalQuantity += quantity;
@@ -205,14 +197,8 @@ const PurchaseProductForm = ({
       final.taxableAmount += taxableAmount;
       final.netAmount += totalAmount;
 
-      if (cgst && taxableAmount > 0) {
-        final.cgstAmount += (taxableAmount * cgst) / 100;
-      }
-      if (sgst && taxableAmount > 0) {
-        final.sgstAmount += (taxableAmount * sgst) / 100;
-      }
-      if (cgst && sgst) {
-        final.igstAmount = final.cgstAmount + final.sgstAmount;
+      if (gst && taxableAmount > 0) {
+        final.gstAmount += (taxableAmount * gst) / 100;
       }
     });
 
@@ -253,9 +239,7 @@ const PurchaseProductForm = ({
                 "Discount (%)",
                 "Discount Amt.",
                 "Taxable Amt.",
-                "IGST",
-                "CGST",
-                "SGST",
+                "GST",
                 "GST Amount",
                 "Total Amount",
                 "Actions",
@@ -346,13 +330,7 @@ const PurchaseProductForm = ({
                     {item.taxableAmount}
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
-                    {item.igst} %
-                  </td>
-                  <td className="border min-w-20 border-gray-300 p-2">
-                    {item.cgst} %
-                  </td>
-                  <td className="border min-w-20 border-gray-300 p-2">
-                    {item.sgst} %
+                    {item.gst} %
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.gstAmount}

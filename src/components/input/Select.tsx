@@ -54,7 +54,7 @@ const Select: FC<SelectProps> = ({ field, handleInputChange, className }) => {
             </option>
           ))
         ) : (
-          <option value="" disabled selected>
+          <option value="" disabled>
             No Data Available
           </option>
         )}

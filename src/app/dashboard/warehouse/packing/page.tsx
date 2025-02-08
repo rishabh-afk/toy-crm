@@ -16,6 +16,15 @@ const columns = [
   { key: "packedBy", label: "Packed By (Employee)" },
   { key: "netAmount", label: "Net Amount (₹)", isCurrency: "₹" },
   { key: "packingDate", label: "Packaging Date", isDate: true },
+  {
+    key: "packed",
+    label: "Is Packed",
+    isMultiPurpose: true,
+    multiPurposeProps: {
+      type: "select",
+      options: ["true", "false"],
+    },
+  },
 ];
 
 const filterOptions = [{ label: "Packing No.", value: "packingNo" }];

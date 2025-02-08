@@ -15,10 +15,11 @@ import ToggleButton from "../input/Toggle";
 import RichTextEditor from "./RichTextEditor";
 import PackingProduct from "./PackingProduct";
 import WarehouseProduct from "./WarehouseProduct";
+import BillingProductForm from "./BillingProductForm";
+import PurchaseProductForm from "./PurchaseProductForm";
 import NumericStringInput from "../input/NumericString";
 import SingleImageUploader from "../input/ImageUploader";
 import SingleVideoUploader from "../input/VideoUploader";
-import PurchaseProductForm from "./PurchaseProductForm";
 import MultipleImageUpload from "../input/MultipleImageUploader";
 import MultipleVideoUpload from "../input/MultipleVideoUploader";
 import StockTransferProductForm from "./StockTransferProductForm";
@@ -295,6 +296,15 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 onProductDataChange={customFunc}
               />
             )}
+
+            {field.type === "productBillingForm" &&
+              field?.options &&
+              field?.options.length > 0 && (
+                <BillingProductForm
+                  initialData={field?.options}
+                  onProductDataChange={customFunc}
+                />
+              )}
           </div>
         ))}
 
