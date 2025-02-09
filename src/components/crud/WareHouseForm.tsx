@@ -74,26 +74,26 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      let nestedObj = nestFields(updatedData, "address", [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-      ]);
+      // let nestedObj = nestFields(updatedData, "address", [
+      //   "city",
+      //   "line1",
+      //   "state",
+      //   "street",
+      //   "pinCode",
+      //   "country",
+      //   "landmark",
+      // ]);
 
-      const stockData = stock.reduce((acc: Record<string, number>, s: any) => {
-        acc[s.id] = s.productQuantity;
-        return acc;
-      }, {});
+      // const stockData = stock.reduce((acc: Record<string, number>, s: any) => {
+      //   acc[s.id] = s.productQuantity;
+      //   return acc;
+      // }, {});
 
-      nestedObj = { ...nestedObj, stock: stockData };
+      // nestedObj = { ...nestedObj, st };
 
       const response: any = data?._id
-        ? await Put(url, nestedObj)
-        : await Post(url, nestedObj);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
