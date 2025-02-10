@@ -11,10 +11,17 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "quotationNo", label: "Quotation ID" },
+  { key: "billNumber", label: "Invoice No." },
   { key: "customerName", label: "Customer Name" },
   { key: "preparedByName", label: "Assigned To (Name)" },
   { key: "preparedByEmail", label: "Assigned To (Email)" },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
+  {
+    key: "invoiceGenerated",
+    isMultiPurpose: true,
+    label: "Invoice Generated",
+    multiPurposeProps: { type: "label" },
+  },
   {
     key: "packed",
     label: "Is Packed",
