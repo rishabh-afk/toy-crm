@@ -50,7 +50,9 @@ const Sidebar: React.FC = () => {
               <Link
                 href={tab?.href}
                 aria-label={tab?.label}
-                onMouseEnter={() => {
+                onClick={() => {
+                  if (list?.list.length > 0 && list?.tab === tab?.permission)
+                    return showList({ tab: "", list: [] });
                   if (tab?.tabs && tab?.tabs.length > 0)
                     showList({ tab: tab?.permission, list: tab?.tabs });
                 }}

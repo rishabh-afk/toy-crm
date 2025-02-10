@@ -98,9 +98,9 @@ export const BillingFormType: FormField[] = [
     placeholder: "Enter Transport Details",
   },
   {
-    name: "grLrNo",
     type: "text",
     label: "GR/LR No",
+    name: "grOrLrNumber",
     placeholder: "Enter GR/LR Number",
   },
   {

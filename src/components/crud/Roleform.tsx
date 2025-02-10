@@ -1,6 +1,6 @@
 "use client";
 
-import { tabs } from "@/data/tabs";
+import { roles, tabs } from "@/data/tabs";
 import { toast } from "react-toastify";
 import { FormEvent, useState } from "react";
 import { endpoints } from "@/data/endpoints";
@@ -111,18 +111,29 @@ const ManageRoleForm: React.FC<ManageRoleFormProps> = ({
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
-        <label className="block font-medium text-gray-700">Name</label>
-        <input
+        <label className="block font-medium text-gray-700">
+          Select User Role
+        </label>
+        <select
           required
-          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 p-2 border text-black rounded-lg w-full outline-none"
-          placeholder="Enter role name"
-        />
+          className="mt-1 p-2 border text-black rounded-lg w-full outline-none bg-white"
+        >
+          <option value="" disabled>
+            Select a role
+          </option>
+          {roles.map((role: any) => (
+            <option key={role.id} value={role.value} className="capitalize">
+              {role.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="mb-4">
-        <label className="block font-medium text-gray-700">Description</label>
+        <label className="block font-medium text-gray-700">
+          Provide Role Description
+        </label>
         <textarea
           rows={1}
           required

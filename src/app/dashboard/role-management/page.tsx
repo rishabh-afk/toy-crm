@@ -12,7 +12,7 @@ import TableComponent from "@/components/common/Table";
 const columns = [
   { key: "_id", label: "ID" },
   { key: "name", label: "Role Name", sortable: true },
-  { key: "description", label: "Detailed Role Description" },
+  { key: "description", label: "Role Description", sortable: true },
   { key: "createdAt", label: "Date Created", sortable: true, isDate: true },
   { key: "updatedAt", label: "Last Updated On", isDate: true },
 ];
@@ -28,7 +28,8 @@ const Contacts: React.FC = () => {
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Role Management");
+  let operationsAllowed = getAccessPoints(user, "Role Management");
+  operationsAllowed = { ...operationsAllowed, delete: false };
 
   if (loading && !updatedData && !error) return <Loader />;
 

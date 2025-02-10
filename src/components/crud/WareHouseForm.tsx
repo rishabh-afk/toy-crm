@@ -23,7 +23,7 @@ interface WarehouseProps {
 const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
-  const [stock, setStock] = useState<any>();
+  // const [stock, setStock] = useState<any>();
   // const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const formField = data?._id
@@ -74,26 +74,19 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      // let nestedObj = nestFields(updatedData, "address", [
-      //   "city",
-      //   "line1",
-      //   "state",
-      //   "street",
-      //   "pinCode",
-      //   "country",
-      //   "landmark",
-      // ]);
-
-      // const stockData = stock.reduce((acc: Record<string, number>, s: any) => {
-      //   acc[s.id] = s.productQuantity;
-      //   return acc;
-      // }, {});
-
-      // nestedObj = { ...nestedObj, st };
+      const nestedObj = nestFields(updatedData, "address", [
+        "city",
+        "line1",
+        "state",
+        "street",
+        "pinCode",
+        "country",
+        "landmark",
+      ]);
 
       const response: any = data?._id
-        ? await Put(url, updatedData)
-        : await Post(url, updatedData);
+        ? await Put(url, nestedObj)
+        : await Post(url, nestedObj);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -170,7 +163,8 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
   // }, [formData.quotation]);
 
   const handleStocks = (data: any) => {
-    setStock(data);
+    console.log(data);
+    // setStock(data);
   };
 
   return (

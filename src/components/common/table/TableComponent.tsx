@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
+import Modal from "../Modal";
 import Actions from "./Actions";
 import { useState } from "react";
 import { functionList } from "@/hooks/customFunction";
+import ConfirmModal from "@/components/crud/ConfirmModal";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
 import MultiPurposeComponent from "../MultiPurposeComponentProps";
-import Modal from "../Modal";
-import ConfirmModal from "@/components/crud/ConfirmModal";
 
 interface Column {
   key: string;
@@ -169,7 +169,7 @@ const Table: React.FC<TableProps> = ({
               </th>
             ))}
             {operationsAllowed?.read && (
-              <th className="p-4 border text-left text-iconBlack border-infobg font-bold">
+              <th className="p-4 border text-center text-iconBlack border-infobg font-bold">
                 Actions
               </th>
             )}
@@ -191,7 +191,7 @@ const Table: React.FC<TableProps> = ({
                   </td>
                 ))}
                 {operationsAllowed?.read && (
-                  <td className="text-nowrap border border-infobg px-4 py-3">
+                  <td className="text-nowrap border flex justify-center border-infobg px-4 py-3">
                     <Actions
                       row={row}
                       type={type}

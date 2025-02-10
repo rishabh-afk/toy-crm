@@ -11,6 +11,7 @@ import PurchaseForm from "../crud/PurchaseForm";
 import QuotationForm from "../crud/QuotationForm";
 import BrandForm from "../crud/product/BrandForm";
 import WarehouseForm from "../crud/WareHouseForm";
+import ReceivingForm from "../crud/ReceivingForm";
 import CategoryForm from "../crud/product/CategoryForm";
 import ConfirmationModal from "../crud/ConfirmationModal";
 import StockTransferForm from "../crud/StockTransferForm";
@@ -49,6 +50,8 @@ const FormRenderer: React.FC<FormRendererProps> = (props: any) => {
       return <PaymentForm {...props} />;
     case "Role":
       return <ManageRoleForm {...props} />;
+    case "Receiving":
+      return <ReceivingForm {...props} />;
     case "UOM":
       return <UOMForm {...props} />;
     case "StockTransfer":

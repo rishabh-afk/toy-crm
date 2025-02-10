@@ -121,6 +121,14 @@ export const endpoints: Record<
     fetchAll: "api/transaction/", // to fetch all products
     operations: operations,
   },
+  Receiving: {
+    create: "api/receiving", // to create a product
+    read: "api/receiving/", // to get a product
+    update: `api/receiving/`, // to update a product
+    delete: "api/receiving/", // to delete a product
+    fetchAll: "api/receiving/", // to fetch all products
+    operations: operations,
+  },
   StockTransfer: {
     create: "api/item-transfer", // to create a product
     read: "api/item-transfer/", // to get a product

@@ -16,6 +16,12 @@ const columns = [
   { key: "preparedByEmail", label: "Assigned To (Email)" },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
   {
+    key: "packed",
+    label: "Is Packed",
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
+  {
     key: "status",
     label: "Status",
     isMultiPurpose: true,

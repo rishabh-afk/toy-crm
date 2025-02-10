@@ -1,6 +1,6 @@
 import { FormField } from "@/hooks/types";
 
-export const paymentFormType: FormField[] = [
+export const ReceivingFormType: FormField[] = [
   {
     type: "select",
     required: true,
@@ -15,17 +15,10 @@ export const paymentFormType: FormField[] = [
   {
     name: "ledgerId",
     type: "select",
+    required: true,
     label: "Customer / Supplier",
     placeholder: "Select Customer / Supplier",
     options: [], // This will hold the options for the Select component
-  },
-  {
-    type: "select",
-    required: true,
-    name: "quotationId",
-    label: "Quatation ID",
-    placeholder: "Select quotation",
-    options: [],
   },
   {
     type: "select",

@@ -11,8 +11,8 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "purchaseNo", label: "Purchase Order Number" },
+  { key: "warehouseName", label: "Warehouse" },
   { key: "vendorName", label: "Supplier / Vendor" },
-  { key: "referenceNumber", label: "Reference Number" },
   { key: "totalQuantity", label: "Total Quantity" },
   { key: "totalValue", label: "Total Value", isCurrency: "₹" },
   { key: "netAmount", label: "Final Amount", isCurrency: "₹" },

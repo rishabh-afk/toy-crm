@@ -1,3 +1,4 @@
+import { IoReloadCircle } from "react-icons/io5";
 import { IoMoon, IoSunny } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
 
@@ -15,17 +16,26 @@ const DarkLightToggle = () => {
   };
 
   return (
-    <button
-      onClick={toggleTheme}
-      aria-label="Toggle theme"
-      className="flex items-center justify-center"
-    >
-      {isDarkMode ? (
-        <IoSunny className="text-2xl" />
-      ) : (
-        <IoMoon className="text-2xl" />
-      )}
-    </button>
+    <>
+      <button
+        aria-label="Reload Settings"
+        onClick={() => window.location.reload()}
+        className="flex items-center justify-center"
+      >
+        <IoReloadCircle className="text-3xl" />
+      </button>
+      <button
+        onClick={toggleTheme}
+        aria-label="Toggle theme"
+        className="flex items-center justify-center"
+      >
+        {isDarkMode ? (
+          <IoSunny className="text-2xl" />
+        ) : (
+          <IoMoon className="text-2xl" />
+        )}
+      </button>
+    </>
   );
 };
 

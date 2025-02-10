@@ -166,26 +166,26 @@ export const userFormType: FormField[] = [
     label: "Landmark",
     placeholder: "Enter landmark",
   },
-  { type: "br", name: "upload", label: "Upload Documents", widthFull: true },
-  {
-    name: "profilePic",
-    label: "Profile Image",
-    type: "file",
-    required: true,
-  },
-  {
-    name: "panCardDoc",
-    label: "Pan Card Image",
-    type: "file",
-  },
-  {
-    name: "aadhaarCardDoc",
-    label: "Aadhar Card Image",
-    type: "file",
-  },
-  {
-    name: "otherDoc",
-    label: "Other Documents Image",
-    type: "file",
-  },
+  // { type: "br", name: "upload", label: "Upload Documents", widthFull: true },
+  // {
+  //   name: "profilePic",
+  //   label: "Profile Image",
+  //   type: "file",
+  //   required: true,
+  // },
+  // {
+  //   name: "panCardDoc",
+  //   label: "Pan Card Image",
+  //   type: "file",
+  // },
+  // {
+  //   name: "aadhaarCardDoc",
+  //   label: "Aadhar Card Image",
+  //   type: "file",
+  // },
+  // {
+  //   name: "otherDoc",
+  //   label: "Other Documents Image",
+  //   type: "file",
+  // },
 ];

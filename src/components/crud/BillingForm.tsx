@@ -74,6 +74,30 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
           { key: "ledgers", fieldName: "invoiceTo" },
           { key: "quotations", fieldName: "quotationId" },
         ];
+        const fetchQuotationDetails = () => {
+          setFormField((prevFields: any[]) =>
+            prevFields.map((field) => {
+              if (field.name === "productBillingForm") {
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [field.name]: data?.quotation?.products,
+                }));
+                return { ...field, options: data?.quotation?.products };
+              }
+              if (field.name === "quotationId") {
+                const dataKey = [
+                  { _id: data?.quotationId, name: data?.quotationNo },
+                ];
+                setFormData((prev: any) => ({
+                  ...prev,
+                  [field.name]: data?.quotationId,
+                }));
+                return { ...field, options: getSelectFormattedData(dataKey) };
+              }
+              return field;
+            })
+          );
+        };
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
           if (mapping) {
@@ -86,6 +110,7 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
           return field;
         });
         setFormField(updatedFormField);
+        if (data?._id) fetchQuotationDetails();
       } catch (error) {
         console.log("Error: ", error);
       } finally {

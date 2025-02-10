@@ -61,7 +61,7 @@ export const PurchaseFieldsType: FormField[] = [
     placeholder: "Select payment mode",
     options: [
       { label: "Cash", value: "Cash" },
-      { label: "Cheuqe", value: "Cheuqe" },
+      { label: "Cheque", value: "Cheque" },
       { label: "NEFT", value: "NEFT" },
     ],
   },

@@ -148,11 +148,11 @@ export const LeadFormType: FormField[] = [
     minDate: formatDate(new Date()),
     placeholder: "Select follow up",
   },
-  {
-    name: "document",
-    label: "Upload Documents",
-    type: "file",
-  },
+  // {
+  //   name: "document",
+  //   label: "Upload Documents",
+  //   type: "file",
+  // },
   {
     rows: 5,
     name: "description",
