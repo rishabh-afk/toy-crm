@@ -22,7 +22,7 @@ export const ExpenseFormType: FormField[] = [
     required: true,
     label: "Date / Time",
     placeholder: "Enter date",
-  },sdjff
+  },
   {
     rows: 8,
     name: "note",
