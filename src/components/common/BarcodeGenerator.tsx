@@ -38,13 +38,33 @@ const BarcodeGenerator = ({
   const handlePrintBarcode = () => {
     const printContent = document.getElementById(id);
     if (printContent) {
-      const originalContent = document.body.innerHTML;
+      const printWindow = window.open("", "", "width=800,height=800");
 
-      document.body.innerHTML = printContent.innerHTML;
-      window.print();
-
-      document.body.innerHTML = originalContent;
-      window.location.reload();
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <style>
+                @page { margin: 0; size: auto; }
+                body { 
+                  display: flex; 
+                  justify-content: center; 
+                  align-items: center; 
+                  height: 100vh; 
+                  margin: 0; 
+                }
+                svg { max-width: 100%; }
+              </style>
+            </head>
+            <body>
+              ${printContent.innerHTML}
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+      }
     }
   };
 

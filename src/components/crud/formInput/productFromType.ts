@@ -44,7 +44,6 @@ export const ProductFormType: FormField[] = [
   {
     name: "sku",
     type: "text",
-    required: true,
     label: "SKU",
     placeholder: "Enter the SKU",
   },
