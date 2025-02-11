@@ -6,6 +6,7 @@ interface DateProps {
     name: string;
     label: string;
     value?: string;
+    currentDate?: any;
     required?: boolean;
     placeholder?: string;
     isDisabled?: boolean;
@@ -37,7 +38,13 @@ const Date: FC<DateProps> = ({ field, handleInputChange, className }) => {
         disabled={field.isDisabled}
         onChange={handleInputChange}
         placeholder={field.placeholder}
-        value={field?.value ? formatDate(field.value) : ""}
+        value={
+          field?.value
+            ? formatDate(field.value)
+            : field.currentDate
+            ? field.currentDate
+            : ""
+        }
         className={`border border-gray-300 text-black placeholder:text-gray-400 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${className}`}
       />
     </div>

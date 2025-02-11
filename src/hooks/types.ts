@@ -68,6 +68,7 @@ export interface FormField {
   options?: any;
   accept?: string;
   maxFiles?: number;
+  currentDate?: any;
   maxSizeMB?: number;
   maxLength?: number;
   multiple?: boolean;

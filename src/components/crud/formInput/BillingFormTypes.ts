@@ -20,7 +20,6 @@ export const BillingFormType: FormField[] = [
   },
   {
     type: "date",
-    required: true,
     name: "billDate",
     label: "Invoice Date",
     minDate: formatDate(new Date()),

@@ -129,11 +129,28 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
         if (response.success && response?.data) {
           const fieldUpdates: Record<string, any> = {
             productBillingForm: { options: response?.data?.products },
+            invoiceTo: {
+              updateFormData: {
+                key: "invoiceTo",
+                value: response?.data?.customer,
+              },
+              isDisabled: true,
+              value: response?.data?.customer,
+            },
+            shipTo: {
+              updateFormData: {
+                key: "shipTo",
+                value: response?.data?.customer,
+              },
+              isDisabled: true,
+              value: response?.data?.customer,
+            },
           };
           const updatedFormField = formField.map((field: any) => {
             const update = fieldUpdates[field.name];
             if (update) {
               if (update.updateFormData) {
+                console.log(update.updateFormData.value);
                 setFormData((prev: any) => ({
                   ...prev,
                   [update.updateFormData.key]: update.updateFormData.value,

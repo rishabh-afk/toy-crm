@@ -150,7 +150,6 @@ export const LedgerType: FormField[] = [
   },
   {
     type: "select",
-    required: true,
     name: "bankName",
     label: "Bank Name",
     placeholder: "Select bank",

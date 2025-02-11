@@ -25,11 +25,10 @@ export const QuotationFieldsType: FormField[] = [
     options: [],
   },
   {
-    name: "quotationDate",
     type: "date",
-    required: true,
+    name: "quotationDate",
     label: "Quotation Date",
-    minDate: formatDate(new Date()),
+    currentDate: formatDate(new Date()),
     placeholder: "Enter quotation date",
   },
   {
@@ -39,8 +38,8 @@ export const QuotationFieldsType: FormField[] = [
     placeholder: "Enter post Office Number",
   },
   {
-    name: "poDate",
     type: "date",
+    name: "poDate",
     label: "Purchase Order Date",
     minDate: formatDate(new Date()),
     placeholder: "Provide post office date",
