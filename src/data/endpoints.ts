@@ -49,6 +49,14 @@ export const endpoints: Record<
     fetchAll: "api/user", // to fetch all Users
     operations: operations,
   },
+  Expense: {
+    create: "api/expense", // to create a expense
+    delete: "api/expense/", // to delete a expense
+    update: "api/expense/", // to update a expense
+    read: "api/expense/", // to get a expense
+    fetchAll: "api/expense", // to fetch all expenses
+    operations: operations,
+  },
   UOM: {
     create: "api/product-uom", // to create a product-uom
     delete: "api/product-uom/", // to delete a product-uom

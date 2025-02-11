@@ -1,9 +1,8 @@
-import { RiAdminFill } from "react-icons/ri";
 import { SiGoogleadmob } from "react-icons/si";
 import { GiBoxUnpacking } from "react-icons/gi";
 import { BsChatQuoteFill } from "react-icons/bs";
 import { FaHome, FaBarcode } from "react-icons/fa";
-// import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
+import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
 import { TbBrandBebo, TbRulerMeasure2, TbTransferIn } from "react-icons/tb";
 import {
   FaWarehouse,
@@ -166,32 +165,40 @@ export const tabs = [
     href: "/dashboard/billing",
     permission: "Manage Billing",
   },
-  // {
-  //   id: 11,
-  //   href: "",
-  //   icon: RiSecurePaymentFill,
-  //   label: "Manage Payment",
-  //   pageTitle: "All Payment",
-  //   permission: "Manage Payment",
-  //   tabs: [
-  //     {
-  //       id: 3,
-  //       icon: FaWarehouse,
-  //       label: "All Transactions",
-  //       permission: "Manage Payment",
-  //       pageTitle: "Manage Payments",
-  //       href: "/dashboard/payment",
-  //     },
-  //     {
-  //       id: 1,
-  //       icon: GiBoxUnpacking,
-  //       label: "Receivings",
-  //       pageTitle: "All Packing",
-  //       permission: "Manage Payment",
-  //       href: "/dashboard/receivings",
-  //     },
-  //   ],
-  // },
+  {
+    id: 11,
+    href: "",
+    icon: RiSecurePaymentFill,
+    label: "Manage Payment",
+    pageTitle: "All Payment",
+    permission: "Manage Payment",
+    tabs: [
+      // {
+      //   id: 3,
+      //   icon: FaWarehouse,
+      //   label: "All Transactions",
+      //   permission: "Manage Payment",
+      //   pageTitle: "Manage Payments",
+      //   href: "/dashboard/payment",
+      // },
+      // {
+      //   id: 1,
+      //   icon: GiBoxUnpacking,
+      //   label: "Receivings",
+      //   pageTitle: "All Packing",
+      //   permission: "Manage Payment",
+      //   href: "/dashboard/receivings",
+      // },
+      {
+        id: 1,
+        icon: GiBoxUnpacking,
+        label: "Expenses",
+        pageTitle: "All Packing",
+        permission: "Manage Payment",
+        href: "/dashboard/expenses",
+      },
+    ],
+  },
 ];
 
 export const roles = [

@@ -162,12 +162,12 @@ export const ProductFormType: FormField[] = [
     label: "GST",
     placeholder: "Enter IGST",
   },
-  // {
-  //   type: "br",
-  //   name: "upload",
-  //   label: "Upload Documents",
-  //   widthFull: true,
-  // },
+  {
+    type: "br",
+    name: "upload",
+    label: "Upload Documents",
+    widthFull: true,
+  },
   // {
   //   type: "file",
   //   name: "images",
@@ -176,12 +176,12 @@ export const ProductFormType: FormField[] = [
   //   widthFull: true,
   //   label: "Product Images",
   // },
-  // {
-  //   name: "coverImage",
-  //   label: "Product Cover Image",
-  //   type: "file",
-  //   required: true,
-  // },
+  {
+    name: "coverImage",
+    label: "Product Cover Image",
+    type: "file",
+    required: true,
+  },
 ];
 
 export const ProductBrandType: FormField[] = [
