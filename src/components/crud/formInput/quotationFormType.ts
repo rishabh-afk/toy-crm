@@ -41,7 +41,7 @@ export const QuotationFieldsType: FormField[] = [
     type: "date",
     name: "poDate",
     label: "Purchase Order Date",
-    minDate: formatDate(new Date()),
+    currentDate: formatDate(new Date()),
     placeholder: "Provide post office date",
   },
   // {

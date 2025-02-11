@@ -45,12 +45,12 @@ const BrandForm: React.FC<DealerFormProps> = (props: any) => {
         if (resp?.success) props?.setFilteredData(resp?.data?.result);
         if (resp?.success && resp?.data?.pagination)
           props?.setPaginate(resp?.data?.pagination);
+        props.onClose?.();
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
       return toast.error("Something went wrong!");
     } finally {
-      props.onClose?.();
       setSubmitting(false);
     }
   };

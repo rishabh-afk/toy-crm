@@ -22,7 +22,7 @@ export const BillingFormType: FormField[] = [
     type: "date",
     name: "billDate",
     label: "Invoice Date",
-    minDate: formatDate(new Date()),
+    currentDate: formatDate(new Date()),
     placeholder: "Select Invoice Date",
   },
   {

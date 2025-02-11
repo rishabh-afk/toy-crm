@@ -1,7 +1,7 @@
+import { FaHome } from "react-icons/fa";
 import { SiGoogleadmob } from "react-icons/si";
 import { GiBoxUnpacking } from "react-icons/gi";
 import { BsChatQuoteFill } from "react-icons/bs";
-import { FaHome, FaBarcode } from "react-icons/fa";
 import { RiAdminFill, RiSecurePaymentFill } from "react-icons/ri";
 import { TbBrandBebo, TbRulerMeasure2, TbTransferIn } from "react-icons/tb";
 import {
@@ -97,14 +97,14 @@ export const tabs = [
         permission: "Manage Products",
         href: "/dashboard/product",
       },
-      {
-        id: 5,
-        icon: FaBarcode,
-        label: "Download Barcode",
-        pageTitle: "Download Barcode",
-        permission: "Manage Products",
-        href: "/dashboard/product/barcode",
-      },
+      // {
+      //   id: 5,
+      //   icon: FaBarcode,
+      //   label: "Download Barcode",
+      //   pageTitle: "Download Barcode",
+      //   permission: "Manage Products",
+      //   href: "/dashboard/product/barcode",
+      // },
     ],
   },
   {

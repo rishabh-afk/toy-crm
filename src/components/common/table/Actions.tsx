@@ -1,13 +1,15 @@
 import Modal from "../Modal";
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { endpoints } from "@/data/endpoints";
 import { Delete, Fetch } from "@/hooks/apiUtils";
+import BarcodeGenerator from "../BarcodeGenerator";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
+import { usePathname, useRouter } from "next/navigation";
 import ConfirmationModal from "@/components/crud/ConfirmationModal";
 
 interface RowData {
   _id: string;
+  name: string;
 }
 
 interface OperationsAllowed {
@@ -129,6 +131,12 @@ const Actions: React.FC<ActionsProps> = ({
           <FaEye title="View Stock" />
         </button>
       )}
+      {type === "Product" && (
+        <BarcodeGenerator rowValue={row?.name} id={row?._id} />
+      )}
+      {/* {type === "Quotation" && (
+        <BarcodeGenerator rowValue={row?.name} id={row?._id} />
+      )} */}
     </>
   );
 };

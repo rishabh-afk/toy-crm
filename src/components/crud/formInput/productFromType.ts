@@ -66,7 +66,6 @@ export const ProductFormType: FormField[] = [
     name: "brand",
     type: "select",
     label: "Brand",
-    required: true,
     placeholder: "Enter Brand Name",
     options: [],
   },
@@ -160,7 +159,8 @@ export const ProductFormType: FormField[] = [
     name: "gst",
     type: "number",
     label: "GST",
-    placeholder: "Enter IGST",
+    required: true,
+    placeholder: "Enter GST",
   },
   {
     type: "br",

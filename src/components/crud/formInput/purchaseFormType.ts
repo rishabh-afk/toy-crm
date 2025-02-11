@@ -43,7 +43,6 @@ export const PurchaseFieldsType: FormField[] = [
     name: "poDate",
     type: "date",
     label: "Purchase Order Date",
-    minDate: formatDate(new Date()),
     placeholder: "Provide Purchase Order date",
   },
   {
@@ -51,6 +50,7 @@ export const PurchaseFieldsType: FormField[] = [
     required: true,
     name: "purchaseDate",
     label: "Purchase Date",
+    currentDate: formatDate(new Date()),
     placeholder: "Provide Purchase date",
   },
   {
