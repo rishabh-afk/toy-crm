@@ -1,4 +1,3 @@
-import { formatDate } from "@/hooks/general";
 import { FormField } from "@/hooks/types";
 
 export const ExpenseFormType: FormField[] = [
@@ -23,7 +22,7 @@ export const ExpenseFormType: FormField[] = [
     required: true,
     label: "Date / Time",
     placeholder: "Enter date",
-  },
+  },sdjff
   {
     rows: 8,
     name: "note",
