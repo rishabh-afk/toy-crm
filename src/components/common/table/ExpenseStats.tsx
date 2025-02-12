@@ -40,31 +40,31 @@ const ExpenseStats = ({
       label: "Today",
       value: data.today,
       prev: data.yesterday,
-      color: "bg-gradient-to-r from-green-400 to-green-600",
+      color: "bg-gradient-to-r from-green-300 to-green-600",
     },
     {
       label: "This Week",
       value: data.currentWeek,
       prev: data.lastWeek,
-      color: "bg-gradient-to-r from-blue-400 to-blue-600",
+      color: "bg-gradient-to-r from-blue-300 to-blue-600",
     },
     {
       label: "This Month",
       value: data.currentMonth,
       prev: data.lastMonth,
-      color: "bg-gradient-to-r from-purple-400 to-purple-600",
+      color: "bg-gradient-to-r from-purple-300 to-purple-600",
     },
     {
       label: "This Year",
       value: data.currentYear,
       prev: data.lastYear,
-      color: "bg-gradient-to-r from-orange-400 to-orange-600",
+      color: "bg-gradient-to-r from-orange-300 to-orange-600",
     },
     {
       label: "Total",
       value: data.total,
       prev: null,
-      color: "bg-gradient-to-r from-pink-400 to-pink-600",
+      color: "bg-gradient-to-r from-pink-300 to-pink-600",
     },
   ];
 

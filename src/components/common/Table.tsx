@@ -229,6 +229,8 @@ const TableComponent = <T extends { [key: string]: any }>({
         )}
       </Modal>
 
+      {type === "Expense" && <ExpenseStats />}
+
       {/* Header */}
       <Header
         type={type}
@@ -253,8 +255,6 @@ const TableComponent = <T extends { [key: string]: any }>({
           setSearchTerm={setSearchTerm}
           fetchFilteredData={fetchFilteredData}
         />
-
-        {type === "Expense" && <ExpenseStats />}
 
         {/* Table */}
         <Table
