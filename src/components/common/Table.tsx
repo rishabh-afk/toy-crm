@@ -50,6 +50,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   operationsAllowed,
 }: TableProps) => {
   const pathname = usePathname();
+  const [moreData, setMoreData] = useState<any>({});
   const [paginate, setPaginate] = useState<Pagination>({
     totalPages: pagination_data?.totalPages ?? 1,
     totalItems: pagination_data?.totalItems ?? 0,
@@ -173,6 +174,7 @@ const TableComponent = <T extends { [key: string]: any }>({
           false
         );
         if (response?.success) {
+          setMoreData(response.data);
           setFilteredData(response?.data?.result || []);
           setPaginate(response?.data?.pagination);
         }
@@ -229,7 +231,7 @@ const TableComponent = <T extends { [key: string]: any }>({
         )}
       </Modal>
 
-      {type === "Expense" && <ExpenseStats />}
+      {type === "Expense" && <ExpenseStats data={moreData} />}
 
       {/* Header */}
       <Header

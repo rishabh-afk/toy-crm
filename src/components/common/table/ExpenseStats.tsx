@@ -2,14 +2,14 @@ import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 
 type ExpenseData = {
   today: number | null;
-  yesterday: number | null;
-  currentWeek: number | null;
-  lastWeek: number | null;
-  currentMonth: number | null;
-  lastMonth: number | null;
-  currentYear: number | null;
-  lastYear: number | null;
   total: number | null;
+  lastWeek: number | null;
+  lastYear: number | null;
+  yesterday: number | null;
+  lastMonth: number | null;
+  currentWeek: number | null;
+  currentYear: number | null;
+  currentMonth: number | null;
 };
 
 const calculatePercentage = (
@@ -22,15 +22,15 @@ const calculatePercentage = (
 
 const ExpenseStats = ({
   data = {
-    today: 10,
-    yesterday: null,
-    currentWeek: 10,
+    today: null,
+    total: null,
     lastWeek: null,
-    currentMonth: 10,
-    lastMonth: null,
-    currentYear: 10,
     lastYear: null,
-    total: 10,
+    yesterday: null,
+    lastMonth: null,
+    currentWeek: null,
+    currentYear: null,
+    currentMonth: null,
   },
 }: {
   data?: ExpenseData;
@@ -80,7 +80,9 @@ const ExpenseStats = ({
           >
             <div className="flex flex-col items-center text-center">
               <p className="text-lg font-semibold">{label}</p>
-              <p className="text-2xl font-bold">₹{value ?? "-"}</p>
+              <p className="text-2xl font-bold">
+                ₹{value?.toLocaleString() ?? "-"}
+              </p>
               {percentChange !== null && (
                 <p
                   className={`flex items-center gap-1 text-sm font-medium ${
