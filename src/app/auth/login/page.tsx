@@ -45,14 +45,9 @@ const Login: React.FC = () => {
     const localPassword = localStorage.getItem("password");
 
     const submitFormAutomatically = async () => {
-      // Call handleSubmit in useEffect (make sure it handles async logic)
-      await handleSubmit(new Event("submit") as unknown as React.FormEvent); // Trigger form submit event manually
+      await handleSubmit(new Event("submit") as unknown as React.FormEvent);
     };
-
-    if (localEmail && localPassword) {
-      submitFormAutomatically();
-    }
-
+    if (localEmail && localPassword) submitFormAutomatically();
     router.prefetch("/dashboard");
     // eslint-disable-next-line
   }, [router]);

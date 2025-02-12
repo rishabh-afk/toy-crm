@@ -10,6 +10,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
+import { tabs } from "@/data/tabs";
 
 interface AuthContextProps {
   user: any;
@@ -42,7 +43,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           setLoading(false);
           setToken(sharedToken);
           setUser(response?.data);
-          return navigate.replace("/dashboard");
+          const permissions = response?.data?.permissions;
+          redirection(permissions);
         } else return navigate.replace("/auth/login");
       } catch (error) {
         setLoading(false);
@@ -54,13 +56,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     const sharedToken = localStorage.getItem("adminToken");
     if (sharedToken) fetchUser(sharedToken);
     else setLoading(false);
+    // eslint-disable-next-line
   }, [navigate]);
 
-  const login = (token: string, userData: object) => {
+  const login = (token: string, userData: any) => {
     setToken(token);
     setUser(userData);
     localStorage.setItem("adminToken", token);
-    return navigate.push("/dashboard");
+    const permissions = userData?.permissions;
+    redirection(permissions);
+  };
+
+  const redirection = (permissions: any) => {
+    const first =
+      permissions.find((item: any) => item.access.read === true)?.module || "";
+    if (first) {
+      const link = tabs.find((item: any) => item.permission === first)?.href;
+      if (link) {
+        const getPathName = localStorage.getItem("pathname");
+        return navigate.replace(getPathName ? getPathName : link);
+      } else navigate.replace("/no-access");
+    } else navigate.replace("/no-access");
   };
 
   const logout = () => {

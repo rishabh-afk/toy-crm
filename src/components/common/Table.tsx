@@ -4,14 +4,15 @@ import dayjs from "dayjs";
 import Modal from "./Modal";
 import Header from "./table/Header";
 import Filters from "./table/Filters";
+import { toast } from "react-toastify";
 import FormRenderer from "./FormRender";
 import NoDataFound from "./NoDataFound";
 import { Fetch } from "@/hooks/apiUtils";
 import Table from "./table/TableComponent";
 import Pagination from "./table/Pagination";
 import { endpoints } from "@/data/endpoints";
+import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 interface TableColumn {
   key: string;
@@ -47,6 +48,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   pagination_data,
   operationsAllowed,
 }: TableProps) => {
+  const pathname = usePathname();
   const [paginate, setPaginate] = useState<Pagination>({
     totalPages: pagination_data?.totalPages ?? 1,
     totalItems: pagination_data?.totalItems ?? 0,
@@ -178,6 +180,11 @@ const TableComponent = <T extends { [key: string]: any }>({
       }
     }
   };
+
+  useEffect(() => {
+    if (pathname) fetchFilteredData({});
+    // eslint-disable-next-line
+  }, [pathname]);
 
   useEffect(() => {
     if (isModalVisible) {
