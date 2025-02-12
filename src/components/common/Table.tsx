@@ -13,6 +13,7 @@ import Pagination from "./table/Pagination";
 import { endpoints } from "@/data/endpoints";
 import { usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import ExpenseStats from "./table/ExpenseStats";
 
 interface TableColumn {
   key: string;
@@ -252,6 +253,8 @@ const TableComponent = <T extends { [key: string]: any }>({
           setSearchTerm={setSearchTerm}
           fetchFilteredData={fetchFilteredData}
         />
+
+        {type === "Expense" && <ExpenseStats />}
 
         {/* Table */}
         <Table
