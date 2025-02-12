@@ -9,9 +9,9 @@ export const ProductFormType: FormField[] = [
     placeholder: "Enter product name",
   },
   {
-    name: "productCode",
     type: "text",
     required: true,
+    name: "productCode",
     label: "Product Code",
     placeholder: "Enter product code",
   },
@@ -154,13 +154,13 @@ export const ProductFormType: FormField[] = [
     label: "Max Level",
     placeholder: "Enter maximum level",
   },
-  {
-    name: "gst",
-    type: "number",
-    label: "GST",
-    required: true,
-    placeholder: "Enter GST",
-  },
+  // {
+  //   name: "gst",
+  //   type: "number",
+  //   label: "GST",
+  //   required: true,
+  //   placeholder: "Enter GST",
+  // },
   {
     type: "br",
     name: "upload",
@@ -239,6 +239,13 @@ export const ProductCategoryType: FormField[] = [
     name: "hsnCode",
     label: "HSN Code",
     placeholder: "Enter hsn code",
+  },
+  {
+    name: "gst",
+    type: "number",
+    label: "GST",
+    required: true,
+    placeholder: "Enter GST",
   },
   {
     name: "status",

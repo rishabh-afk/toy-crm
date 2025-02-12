@@ -32,7 +32,7 @@ export const QuotationFieldsType: FormField[] = [
     placeholder: "Enter quotation date",
   },
   {
-    name: "poNO",
+    name: "poNo",
     type: "text",
     label: "Purchase Order Number",
     placeholder: "Enter post Office Number",

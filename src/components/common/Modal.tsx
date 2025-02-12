@@ -8,6 +8,7 @@ interface ModalProps {
   formtype?: string;
   isVisible: boolean;
   onClose: () => void;
+  hidePadding?: boolean;
   children: React.ReactNode;
 }
 
@@ -17,6 +18,7 @@ const Modal: React.FC<ModalProps> = ({
   isVisible,
   onClose,
   children,
+  hidePadding,
 }) => {
   if (!isVisible) return null;
 
@@ -37,7 +39,7 @@ const Modal: React.FC<ModalProps> = ({
               onClick={onClose}
             />
           </p>
-          <div className="p-4">{children}</div>
+          <div className={hidePadding ? "" : "p-4"}>{children}</div>
         </div>
       </div>
     </div>,

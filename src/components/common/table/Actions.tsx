@@ -5,6 +5,7 @@ import { Delete, Fetch } from "@/hooks/apiUtils";
 import BarcodeGenerator from "../BarcodeGenerator";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
+import GenerateQuotationPDF from "../GenerateQuotationPDF";
 import ConfirmationModal from "@/components/crud/ConfirmationModal";
 
 interface RowData {
@@ -134,9 +135,7 @@ const Actions: React.FC<ActionsProps> = ({
       {type === "Product" && (
         <BarcodeGenerator rowValue={row?.name} id={row?._id} />
       )}
-      {/* {type === "Quotation" && (
-        <BarcodeGenerator rowValue={row?.name} id={row?._id} />
-      )} */}
+      {type === "Quotation" && <GenerateQuotationPDF id={row._id} />}
     </>
   );
 };
