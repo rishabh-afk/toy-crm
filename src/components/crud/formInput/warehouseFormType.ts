@@ -1,6 +1,7 @@
 import { countries } from "@/data/data";
 import { FormField } from "@/hooks/types";
 import { getSelectFormattedData } from "@/hooks/general";
+import { states } from "@/data/states";
 
 export const warehouseType: FormField[] = [
   {
@@ -24,11 +25,12 @@ export const warehouseType: FormField[] = [
     placeholder: "Enter street address",
   },
   {
+    type: "select",
     name: "city",
-    type: "text",
     label: "City",
     required: true,
-    placeholder: "Enter city",
+    placeholder: "Select city",
+    options: getSelectFormattedData(states),
   },
   {
     name: "state",

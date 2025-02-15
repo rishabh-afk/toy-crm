@@ -2,6 +2,7 @@ import { countries } from "@/data/data";
 import { FormField } from "@/hooks/types";
 import { includes } from "@/hooks/polyfills";
 import { formatDate, getSelectFormattedData } from "@/hooks/general";
+import { states } from "@/data/states";
 
 export const userFormType: FormField[] = [
   {
@@ -131,11 +132,12 @@ export const userFormType: FormField[] = [
     placeholder: "Enter street address",
   },
   {
+    type: "select",
     name: "city",
-    type: "text",
     label: "City",
     required: true,
-    placeholder: "Enter city",
+    placeholder: "Select city",
+    options: getSelectFormattedData(states),
   },
   {
     name: "state",

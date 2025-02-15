@@ -2,6 +2,7 @@ import { FormField } from "@/hooks/types";
 import { includes } from "@/hooks/polyfills";
 import { bankNames, countries } from "@/data/data";
 import { getSelectFormattedData } from "@/hooks/general";
+import { states } from "@/data/states";
 
 export const LedgerType: FormField[] = [
   {
@@ -106,11 +107,12 @@ export const LedgerType: FormField[] = [
     placeholder: "Enter street address",
   },
   {
+    type: "select",
     name: "city",
-    type: "text",
     label: "City",
     required: true,
-    placeholder: "Enter city",
+    placeholder: "Select city",
+    options: getSelectFormattedData(states),
   },
   {
     name: "state",
