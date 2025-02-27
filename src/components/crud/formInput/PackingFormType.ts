@@ -27,9 +27,9 @@ export const PackingFormType: FormField[] = [
     options: [], // This will hold the options for the Select component
   },
   {
-    name: "packingDate",
     type: "date",
     required: true,
+    name: "packingDate",
     label: "Estimated Packed Date",
     minDate: formatDate(new Date()),
     placeholder: "Select Packed Date",

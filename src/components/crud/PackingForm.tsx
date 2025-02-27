@@ -34,6 +34,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [loading2, setLoading2] = useState(data?._id ? true : false);
 
   const [formField, setFormField] = useState<any>(
     data?._id
@@ -88,6 +89,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         const url = `/api/quotation/${formData.quotationId}`;
         const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data) {
+          setStock(response?.data?.products);
           const fieldUpdates: Record<string, any> = {
             packing: { options: response?.data?.products },
             customerName: {
@@ -115,7 +117,6 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
               value: response?.data?.totalQuantity,
             },
           };
-
           const updatedFormField = formField.map((field: any) => {
             const update = fieldUpdates[field.name];
             if (update) {
@@ -130,6 +131,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
             return field;
           });
           setFormField(updatedFormField);
+          await fetchDetails();
         }
       } catch (error) {
         console.log("Error: ", error);
@@ -138,6 +140,46 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
     if (formData.quotationId && !data?._id) fetchQuotationDetails();
     // eslint-disable-next-line
   }, [formData.quotationId]);
+
+  const updateProductsWithMaxQuantity = (
+    products: any,
+    quantityObj: Record<string, number>
+  ): any => {
+    return products.map((product: any) => {
+      if (quantityObj[product._id] !== undefined) {
+        return { ...product, maxQuantity: quantityObj[product._id] };
+      }
+      return product;
+    });
+  };
+
+  const fetchDetails = useCallback(async () => {
+    try {
+      const url = `/api/packing/get-max-quantity`;
+      const params = {
+        packingId: data?._id ?? "",
+        quotationId: formData.quotationId,
+      };
+      const response: any = await Fetch(url, params, 5000, true, false);
+      if (response.success && response?.data) {
+        const data = updateProductsWithMaxQuantity(stock, response.data);
+        const updatedFormField = formField.map((field: any) => {
+          if (field.name === "packing") return { ...field, options: data };
+          return field;
+        });
+        setFormField(updatedFormField);
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    } finally {
+      setLoading2(false);
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (data?._id && formData.quotationId) fetchDetails();
+  }, [fetchDetails, formData.quotationId, data?._id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -197,9 +239,11 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
     }
   }, []);
 
+  if (loading || loading2) return;
+
   return (
     <div>
-      {!loading && (
+      {!loading && !loading2 && (
         <>
           <DynamicForm
             returnAs="object"
