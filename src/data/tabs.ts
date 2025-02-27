@@ -173,14 +173,14 @@ export const tabs = [
     pageTitle: "All Payment",
     permission: "Manage Payment",
     tabs: [
-      // {
-      //   id: 3,
-      //   icon: FaWarehouse,
-      //   label: "All Transactions",
-      //   permission: "Manage Payment",
-      //   pageTitle: "Manage Payments",
-      //   href: "/dashboard/payment",
-      // },
+      {
+        id: 3,
+        icon: FaWarehouse,
+        label: "All Payments",
+        permission: "Manage Payment",
+        pageTitle: "Manage Payments",
+        href: "/dashboard/payment",
+      },
       // {
       //   id: 1,
       //   icon: GiBoxUnpacking,

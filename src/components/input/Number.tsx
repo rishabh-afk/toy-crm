@@ -32,7 +32,7 @@ const Number: FC<NumberProps> = ({ field, handleInputChange, className }) => {
         min={field.min}
         max={field.max}
         name={field.name}
-        value={field?.value}
+        value={field.value ?? 0}
         required={field.required}
         disabled={field.isDisabled}
         onChange={handleInputChange}

@@ -162,3 +162,47 @@ export function removeSuffixInNestedObject(
     [nestedKey]: updatedNestedObj, // Update the nested object
   };
 }
+
+export const formatRupee = (amount: any) => {
+  return new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 2,
+  }).format(amount);
+};
+
+export const formatCompactNumber = (num: number) => {
+  if (!num) return "-";
+
+  if (num >= 1_00_00_00_000) {
+    return (num / 1_00_00_00_000).toFixed(2) + "T"; // Trillion
+  } else if (num >= 1_00_00_00_000) {
+    return (num / 1_00_00_00_000).toFixed(2) + "B"; // Billion
+  } else if (num >= 1_00_00_000) {
+    return (num / 1_00_00_000).toFixed(2) + "Cr"; // Crore
+  } else if (num >= 1_00_000) {
+    return (num / 1_00_000).toFixed(2) + "L"; // Lakh
+  } else if (num >= 1_000) {
+    return (num / 1_000).toFixed(2) + "K"; // Thousand
+  }
+  return num.toString(); // Less than 1000, return as is
+};
+
+export const formatIndianCurrency = (amount: number) => {
+  let formattedAmount: string;
+  if (!amount) return "-";
+
+  if (amount >= 1_00_00_00_000) {
+    formattedAmount = (amount / 1_00_00_00_000).toFixed(2) + "T"; // Trillion
+  } else if (amount >= 1_00_00_000) {
+    formattedAmount = (amount / 1_00_00_000).toFixed(2) + "Cr"; // Crore
+  } else if (amount >= 1_00_000) {
+    formattedAmount = (amount / 1_00_000).toFixed(2) + "L"; // Lakh
+  } else if (amount >= 1_000) {
+    formattedAmount = (amount / 1_000).toFixed(2) + "K"; // Thousand
+  } else {
+    formattedAmount = amount.toFixed(2); // Normal amount
+  }
+
+  return `₹${formattedAmount}`;
+};

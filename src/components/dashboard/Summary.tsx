@@ -1,61 +1,23 @@
-import {
-  closedDeals,
-  recentActivity,
-  upcomingMeetings,
-} from "@/data/dashboard";
-import { Deal } from "@/hooks/types";
-import BarChart from "../chart/Barchart";
-import { FaFileAlt } from "react-icons/fa";
-import { FaEye, FaArrowDown } from "react-icons/fa";
+// import {
+//   closedDeals,
+//   recentActivity,
+//   upcomingMeetings,
+// } from "@/data/dashboard";
+import useFetch from "@/hooks/useFetch";
+// import BarChart from "../chart/Barchart";
+import { useRouter } from "next/navigation";
+import { endpoints } from "@/data/endpoints";
+import { formatDate } from "@/hooks/general";
+// import { FaFileAlt } from "react-icons/fa";
 
 const Summary = () => {
-  const recentDeals: Deal[] = [
-    {
-      id: "#001234",
-      client: "Acme Corp.",
-      dealValue: "$50,000",
-      dealStatus: "Closed",
-      closingDate: "Oct 18, 2024",
-      salesperson: "John Doe",
-    },
-    {
-      id: "#001235",
-      client: "Susenz Ltd.",
-      dealValue: "$75,000",
-      dealStatus: "In Progress",
-      closingDate: "Oct 16, 2024",
-      salesperson: "Jane Smith",
-    },
-    {
-      id: "#001236",
-      client: "BrightTech",
-      dealValue: "$120,000",
-      dealStatus: "Lost",
-      closingDate: "Oct 12, 2024",
-      salesperson: "Peter Johnson",
-    },
-    {
-      id: "#001237",
-      client: "Future Innovations",
-      dealValue: "$65,000",
-      dealStatus: "Pending",
-      closingDate: "Oct 10, 2024",
-      salesperson: "Emily Davis",
-    },
-    {
-      id: "#001238",
-      client: "Global Ventures",
-      dealValue: "$90,000",
-      dealStatus: "Closed",
-      closingDate: "Oct 08, 2024",
-      salesperson: "Mark Lee",
-    },
-  ];
+  const router = useRouter();
+  const { data } = useFetch(endpoints["Quotation"].fetchAll);
+  const updatedData = data?.data.result.slice(0, 5);
+
   return (
     <>
-      {" "}
-      <div className="flex flex-col lg:flex-row gap-5">
-        {/* Closed Deals */}
+      {/* <div className="flex flex-col lg:flex-row gap-5">
         <div className="w-full lg:w-1/4 h-fit bg-whiteBg p-4 rounded-xl">
           <div className="flex justify-between gap-5 border-b border-infobg pb-4 items-center">
             <h2 className="font-semibold text-iconBlack">Closed Deals</h2>
@@ -91,8 +53,6 @@ const Summary = () => {
             ))}
           </div>
         </div>
-
-        {/* Website Traffic */}
         <div className="w-full h-fit lg:w-1/4 bg-whiteBg p-4 rounded-xl">
           <div className="flex justify-between gap-5 border-b border-infobg pb-3 items-center">
             <h2 className="font-semibold text-iconBlack">Website Traffic</h2>
@@ -102,8 +62,6 @@ const Summary = () => {
           </div>
           <BarChart />{" "}
         </div>
-
-        {/* Recent Activity */}
         <div className="w-full h-fit lg:w-1/4 bg-whiteBg p-4 rounded-xl">
           <div className="flex justify-between gap-3 border-b border-infobg pb-3 items-center">
             <h2 className="font-semibold text-iconBlack">Recent Activity</h2>
@@ -141,8 +99,6 @@ const Summary = () => {
             ))}
           </div>
         </div>
-
-        {/* Upcoming Meetings */}
         <div className="w-full h-fit lg:w-1/4 bg-whiteBg p-4 rounded-xl">
           <div className="flex justify-between gap-5 border-b border-infobg pb-3 items-center">
             <h2 className="font-semibold text-iconBlack">Upcoming Meetings</h2>
@@ -169,14 +125,18 @@ const Summary = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Recent Deals */}
       <section className="px-6 py-4 bg-whiteBg rounded-xl mt-5">
         <div className="flex justify-between items-center">
           <h2 className="text-lg text-iconBlack font-semibold">
             Recent Deals Status
           </h2>
-          <button className="text-blue-500 bg-infobg font-semibold text-sm rounded-md whitespace-nowrap px-2 py-1">
+          <button
+            type="button"
+            onClick={() => router.push("/dashboard/quotation")}
+            className="text-blue-500 bg-infobg font-semibold text-sm rounded-md whitespace-nowrap px-2 py-1"
+          >
             View Details
           </button>
         </div>
@@ -187,45 +147,54 @@ const Summary = () => {
               <th className="p-4 border border-infobg">Client</th>
               <th className="p-4 border border-infobg">Deal Value</th>
               <th className="p-4 border border-infobg">Deal Status</th>
-              <th className="p-4 border border-infobg">Closing Date</th>
+              <th className="p-4 border border-infobg">Approved On</th>
               <th className="p-4 border border-infobg">Salesperson</th>
-              <th className="p-4 border border-infobg">Actions</th>
+              {/* <th className="p-4 border border-infobg">Actions</th> */}
             </tr>
           </thead>
           <tbody>
-            {recentDeals.map((deal) => (
-              <tr
-                key={deal.id}
-                className="border-b border-infobg text-iconBlack hover:bg-infobg cursor-pointer"
-              >
-                <td className="p-4 border border-infobg">{deal.id}</td>
-                <td className="p-4 border border-infobg">{deal.client}</td>
-                <td className="p-4 border border-infobg">{deal.dealValue}</td>
-                <td className="p-4 border border-infobg">
-                  <span
-                    className={`px-2 py-1 text-xs text-white rounded ${
-                      deal.dealStatus === "Closed"
-                        ? "bg-green-400"
-                        : deal.dealStatus === "In Progress"
-                        ? "bg-yellow-400"
-                        : "bg-red-400"
-                    }`}
-                  >
-                    {deal.dealStatus}
-                  </span>
-                </td>
-                <td className="p-4 border border-infobg">{deal.closingDate}</td>
-                <td className="p-4 border border-infobg">{deal.salesperson}</td>
-                <td className="p-4 border border-infobg">
+            {updatedData?.length > 0 &&
+              updatedData.map((deal: any) => (
+                <tr
+                  key={deal._id}
+                  className="border-b border-infobg text-iconBlack hover:bg-infobg cursor-pointer"
+                >
+                  <td className="p-4 border border-infobg">
+                    {deal.quotationNo}
+                  </td>
+                  <td className="p-4 border border-infobg">
+                    {deal.customerName}
+                  </td>
+                  <td className="p-4 border border-infobg">{deal.netAmount}</td>
+                  <td className="p-4 border border-infobg">
+                    <span
+                      className={`px-2 py-1 text-xs text-white rounded ${
+                        deal.status === "Approved"
+                          ? "bg-green-400"
+                          : deal.dealStatus === "Pending"
+                          ? "bg-yellow-400"
+                          : "bg-red-400"
+                      }`}
+                    >
+                      {deal.status}
+                    </span>
+                  </td>
+                  <td className="p-4 border border-infobg">
+                    {deal.approvedOn ? formatDate(deal.approvedOn) : "-"}
+                  </td>
+                  <td className="p-4 border border-infobg">
+                    {deal.preparedByName}
+                  </td>
+                  {/* <td className="p-4 border border-infobg">
                   <button className="bg-blue-400 text-white rounded text-lg p-1 hover:text-indigo-800 mr-2">
                     <FaEye />
                   </button>
                   <button className="bg-gray-400 text-white rounded text-lg p-1 hover:text-green-800">
                     <FaArrowDown />
                   </button>
-                </td>
-              </tr>
-            ))}
+                </td> */}
+                </tr>
+              ))}
           </tbody>
         </table>
       </section>

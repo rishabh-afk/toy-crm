@@ -50,7 +50,6 @@ export const PackingFormType: FormField[] = [
   },
   {
     maxLength: 6,
-    required: true,
     isDisabled: true,
     type: "stringNumeric",
     name: "netPackedQuantity",

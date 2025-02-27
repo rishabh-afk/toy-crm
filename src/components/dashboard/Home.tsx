@@ -1,37 +1,18 @@
-// pages/index.tsx
 import { FC } from "react";
-import { CRMStats } from "@/hooks/types";
+import useFetch from "@/hooks/useFetch";
+// import { CRMStats } from "@/hooks/types";
 import LineGraph from "../chart/Linegraph";
 import { IoStatsChart } from "react-icons/io5";
-import { ImParagraphLeft } from "react-icons/im";
+// import { ImParagraphLeft } from "react-icons/im";
+import { DashboardEndpoint } from "@/data/endpoints";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
-import ConcentricCircleGraph from "../chart/ConcentricCircleGraph";
-import BarChartWithNegativePositiveXAxis from "../chart/BarChartWithNegativePositiveXAxis";
+// import ConcentricCircleGraph from "../chart/ConcentricCircleGraph";
+import { formatCompactNumber, formatIndianCurrency } from "@/hooks/general";
+// import BarChartWithNegativePositiveXAxis from "../chart/BarChartWithNegativePositiveXAxis";
 
 const Home: FC = () => {
-  const crmStats: CRMStats = {
-    totalRevenue: "$150.75k",
-    activeUsers: "5.87K",
-    totalDeals: "8,654",
-    conversionRatio: "4.25%",
-    revenueData: [
-      { month: "Jan", thisYear: 30, lastYear: 20 },
-      { month: "Feb", thisYear: 45, lastYear: 40 },
-      { month: "Mar", thisYear: 50, lastYear: 30 },
-      { month: "Apr", thisYear: 60, lastYear: 50 },
-      { month: "May", thisYear: 70, lastYear: 60 },
-      { month: "Jun", thisYear: 50, lastYear: 45 },
-      { month: "Jul", thisYear: 40, lastYear: 30 },
-      { month: "Aug", thisYear: 60, lastYear: 55 },
-      { month: "Sep", thisYear: 65, lastYear: 60 },
-      { month: "Oct", thisYear: 55, lastYear: 50 },
-    ],
-    profitReport: {
-      profit: "$3.56K",
-      revenue: "$4.25K",
-      expenses: "$2.77K",
-    },
-  };
+  const { data: dealsData } = useFetch(DashboardEndpoint["fetchSale"]);
+  const crmStats: any = dealsData?.data;
 
   return (
     <div className="space-y-10">
@@ -60,7 +41,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {crmStats.totalRevenue}
+                  {formatIndianCurrency(crmStats?.totalRevenue)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Total Revenue
@@ -89,7 +70,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {crmStats.activeUsers}
+                  {formatCompactNumber(crmStats?.activeUsers)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Active Users
@@ -118,7 +99,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {crmStats.totalDeals}
+                  {formatCompactNumber(crmStats?.totalDeals)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Total Deals
@@ -147,7 +128,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {crmStats.conversionRatio}
+                  {crmStats?.conversionRatio}%
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Conversion Ratio
@@ -160,7 +141,7 @@ const Home: FC = () => {
         <div className="grid grid-cols-3 my-5 gap-5 rounded-xl">
           <div className="col-span-2">
             {/* Revenue Chart (example) */}
-            <div className="bg-whiteBg p-4 rounded-xl h-full">
+            {/* <div className="bg-whiteBg p-4 rounded-xl h-full">
               <h3 className="text-xl text-iconBlack font-semibold border-b border-secondary pb-4">
                 Revenue Statistics
               </h3>
@@ -169,34 +150,34 @@ const Home: FC = () => {
                   <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Total Revenue:{" "}
                     <span className="text-lg font-extrabold text-iconBlack">
-                      {crmStats.profitReport.revenue}
+                      {crmStats?.profitReport.revenue}
                     </span>
                   </div>
                   <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Total Income:{" "}
                     <span className="text-lg font-extrabold text-iconBlack">
-                      {crmStats.profitReport.revenue}
+                      {crmStats?.profitReport.revenue}
                     </span>
                   </div>
                   <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Conversion Rate:{" "}
                     <span className="text-lg font-extrabold text-iconBlack">
-                      {crmStats.conversionRatio}
+                      {crmStats?.conversionRatio}
                     </span>
                   </div>
                   <div className="w-1/3 text-center text-sm text-iconBlack font-semibold">
                     Change:{" "}
                     <span className="text-lg font-extrabold text-iconBlack">
-                      {crmStats.profitReport.revenue}
+                      {crmStats?.profitReport.revenue}
                     </span>
                   </div>
                 </div>
               </div>
               <BarChartWithNegativePositiveXAxis />
-            </div>
+            </div> */}
           </div>
           <div className="col-span-1 h-full">
-            <div className="p-5 rounded-xl bg-whiteBg">
+            {/* <div className="p-5 rounded-xl bg-whiteBg">
               <div className="flex justify-between items-center">
                 <h3 className="text-base font-semibold text-iconBlack">
                   Profit Report
@@ -216,7 +197,7 @@ const Home: FC = () => {
                       </div>
                       <div>
                         <p className="text-lg font-bold">
-                          {crmStats.profitReport.profit}
+                          {crmStats?.profitReport.profit}
                         </p>
                         <h4 className="text-sm font-semibold">Profit</h4>
                         <p className="text-xs inline-flex items-center text-iconBlack font-bold">
@@ -236,7 +217,7 @@ const Home: FC = () => {
                       </div>
                       <div>
                         <p className="text-lg font-bold">
-                          {crmStats.profitReport.revenue}
+                          {crmStats?.profitReport.revenue}
                         </p>
                         <h4 className="text-sm font-semibold">Revenue</h4>
                         <p className="text-xs inline-flex items-center text-iconBlack font-bold">
@@ -256,7 +237,7 @@ const Home: FC = () => {
                       </div>
                       <div>
                         <p className="text-lg font-bold">
-                          {crmStats.profitReport.expenses}
+                          {crmStats?.profitReport.expenses}
                         </p>
                         <h4 className="text-sm font-semibold">Expenses</h4>
                         <p className="text-xs inline-flex items-center text-iconBlack font-bold">
@@ -273,7 +254,7 @@ const Home: FC = () => {
                   <ConcentricCircleGraph />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

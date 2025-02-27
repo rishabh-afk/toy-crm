@@ -1,8 +1,8 @@
+import { toast } from "react-toastify";
 import { Fetch } from "@/hooks/apiUtils";
 import { debounce } from "@/hooks/general";
 import ProductSelect from "./ProductSelect";
-import { useCallback, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const ProductForm = ({
   initialData,
@@ -60,10 +60,14 @@ const ProductForm = ({
     }
   }, []);
 
-  const debouncedFetchProducts = useCallback(
-    debounce((search: string) => fetchProducts(search), 1000),
-    // eslint-disable-next-line
-    []
+  // const debouncedFetchProducts = useCallback(
+  //   debounce((search: string) => fetchProducts(search), 1000),
+  //   [fetchProducts] // Add fetchProducts as a dependency
+  // );
+
+  const debouncedFetchProducts = useMemo(
+    () => debounce((search: string) => fetchProducts(search), 1000),
+    [fetchProducts]
   );
 
   useEffect(() => {
@@ -122,6 +126,7 @@ const ProductForm = ({
         totalAmount: 0,
         taxableAmount: 0,
         id: product?._id,
+        _id: product?._id,
         discountAmount: 0,
         name: product.name,
         discountPercentage: 0,

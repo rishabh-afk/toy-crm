@@ -101,7 +101,7 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      let updatedProducts = [...products];
+      const updatedProducts = [...products];
       if (
         updatedProducts.length > 0 &&
         !updatedProducts[updatedProducts.length - 1]?._id

@@ -122,11 +122,11 @@ export const endpoints: Record<
     operations: operations,
   },
   Payment: {
-    create: "api/transaction", // to create a product
-    read: "api/transaction/", // to get a product
-    update: `api/transaction/`, // to update a product
-    delete: "api/transaction/", // to delete a product
-    fetchAll: "api/transaction/", // to fetch all products
+    create: "api/payment", // to create a product
+    read: "api/payment/", // to get a product
+    update: `api/payment/`, // to update a product
+    delete: "api/payment/", // to delete a product
+    fetchAll: "api/payment/", // to fetch all products
     operations: operations,
   },
   Receiving: {
@@ -156,7 +156,7 @@ export const endpoints: Record<
 };
 
 export const DashboardEndpoint = {
-  fetchSale: "admin/transactions/total-sales-duration", // to fetch all duration
+  fetchSale: "api/dashboard", // to fetch all duration
   fetchGraphSale: "admin/dashboard/overview-revenue", // to fetch all graph
   fetchGraphSessions: "admin/dashboard/overview-sessions", // to fetch all graph
   fetchSaleByMonthYear: "admin/dashboard/line-chart", // to fetch all line charts
