@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { formatCurrency } from "@/hooks/general";
 
 interface TableRow {
   hsn: string;
@@ -46,15 +47,6 @@ const FinalRow = ({ data }: { data: any }) => {
     }
   );
 
-  const formatCurrency = (value: number | undefined) =>
-    value && !isNaN(value)
-      ? new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-          minimumFractionDigits: 2,
-        }).format(value)
-      : "₹0.00";
-
   return (
     <tr className="bg-gray-100 font-semibold">
       <td className="border-x border-gray-200 pb-4 px-2" colSpan={5}>
@@ -77,15 +69,6 @@ const FinalRow = ({ data }: { data: any }) => {
 };
 
 const ProductTable: React.FC<TableProps> = ({ data }) => {
-  const formatCurrency = (value: number | undefined) =>
-    value && !isNaN(value)
-      ? new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-          minimumFractionDigits: 2,
-        }).format(value)
-      : "₹0.00";
-
   const formatPercentage = (value: number | undefined) =>
     value && !isNaN(value) ? `${value.toFixed(2)} %` : "0 %";
 

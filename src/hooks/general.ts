@@ -206,3 +206,12 @@ export const formatIndianCurrency = (amount: number) => {
 
   return `₹${formattedAmount}`;
 };
+
+export const formatCurrency = (value: number | undefined) =>
+  value && !isNaN(value)
+    ? new Intl.NumberFormat("en-IN", {
+        style: "currency",
+        currency: "INR",
+        minimumFractionDigits: 2,
+      }).format(value)
+    : "₹0.00";

@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Modal from "../Modal";
 import Actions from "./Actions";
 import { useState } from "react";
+import { formatCurrency } from "@/hooks/general";
 import { functionList } from "@/hooks/customFunction";
 import ConfirmModal from "@/components/crud/ConfirmModal";
 import { FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
@@ -129,7 +130,7 @@ const Table: React.FC<TableProps> = ({
 
     if (col.key === "_id") return value?.slice(-8);
     if (col.isDate && value) return dayjs(value).format("YYYY-MM-DD");
-    if (col.isCurrency && value) return `${col.isCurrency} ${value}`;
+    if (col.isCurrency && value) return formatCurrency(value);
     if (col.isPercent) return `${value} ${col.isPercent}`;
 
     if (typeof value === "number") return value;
