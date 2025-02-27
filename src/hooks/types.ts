@@ -39,6 +39,7 @@ export interface FormField {
     | "label"
     | "br"
     | "button"
+    | "arrayOfString"
     | "warehouse"
     | "packing"
     | "billing"

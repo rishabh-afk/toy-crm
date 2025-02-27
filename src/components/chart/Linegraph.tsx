@@ -19,10 +19,15 @@ ChartJS.register(
   Filler
 );
 
-const LineGraph = ({ borderColor }: { borderColor: string }) => {
-  const data = [20, 25, 15, 35, 20, 30, 15];
+const LineGraph = ({
+  data,
+  borderColor,
+}: {
+  data: any;
+  borderColor: string;
+}) => {
   const chartData = {
-    labels: data.map((_, index) => `Point ${index + 1}`), // Label each point
+    labels: data.map((_: any, index: any) => `Point ${index + 1}`), // Label each point
     datasets: [
       {
         data,

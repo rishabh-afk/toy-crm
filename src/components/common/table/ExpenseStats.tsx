@@ -1,16 +1,16 @@
 import { BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 
-type ExpenseData = {
-  today: number | null;
-  total: number | null;
-  lastWeek: number | null;
-  lastYear: number | null;
-  yesterday: number | null;
-  lastMonth: number | null;
-  currentWeek: number | null;
-  currentYear: number | null;
-  currentMonth: number | null;
-};
+// type ExpenseData = {
+//   today: number | null;
+//   total: number | null;
+//   lastWeek: number | null;
+//   lastYear: number | null;
+//   yesterday: number | null;
+//   lastMonth: number | null;
+//   currentWeek: number | null;
+//   currentYear: number | null;
+//   currentMonth: number | null;
+// };
 
 const calculatePercentage = (
   current: number | null,
@@ -33,37 +33,43 @@ const ExpenseStats = ({
     currentMonth: null,
   },
 }: {
-  data?: ExpenseData;
+  data?: any;
 }) => {
   const stats = [
     {
       label: "Today",
-      value: data.today,
-      prev: data.yesterday,
+      value: data?.today,
+      percentageChange: data?.comparisons?.todayVsYesterday?.percentageChange,
+      prev: data?.comparisons?.todayVsYesterday?.value,
       color: "bg-gradient-to-r from-green-300 to-green-600",
     },
     {
       label: "This Week",
-      value: data.currentWeek,
-      prev: data.lastWeek,
+      value: data?.thisWeek,
+      percentageChange: data?.comparisons?.thisWeekVsLastWeek?.percentageChange,
+      prev: data?.comparisons?.thisWeekVsLastWeek?.value,
       color: "bg-gradient-to-r from-blue-300 to-blue-600",
     },
     {
       label: "This Month",
-      value: data.currentMonth,
-      prev: data.lastMonth,
+      value: data?.thisMonth,
+      percentageChange:
+        data?.comparisons?.thisMonthVsLastMonth?.percentageChange,
+      prev: data?.comparisons?.thisMonthVsLastMonth?.value,
       color: "bg-gradient-to-r from-purple-300 to-purple-600",
     },
     {
       label: "This Year",
-      value: data.currentYear,
-      prev: data.lastYear,
+      value: data?.thisYear,
+      percentageChange: data?.comparisons?.thisYearVsLastYear?.percentageChange,
+      prev: data?.comparisons?.thisYearVsLastYear?.value,
       color: "bg-gradient-to-r from-orange-300 to-orange-600",
     },
     {
-      label: "Total",
-      value: data.total,
       prev: null,
+      label: "Total",
+      value: data?.total,
+      percentageChange: null,
       color: "bg-gradient-to-r from-pink-300 to-pink-600",
     },
   ];

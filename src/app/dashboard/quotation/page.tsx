@@ -12,7 +12,8 @@ import TableComponent from "@/components/common/Table";
 const columns = [
   { key: "quotationNo", label: "Quotation ID" },
   { key: "billNumber", label: "Invoice No." },
-  { key: "customerName", label: "Customer Name" },
+  { key: "leadName", label: "Lead Name" },
+  { key: "customerName", label: "Customer / Company" },
   { key: "preparedByName", label: "Assigned To (Name)" },
   { key: "preparedByEmail", label: "Assigned To (Email)" },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
@@ -39,7 +40,11 @@ const columns = [
   },
 ];
 
-const filterOptions = [{ label: "Status", value: "status" }];
+const filterOptions = [
+  { label: "Name", value: "name" },
+  { label: "Status", value: "status" },
+  { label: "Quotation No.", value: "quotationId" },
+];
 
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Quotation"].fetchAll);

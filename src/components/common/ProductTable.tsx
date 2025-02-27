@@ -5,6 +5,7 @@ interface TableRow {
   hsn: string;
   gst: number;
   uom: string;
+  name: string;
   size: number;
   value: number;
   product: number;
@@ -47,19 +48,19 @@ const FinalRow = ({ data }: { data: any }) => {
 
   return (
     <tr className="bg-gray-100 font-semibold">
-      <td className="border border-black pb-4 px-2" colSpan={5}>
+      <td className="border-x border-gray-200 pb-4 px-2" colSpan={5}>
         **Total Summary** (Qty: {total?.quantity})
       </td>
-      <td className="border border-black pb-4 px-2" colSpan={2}>
+      <td className="border-x border-gray-200 pb-4 px-2" colSpan={1}>
         ₹{total.discountAmount.toFixed(2)}
       </td>
-      <td className="border border-black pb-4 px-2">
+      <td className="border-x border-gray-200 pb-4 px-2">
         ₹{total.gstAmount.toFixed(2)}
       </td>
-      <td className="border border-black pb-4 px-2">
+      <td className="border-x border-gray-200 pb-4 px-2">
         ₹{total.taxableAmount.toFixed(2)}
       </td>
-      <td className="border border-black pb-4 px-2">
+      <td className="border-x border-gray-200 pb-4 px-2">
         ₹{total.totalAmount.toFixed(2)}
       </td>
     </tr>
@@ -80,23 +81,25 @@ const ProductTable: React.FC<TableProps> = ({ data }) => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full border border-black text-sm">
+      <table className="w-full border-x border-gray-200 text-sm">
         {/* Table Header */}
         <thead>
-          <tr className="bg-gray-300 text-left">
+          <tr className="bg-red-400 text-white text-left">
             {[
               "S.N.",
               "Image",
               "Code / Desc. / Hsn",
               "Qty/UOM",
               "Rate",
-              "Disc. / Pcs",
-              "GST (%)",
+              "Disc. / Pcs (%)",
               "GST / Pcs (%)",
               "Value / Pcs",
               "Total ₹",
             ].map((heading, index) => (
-              <th key={index} className="border pb-4 px-2 border-black text-xs">
+              <th
+                key={index}
+                className="border pb-4 px-2 border-gray-200 text-xs"
+              >
                 {heading}
               </th>
             ))}
@@ -107,48 +110,49 @@ const ProductTable: React.FC<TableProps> = ({ data }) => {
         <tbody>
           {data.map((item, index) => (
             <tr key={item.product}>
-              <td className="border border-black pb-4 px-2">{index + 1}</td>
-              <td className="border border-black py-2 px-2">
+              <td className="border-x border-gray-200 pb-4 px-2">
+                {index + 1}
+              </td>
+              <td className="border-x border-gray-200 py-2 px-2">
                 {item.coverImage ? (
                   <Image
                     width={50}
                     height={50}
+                    alt={item.name}
                     src={item.coverImage}
-                    alt={item.description}
                     className="w-10 h-10 object-contain"
                   />
                 ) : (
                   "-"
                 )}
               </td>
-              <td className="border text-[10px] leading-3 border-black pb-4 px-2">
+              <td className="border-x text-[10px] leading-3 border-gray-200 pb-4 px-2">
                 {item.productCode}
                 <br />
-                {item.description}
+                {item.name}
                 <br />
                 {item.hsn}
               </td>
-              <td className="border border-black pb-4 px-2 text-xs">
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
                 {item.quantity} {item.uom}.
               </td>
-              <td className="border border-black pb-4 px-2 text-xs">
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
                 {formatCurrency(item.listPrice)}
               </td>
-              <td className="border border-black pb-4 px-2 text-xs">
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
                 {formatCurrency(safeDivide(item.discountAmount, item.quantity))}
-              </td>
-              <td className="border border-black pb-4 px-2 text-xs">
-                {formatPercentage(item.gst)}
-              </td>
-              <td className="border border-black pb-4 px-2 text-xs">
-                {formatCurrency(safeDivide(item.gstAmount, item.quantity))}
                 <br />
                 {formatPercentage(item.discountPercentage)}
               </td>
-              <td className="border border-black pb-4 px-2 text-xs">
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
+                {formatCurrency(safeDivide(item.gstAmount, item.quantity))}
+                <br />
+                {formatPercentage(item.gst)}
+              </td>
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
                 {formatCurrency(safeDivide(item.taxableAmount, item.quantity))}
               </td>
-              <td className="border border-black pb-4 px-2 text-xs">
+              <td className="border-x border-gray-200 pb-4 px-2 text-xs">
                 {formatCurrency(item.totalAmount)}
               </td>
             </tr>

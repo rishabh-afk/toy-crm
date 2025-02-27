@@ -42,6 +42,7 @@ const columns = [
 ];
 
 const filterOptions = [
+  { label: "Name", value: "name" },
   { label: "Company", value: "companyName" },
   { label: "Email", value: "email" },
   { label: "Phone", value: "phone" },

@@ -1,35 +1,34 @@
-// components/InvoiceDetails.tsx
 import Image from "next/image";
-import React from "react";
+import { formatDate } from "@/hooks/general";
 
-const InvoiceDetails: React.FC = () => {
+const InvoiceDetails = ({ data }: { data?: any }) => {
   return (
-    <div className="lg:flex justify-between items-center">
-      <div className="lg:w-2/3">
-        <div className="flex mb-2">
-          <label className="block items-center text-sm">Invoice No:</label>
-          <p
-            className={` text-green-500 font-semibold text-md px-2 rounded`}
-          >#INV35230</p>
-        </div>
-        <div className="flex  mb-2">
-          <label className="inline-block text-sm">
-            Issued Date:
+    <div className="flex justify-between items-center">
+      <div>
+        <div className="flex items-center mb-2">
+          <label className="block items-center font-semibold">
+            Invoice No:
           </label>
-          <p
-            className={` text-primary text-sm px-2 rounded`}
-          >15, April 2024</p>
+          <p className={` text-green-500 font-semibold px-2 rounded`}>
+            #(Quotation_{data?.quotationNo})
+          </p>
+        </div>
+        <div className="flex items-center mb-2">
+          <label className="inline-block font-semibold">Issued Date:</label>
+          <p className={` text-primary px-2 rounded`}>
+            {data?.quotationDate ? formatDate(data?.quotationDate) : ""}
+          </p>
         </div>
       </div>
-      <div className="lg:1/3 text-right m-2">
-        <Image
-          src={"/assets/logo/logo.jpg"}
-          alt={"logo"}
-          width={85}
-          height={75}
-          className="inline "
-        />
-      </div>
+      <Image
+        width={200}
+        height={80}
+        priority
+        unoptimized
+        alt="Company Logo"
+        className="object-contain w-fit"
+        src="/assets/logo/logo.jpg"
+      />
     </div>
   );
 };

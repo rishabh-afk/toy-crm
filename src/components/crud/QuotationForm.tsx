@@ -101,8 +101,13 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const updated = { products: products, ...updatedData };
-
+      let updatedProducts = [...products];
+      if (
+        updatedProducts.length > 0 &&
+        !updatedProducts[updatedProducts.length - 1]?._id
+      )
+        updatedProducts.pop();
+      const updated = { ...updatedData, products: updatedProducts };
       const response: any = data?._id
         ? await Put(url, updated)
         : await Post(url, updated);
@@ -123,26 +128,61 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
     }
   };
 
-  const customFunc = useCallback((data: any, items?: any) => {
-    setFormData((prevFormData: any) => {
-      const updated = populateFormData(QuotationFieldsType, {
-        ...prevFormData,
-        ...data,
+  const calculateFinal = useCallback(() => {
+    const toNumber = (value: any) => {
+      const num = parseFloat(value);
+      return isNaN(num) ? 0 : num;
+    };
+    const packagingCharges = toNumber(formData.packagingCharges);
+    const installationCharges = toNumber(formData.installationCharges);
+    const transportationCharges = toNumber(formData.transportationCharges);
+    const packagingTaxPercentage = toNumber(formData.packagingTaxPercentage);
+
+    const packagingTax = (packagingCharges * packagingTaxPercentage) / 100;
+    const finalAmount =
+      packagingTax +
+      packagingCharges +
+      installationCharges +
+      transportationCharges;
+
+    const final = Number(finalAmount.toFixed(2));
+    setFormData((formData: any) => ({
+      ...formData,
+      additional: final,
+      additional2: formData.netAmount,
+      netAmount: formData.netAmount + final,
+    }));
+  }, [
+    formData.packagingCharges,
+    formData.installationCharges,
+    formData.transportationCharges,
+    formData.packagingTaxPercentage,
+  ]);
+
+  useEffect(() => {
+    calculateFinal();
+  }, [calculateFinal]);
+
+  const customFunc = useCallback(
+    (data: any, items?: any) => {
+      setFormData((prevFormData: any) => {
+        const updated = populateFormData(QuotationFieldsType, {
+          ...prevFormData,
+          ...data,
+        });
+
+        if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
+          return updated;
+        }
+        return prevFormData;
       });
-
-      if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
-        return updated;
+      if (items && items.length > 0) {
+        setProducts(items);
+        calculateFinal();
       }
-      return prevFormData;
-    });
-
-    setProducts((prevProducts: any) => {
-      if (items && JSON.stringify(items) !== JSON.stringify(prevProducts)) {
-        return items;
-      }
-      return prevProducts;
-    });
-  }, []);
+    },
+    [calculateFinal]
+  );
 
   return (
     <div>

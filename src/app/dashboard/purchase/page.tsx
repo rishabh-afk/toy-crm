@@ -30,7 +30,10 @@ const columns = [
   },
 ];
 
-const filterOptions = [{ label: "Purchase No.", value: "purchaseNo" }];
+const filterOptions = [
+  { label: "Supplier", value: "name" },
+  { label: "Purchase", value: "purchaseNo" },
+];
 
 const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(endpoints["Purchase"].fetchAll);

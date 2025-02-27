@@ -31,7 +31,6 @@ export const LeadFormType: FormField[] = [
     name: "email",
     type: "email",
     label: "Email",
-    required: true,
     placeholder: "Enter your email",
     validation: (value) => (includes(value, "@") ? null : "Invalid email"),
   },

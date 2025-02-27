@@ -42,11 +42,10 @@ export const BillingFormType: FormField[] = [
   },
   {
     name: "shipTo",
-    type: "select",
+    type: "text",
     required: true,
     label: "Ship To",
-    placeholder: "Select Ship To",
-    options: [],
+    placeholder: "Enter Ship To",
   },
   {
     type: "br",

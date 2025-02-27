@@ -31,6 +31,7 @@ const columns = [
 ];
 
 const filterOptions = [
+  { label: "Name", value: "name" },
   { label: "Email", value: "email" },
   { label: "Role", value: "role" },
   { label: "Status", value: "status" },

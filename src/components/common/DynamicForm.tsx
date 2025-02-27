@@ -16,6 +16,7 @@ import RichTextEditor from "./RichTextEditor";
 import PackingProduct from "./PackingProduct";
 import WarehouseProduct from "./WarehouseProduct";
 import BillingProductForm from "./BillingProductForm";
+import DynamicStringInput from "./DynamicStringInput";
 import PurchaseProductForm from "./PurchaseProductForm";
 import NumericStringInput from "../input/NumericString";
 import SingleImageUploader from "../input/ImageUploader";
@@ -287,6 +288,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
               <StockTransferProductForm
                 initialData={field?.options}
                 onProductDataChange={customFunc}
+              />
+            )}
+
+            {field.type === "arrayOfString" && (
+              <DynamicStringInput
+                formData={formData}
+                setFormData={setFormData}
               />
             )}
 

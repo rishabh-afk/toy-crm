@@ -47,7 +47,10 @@ const Home: FC = () => {
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
-              <LineGraph borderColor="rgba(0, 123, 255, 1)" />
+              <LineGraph
+                data={[20, 25, 15, 35, 20, 30, 15]}
+                borderColor="rgba(0, 123, 255, 1)"
+              />
             </div>
             <div className="w-[45%] flex flex-col justify-end items-end text-right gap-3">
               <div className="bg-blue-200 p-1.5 w-fit rounded-full">
@@ -73,7 +76,10 @@ const Home: FC = () => {
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
-              <LineGraph borderColor="rgba(255, 165, 0, 1)" />
+              <LineGraph
+                data={[20, 25, 15, 35, 20, 30, 15]}
+                borderColor="rgba(255, 165, 0, 1)"
+              />
             </div>
             <div className="w-[45%] flex flex-col justify-end items-end text-right gap-3">
               <div className="bg-orange-200 p-1.5 w-fit rounded-full">
@@ -99,7 +105,10 @@ const Home: FC = () => {
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
-              <LineGraph borderColor="rgba(255, 0, 0, 1)" />
+              <LineGraph
+                data={[20, 25, 15, 35, 20, 30, 15]}
+                borderColor="rgba(255, 0, 0, 1)"
+              />
             </div>
             <div className="w-[45%] flex flex-col justify-end items-end text-right gap-3">
               <div className="bg-red-200 p-1.5 w-fit rounded-full">
@@ -125,7 +134,10 @@ const Home: FC = () => {
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
-              <LineGraph borderColor="rgba(128, 128, 128, 1)" />
+              <LineGraph
+                data={[20, 25, 15, 0, 20, 30, 15]}
+                borderColor="rgba(128, 128, 128, 1)"
+              />
             </div>
             <div className="w-[45%] flex flex-col justify-end items-end text-right gap-3">
               <div className="bg-purple-200 p-1.5 w-fit rounded-full">
