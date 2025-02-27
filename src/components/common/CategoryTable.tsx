@@ -1,13 +1,11 @@
-import React from "react";
-
 interface DataType {
   [key: string]: {
-    taxableAmount: number;
-    quantity: number;
     gst: number;
+    hsn: string;
+    quantity: number;
     taxAmount: number;
     totalAmount: number;
-    hsn: string;
+    taxableAmount: number;
   };
 }
 
@@ -30,6 +28,14 @@ const FinalRow = ({ data }: { data: Record<string, any> }) => {
       totalAmount: 0,
     }
   );
+  const formatCurrency = (value: number | undefined) =>
+    value && !isNaN(value)
+      ? new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          minimumFractionDigits: 2,
+        }).format(value)
+      : "₹0.00";
 
   return (
     <tr className="bg-gray-100 text-center font-semibold">
@@ -38,13 +44,13 @@ const FinalRow = ({ data }: { data: Record<string, any> }) => {
       </td>
       <td className="border-x border-gray-200 pb-4 px-2">{total.quantity}</td>
       <td className="border-x border-gray-200 pb-4 px-2" colSpan={2}>
-        ₹{total.taxableAmount.toFixed(2)}
+        {formatCurrency(total.taxableAmount)}
       </td>
       <td className="border-x border-gray-200 pb-4 px-2">
-        ₹{total.taxAmount.toFixed(2)}
+        {formatCurrency(total.taxAmount)}
       </td>
       <td className="border-x border-gray-200 pb-4 px-2">
-        ₹{total.totalAmount.toFixed(2)}
+        {formatCurrency(total.totalAmount)}
       </td>
     </tr>
   );
@@ -52,7 +58,13 @@ const FinalRow = ({ data }: { data: Record<string, any> }) => {
 
 const DynamicTable: React.FC<{ data: DataType }> = ({ data }) => {
   const formatCurrency = (value: number | undefined) =>
-    value && !isNaN(value) ? `₹${value.toFixed(2)}` : "₹0.00";
+    value && !isNaN(value)
+      ? new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          minimumFractionDigits: 2,
+        }).format(value)
+      : "₹0.00";
 
   const formatPercentage = (value: number | undefined) =>
     value && !isNaN(value) ? `${value.toFixed(2)} %` : "0 %";
