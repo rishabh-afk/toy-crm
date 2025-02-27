@@ -33,6 +33,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
 
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
+  const [baseFields, setBaseFields] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [loading2, setLoading2] = useState(data?._id ? true : false);
 
@@ -216,6 +217,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       } catch (error) {
         console.log("Error: ", error);
       } finally {
+        setBaseFields(true);
         setLoading(false);
       }
     };

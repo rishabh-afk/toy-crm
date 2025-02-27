@@ -7,7 +7,7 @@ import useFetch from "@/hooks/useFetch";
 // import BarChart from "../chart/Barchart";
 import { useRouter } from "next/navigation";
 import { endpoints } from "@/data/endpoints";
-import { formatDate } from "@/hooks/general";
+import { formatCurrency, formatDate } from "@/hooks/general";
 // import { FaFileAlt } from "react-icons/fa";
 
 const Summary = () => {
@@ -149,6 +149,7 @@ const Summary = () => {
               <th className="p-4 border border-infobg">Deal Status</th>
               <th className="p-4 border border-infobg">Approved On</th>
               <th className="p-4 border border-infobg">Salesperson</th>
+              <th className="p-4 border border-infobg">Salesperson (Email)</th>
               {/* <th className="p-4 border border-infobg">Actions</th> */}
             </tr>
           </thead>
@@ -160,12 +161,14 @@ const Summary = () => {
                   className="border-b border-infobg text-iconBlack hover:bg-infobg cursor-pointer"
                 >
                   <td className="p-4 border border-infobg">
-                    {deal.quotationNo}
+                    Quotation_{deal.quotationNo}
                   </td>
-                  <td className="p-4 border border-infobg">
+                  <td className="p-4 capitalize border border-infobg">
                     {deal.customerName}
                   </td>
-                  <td className="p-4 border border-infobg">{deal.netAmount}</td>
+                  <td className="p-4 border border-infobg">
+                    {formatCurrency(deal.netAmount)}
+                  </td>
                   <td className="p-4 border border-infobg">
                     <span
                       className={`px-2 py-1 text-xs text-white rounded ${
@@ -184,6 +187,9 @@ const Summary = () => {
                   </td>
                   <td className="p-4 border border-infobg">
                     {deal.preparedByName}
+                  </td>
+                  <td className="p-4 border border-infobg">
+                    {deal.preparedByEmail}
                   </td>
                   {/* <td className="p-4 border border-infobg">
                   <button className="bg-blue-400 text-white rounded text-lg p-1 hover:text-indigo-800 mr-2">
