@@ -175,11 +175,16 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         const response: any = await Fetch(url, params, 5000, true, false);
         if (response.success && response?.data) {
           const data = updateProductsWithMaxQuantity(stock, response.data);
+          const updatedStock = data.map((item: any) => ({
+            ...item,
+            quantity: item.maxQuantity <= item.quantity ? 0 : item.quantity,
+          }));
           const updatedFormField = formField.map((field: any) => {
-            if (field.name === "packing") return { ...field, options: data };
+            if (field.name === "packing")
+              return { ...field, options: updatedStock };
             return field;
           });
-          setStock(stock);
+          setStock(updatedStock);
           setFormField(updatedFormField);
         }
       } catch (error) {
