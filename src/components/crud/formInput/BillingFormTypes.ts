@@ -5,9 +5,9 @@ export const BillingFormType: FormField[] = [
   {
     type: "select",
     required: true,
-    name: "quotationId",
-    label: "Quatation ID",
-    placeholder: "Select quotation",
+    name: "packingId",
+    label: "Packing ID",
+    placeholder: "Select packing",
     options: [],
   },
   {

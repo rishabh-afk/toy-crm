@@ -68,10 +68,9 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
         const url = "/api/invoice/public/base-fields";
         const response: any = await Fetch(url, {}, 5000, true, false);
         const mappings = [
-          { key: "ledgers", fieldName: "shipTo" },
           { key: "users", fieldName: "preparedBy" },
           { key: "ledgers", fieldName: "invoiceTo" },
-          { key: "quotations", fieldName: "quotationId" },
+          { key: "packings", fieldName: "packingId" },
         ];
         const fetchQuotationDetails = () => {
           setFormField((prevFields: any[]) =>
@@ -83,13 +82,11 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
                 }));
                 return { ...field, options: data?.quotation?.products };
               }
-              if (field.name === "quotationId") {
-                const dataKey = [
-                  { _id: data?.quotationId, name: data?.quotationNo },
-                ];
+              if (field.name === "packingId") {
+                const dataKey = [{ _id: data?._id, name: data?.packingNo }];
                 setFormData((prev: any) => ({
                   ...prev,
-                  [field.name]: data?.quotationId,
+                  [field.name]: data?.packingId,
                 }));
                 return { ...field, options: getSelectFormattedData(dataKey) };
               }
@@ -123,7 +120,7 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
   useEffect(() => {
     const fetchQuotationDetails = async () => {
       try {
-        const url = `/api/quotation/${formData.quotationId}`;
+        const url = `/api/packing/${formData.packingId}`;
         const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data) {
           const fieldUpdates: Record<string, any> = {
@@ -136,20 +133,11 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
               isDisabled: true,
               value: response?.data?.customer,
             },
-            shipTo: {
-              updateFormData: {
-                key: "shipTo",
-                value: response?.data?.customer,
-              },
-              isDisabled: true,
-              value: response?.data?.customer,
-            },
           };
           const updatedFormField = formField.map((field: any) => {
             const update = fieldUpdates[field.name];
             if (update) {
               if (update.updateFormData) {
-                console.log(update.updateFormData.value);
                 setFormData((prev: any) => ({
                   ...prev,
                   [update.updateFormData.key]: update.updateFormData.value,
@@ -165,9 +153,9 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
         console.log("Error: ", error);
       }
     };
-    if (formData.quotationId && !data?._id) fetchQuotationDetails();
+    if (formData.packingId && !data?._id) fetchQuotationDetails();
     // eslint-disable-next-line
-  }, [formData.quotationId]);
+  }, [formData.packingId]);
 
   const calculateFinal = useCallback(() => {
     const toNumber = (value: any) => {
