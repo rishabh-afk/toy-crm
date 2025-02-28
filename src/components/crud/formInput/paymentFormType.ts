@@ -4,8 +4,8 @@ export const paymentFormType: FormField[] = [
   {
     type: "select",
     required: true,
-    name: "receivingType",
-    label: "Receiving Type",
+    name: "paymentType",
+    label: "Payment Type",
     placeholder: "Select type",
     options: [
       { label: "Purchase", value: "Purchase" },
@@ -13,8 +13,8 @@ export const paymentFormType: FormField[] = [
     ],
   },
   {
-    name: "ledgerId",
     type: "select",
+    name: "ledgerId",
     label: "Customer / Supplier",
     placeholder: "Select Customer / Supplier",
     options: [], // This will hold the options for the Select component
@@ -29,9 +29,9 @@ export const paymentFormType: FormField[] = [
   // },
   {
     type: "select",
-    name: "invoiceId",
-    label: "Invoice ID",
-    placeholder: "Select invoice",
+    name: "purchaseId",
+    label: "Purchase ID",
+    placeholder: "Select purchase",
     options: [],
   },
   {
@@ -93,7 +93,6 @@ export const paymentFormType: FormField[] = [
     rows: 1,
     type: "text",
     name: "remarks",
-    required: true,
     label: "Remarks",
     placeholder: "Enter remarks",
   },

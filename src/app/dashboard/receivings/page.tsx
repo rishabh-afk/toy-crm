@@ -10,28 +10,20 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "transactionNo", label: "Transaction ID" },
+  { key: "receivingNo", label: "Receiving No." },
   { key: "ledgerName", label: "Customer / Supplier" },
-  { key: "employeeName", label: "Employee Name" },
-  { key: "netAmount", label: "Final Amount", isCurrency: "₹", sortable: true },
+  { key: "receivingType", label: "Receiving Type" },
+  { key: "amount", label: "Amount", isCurrency: "₹" },
   {
-    key: "transactionDate",
-    label: "Transaction Date",
+    key: "receivingDate",
+    label: "Receiving Date",
     sortable: true,
     isDate: true,
   },
-  { key: "paymentType", label: "Payment Type", sortable: true },
-  { key: "paymentMethod", label: "Payment Mode", sortable: true },
+  { key: "receivingMethod", label: "Payment Mode", sortable: true },
   {
-    key: "paymentDirection",
-    label: "Payment Direction",
-    sortable: true,
-    isMultiPurpose: true,
-    multiPurposeProps: { type: "label" },
-  },
-  {
-    key: "paymentStatus",
-    label: "Payment Status",
+    key: "receivingStatus",
+    label: "Receiving Status",
     sortable: true,
     isMultiPurpose: true,
     multiPurposeProps: { type: "label" },

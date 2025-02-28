@@ -78,12 +78,14 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
               if (field.name === "productBillingForm") {
                 setFormData((prev: any) => ({
                   ...prev,
-                  [field.name]: data?.quotation?.products,
+                  [field.name]: data?.packing?.products,
                 }));
-                return { ...field, options: data?.quotation?.products };
+                return { ...field, options: data?.packing?.products };
               }
               if (field.name === "packingId") {
-                const dataKey = [{ _id: data?._id, name: data?.packingNo }];
+                const dataKey = [
+                  { _id: data?.packingId, name: data?.packingNo },
+                ];
                 setFormData((prev: any) => ({
                   ...prev,
                   [field.name]: data?.packingId,

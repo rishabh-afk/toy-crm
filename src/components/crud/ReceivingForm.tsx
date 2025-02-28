@@ -39,7 +39,7 @@ const ReceivingForm: React.FC<LedgerProps> = (props: any) => {
         const response: any = await Fetch(url, param, 5000, true, false);
         const mappings = [
           { key: "ledger", fieldName: "ledgerId" },
-          { key: "invoices", fieldName: "invoiceId" },
+          { key: "invoice", fieldName: "invoiceId" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
@@ -57,9 +57,9 @@ const ReceivingForm: React.FC<LedgerProps> = (props: any) => {
         console.log("Error: ", error);
       }
     };
-    if (formData?.receivingType) fetchData();
+    fetchData();
     // eslint-disable-next-line
-  }, [formData.receivingType]);
+  }, []);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -79,11 +79,11 @@ const ReceivingForm: React.FC<LedgerProps> = (props: any) => {
         if (resp?.success) props?.setFilteredData(resp?.data?.result);
         if (resp?.success && resp?.data?.pagination)
           props?.setPaginate(resp?.data?.pagination);
+        props.onClose?.();
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
     } finally {
-      props.onClose?.();
       setSubmitting(false);
     }
   };
@@ -91,8 +91,8 @@ const ReceivingForm: React.FC<LedgerProps> = (props: any) => {
   return (
     <div>
       <DynamicForm
-        returnAs="object"
         fields={formField}
+        returnAs="formData"
         formData={formData}
         submitting={submitting}
         onClose={props?.onClose}

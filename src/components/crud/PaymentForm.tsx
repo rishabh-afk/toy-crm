@@ -39,7 +39,7 @@ const PaymentForm: React.FC<LedgerProps> = (props: any) => {
         const response: any = await Fetch(url, {}, 5000, true, false);
         const mappings = [
           { key: "ledgers", fieldName: "ledgerId" },
-          { key: "employees", fieldName: "employee" },
+          { key: "purchases", fieldName: "purchaseId" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
