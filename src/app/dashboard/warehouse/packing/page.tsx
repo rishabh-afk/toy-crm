@@ -14,7 +14,7 @@ const columns = [
   { key: "quotationNo", label: "Quotation Number" },
   { key: "customer", label: "Customer Name" },
   { key: "packedBy", label: "Packed By (Employee)" },
-  { key: "netAmount", label: "Net Amount (₹)", isCurrency: "₹" },
+  // { key: "netAmount", label: "Net Amount (₹)", isCurrency: "₹" },
   { key: "packingDate", label: "Packaging Date", isDate: true },
   {
     key: "packed",
