@@ -121,6 +121,14 @@ export const endpoints: Record<
     fetchAll: "api/purchase/", // to fetch all products
     operations: operations,
   },
+  Paid: {
+    create: "api/payment", // to create a product
+    read: "api/payment/", // to get a product
+    update: `api/payment/`, // to update a product
+    delete: "api/payment/", // to delete a product
+    fetchAll: "api/payment/", // to fetch all products
+    operations: operations,
+  },
   Payment: {
     create: "api/payment", // to create a product
     read: "api/payment/", // to get a product
@@ -143,6 +151,14 @@ export const endpoints: Record<
     update: `api/item-transfer/`, // to update a product
     delete: "api/item-transfer/", // to delete a product
     fetchAll: "api/item-transfer/", // to fetch all products
+    operations: operations,
+  },
+  Stock: {
+    create: "api/item-transfer", // to create a product
+    read: "api/warehouse/public/", // to get a product
+    update: `api/item-transfer/`, // to update a product
+    delete: "api/item-transfer/", // to delete a product
+    fetchAll: "api/warehouse/public/", // to fetch all products
     operations: operations,
   },
   Warehouse: {

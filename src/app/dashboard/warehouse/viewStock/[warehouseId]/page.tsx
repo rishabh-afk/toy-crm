@@ -11,19 +11,16 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "Warehouse ID" },
-  { key: "name", label: "Name", sortable: true },
-  { key: "state", label: "Warehouse State" },
-  { key: "city", label: "Warehouse City" },
-  { key: "createdAt", label: "Register At", sortable: true, isDate: true },
-  { key: "updatedAt", label: "Last Updated", sortable: true, isDate: true },
+  { key: "_id", label: "Product ID" },
+  { key: "productCode", label: "Product Code" },
+  { key: "name", label: "Product Name", sortable: true },
+  { key: "stockInHand", label: "Stock In Hand" },
+  { key: "mrp", label: "Price", isCurrency: true },
 ];
 
 const filterOptions = [
-  { label: "Name", value: "firstName" },
-  { label: "Email", value: "email" },
-  { label: "Phone", value: "mobile" },
-  { label: "Role", value: "role" },
+  { label: "Name", value: "name" },
+  { label: "Code", value: "productCode" },
 ];
 
 const Contacts: React.FC = () => {
@@ -31,7 +28,7 @@ const Contacts: React.FC = () => {
   const warehouseID = pathname.split("/").pop(); // Assuming `id` is the last segment of the path
 
   const { data, loading, error } = useFetch(
-    endpoints["Warehouse"].read + warehouseID
+    endpoints["Stock"].read + warehouseID
   );
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
@@ -40,14 +37,21 @@ const Contacts: React.FC = () => {
   let operationsAllowed = getAccessPoints(user, "Manage Warehouse", true);
 
   if (loading && !updatedData && !error) return <Loader />;
-  operationsAllowed = { ...operationsAllowed, delete: false, update: false };
+  operationsAllowed = {
+    ...operationsAllowed,
+    delete: false,
+    update: false,
+    create: false,
+  };
   return (
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Warehouse"
+          type="Stock"
+          id={warehouseID}
           columns={columns}
           data={updatedData}
+          hideDateFilter={true}
           filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}

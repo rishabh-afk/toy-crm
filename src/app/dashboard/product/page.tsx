@@ -41,8 +41,7 @@ const Contacts: React.FC = () => {
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  const operationsAllowed = getAccessPoints(user, "Manage Products");
-  // const operationsAllowed = getAccessPoints(user, "Manage Products", true); // to show view stocks
+  const operationsAllowed = getAccessPoints(user, "Manage Products", true); // to show view stocks
 
   if (loading && !updatedData && !error) return <Loader />;
 

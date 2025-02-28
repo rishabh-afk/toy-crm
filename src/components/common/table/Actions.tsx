@@ -40,6 +40,10 @@ const Actions: React.FC<ActionsProps> = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const pathNameParams = pathname.split("/");
+  const id =
+    pathNameParams.length > 4 ? pathNameParams[pathNameParams.length - 1] : "";
+
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [selectIdForDeletion, setSelectIdForDeletion] = useState<string>("");
 
@@ -91,7 +95,7 @@ const Actions: React.FC<ActionsProps> = ({
 
   const handleView = async (id?: string) => {
     if (!id) return;
-    const url = `${pathname}/${id}`;
+    const url = `${pathname}/viewStock/${id}`;
     return router.push(url);
   };
 
@@ -124,7 +128,7 @@ const Actions: React.FC<ActionsProps> = ({
           <FaTrash title="Delete" />
         </button>
       )}
-      {operationsAllowed?.viewStock && (
+      {operationsAllowed?.viewStock && !id && (
         <button
           onClick={() => handleView(row._id)}
           className="text-green-700 ml-1 text-xl hover:scale-125 hover:p-1 hover:bg-green-100 p-1 rounded transition"

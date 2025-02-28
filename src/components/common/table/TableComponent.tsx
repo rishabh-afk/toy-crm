@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Modal from "../Modal";
 import Actions from "./Actions";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { formatCurrency } from "@/hooks/general";
 import { functionList } from "@/hooks/customFunction";
 import ConfirmModal from "@/components/crud/ConfirmModal";
@@ -49,6 +50,11 @@ const Table: React.FC<TableProps> = ({
   operationsAllowed,
   fetchFilteredData,
 }) => {
+  const pathname = usePathname();
+  const pathNameParams = pathname.split("/");
+  const id =
+    pathNameParams.length > 4 ? pathNameParams[pathNameParams.length - 1] : "";
+
   const [confirmation, setConfirmation] = useState(false);
   const [confirmationData, setConfirmationData] = useState<any>({});
   const handleSort = (key: string) => {
@@ -169,7 +175,7 @@ const Table: React.FC<TableProps> = ({
                 )}
               </th>
             ))}
-            {operationsAllowed?.read && (
+            {operationsAllowed?.read && id === "" && (
               <th className="p-4 border text-center text-iconBlack border-infobg font-bold">
                 Actions
               </th>
@@ -191,7 +197,7 @@ const Table: React.FC<TableProps> = ({
                     {formatRowValue(row, col)}
                   </td>
                 ))}
-                {operationsAllowed?.read && (
+                {operationsAllowed?.read && !id && (
                   <td className="text-nowrap border flex justify-center border-infobg px-4 py-3">
                     <Actions
                       row={row}

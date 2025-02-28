@@ -10,38 +10,43 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "Warehouse ID" },
-  { key: "name", label: "Warehouse Name", sortable: true },
-  { key: "state", label: "State" },
-  { key: "city", label: "City" },
+  { key: "transactionNo", label: "Transaction ID" },
+  { key: "ledgerName", label: "Customer / Supplier" },
+  { key: "employeeName", label: "Employee Name" },
+  { key: "netAmount", label: "Final Amount", isCurrency: "₹", sortable: true },
   {
-    key: "createdAt",
-    label: "Registration Date",
+    key: "transactionDate",
+    label: "Transaction Date",
     sortable: true,
     isDate: true,
   },
+  { key: "paymentType", label: "Payment Type", sortable: true },
+  { key: "paymentMethod", label: "Payment Mode", sortable: true },
   {
-    key: "updatedAt",
-    label: "Last Updated Date",
+    key: "paymentDirection",
+    label: "Payment Direction",
     sortable: true,
-    isDate: true,
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
+  },
+  {
+    key: "paymentStatus",
+    label: "Payment Status",
+    sortable: true,
+    isMultiPurpose: true,
+    multiPurposeProps: { type: "label" },
   },
 ];
 
-const filterOptions = [
-  { label: "Name", value: "name" },
-  { label: "State", value: "state" },
-  { label: "City", value: "city" },
-];
+const filterOptions = [{ label: "Txn ID", value: "transactionNo" }];
 
 const Contacts: React.FC = () => {
-  const { data, loading, error } = useFetch(endpoints["Warehouse"].fetchAll);
+  const { data, loading, error } = useFetch(endpoints["Paid"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
-  let operationsAllowed = getAccessPoints(user, "Manage Warehouse", true); // to viewstocks
-  operationsAllowed = { ...operationsAllowed, delete: false };
+  const operationsAllowed = getAccessPoints(user, "Manage Payment");
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -49,7 +54,7 @@ const Contacts: React.FC = () => {
     <AuthGuard>
       <Wrapper>
         <TableComponent
-          type="Warehouse"
+          type="Paid"
           columns={columns}
           data={updatedData}
           filterOptions={filterOptions}

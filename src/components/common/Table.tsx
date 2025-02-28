@@ -25,11 +25,13 @@ interface TableColumn {
 
 interface TableProps {
   data: any;
+  id?: string;
   type?: any;
   suffix?: string;
   filterOptions?: any;
   columns: TableColumn[];
   operationsAllowed: any;
+  hideDateFilter?: boolean;
   pagination_data?: Pagination;
 }
 
@@ -44,8 +46,10 @@ const TableComponent = <T extends { [key: string]: any }>({
   data,
   type,
   suffix,
+  id = "",
   columns,
   filterOptions,
+  hideDateFilter,
   pagination_data,
   operationsAllowed,
 }: TableProps) => {
@@ -82,8 +86,8 @@ const TableComponent = <T extends { [key: string]: any }>({
   };
 
   const handleSearch = (searchTerm: string, selectedOption: string) => {
-    if (searchTerm && searchTerm.length < 4)
-      return toast.warn("Search term must be at least 4 characters");
+    if (searchTerm && searchTerm.length < 3)
+      return toast.warn("Search term must be at least 3 characters");
     setSearchTerm(searchTerm);
     setSelectedField(selectedOption);
     fetchFilteredData({ search: searchTerm, selectedField: selectedOption });
@@ -101,6 +105,7 @@ const TableComponent = <T extends { [key: string]: any }>({
       end: "",
       start: "",
       sortkey: "",
+      search: "",
       sortdir: "",
       status: "all",
     });
@@ -139,7 +144,7 @@ const TableComponent = <T extends { [key: string]: any }>({
     }
 
     // Add search if valid
-    if (data.search?.length > 3 && data.searchkey) {
+    if (data.search?.length > 2 && data.searchkey) {
       params.search = data.search;
       params.searchkey = data.searchkey;
     }
@@ -167,7 +172,7 @@ const TableComponent = <T extends { [key: string]: any }>({
     if (fetchEndpoint) {
       try {
         const response: any = await Fetch(
-          fetchEndpoint,
+          fetchEndpoint + id,
           params,
           5000,
           true,
@@ -255,6 +260,7 @@ const TableComponent = <T extends { [key: string]: any }>({
           setStartDate={setStartDate}
           filterOptions={filterOptions}
           setSearchTerm={setSearchTerm}
+          hideDateFilter={hideDateFilter}
           fetchFilteredData={fetchFilteredData}
         />
 

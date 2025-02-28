@@ -84,7 +84,6 @@ const CategoryForm: React.FC<DealerFormProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }

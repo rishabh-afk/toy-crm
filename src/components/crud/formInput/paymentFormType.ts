@@ -8,8 +8,8 @@ export const paymentFormType: FormField[] = [
     label: "Receiving Type",
     placeholder: "Select type",
     options: [
-      { label: "Invoice", value: "Invoice" },
-      { label: "Purchase Return", value: "Purchase Return" },
+      { label: "Purchase", value: "Purchase" },
+      // { label: "Sale Return", value: "Sale Return" },
     ],
   },
   {
@@ -19,17 +19,16 @@ export const paymentFormType: FormField[] = [
     placeholder: "Select Customer / Supplier",
     options: [], // This will hold the options for the Select component
   },
+  // {
+  //   type: "select",
+  //   required: true,
+  //   name: "quotationId",
+  //   label: "Quatation ID",
+  //   placeholder: "Select quotation",
+  //   options: [],
+  // },
   {
     type: "select",
-    required: true,
-    name: "quotationId",
-    label: "Quatation ID",
-    placeholder: "Select quotation",
-    options: [],
-  },
-  {
-    type: "select",
-    required: true,
     name: "invoiceId",
     label: "Invoice ID",
     placeholder: "Select invoice",
@@ -79,21 +78,13 @@ export const paymentFormType: FormField[] = [
     ],
   },
   {
-    name: "paymentDirection",
-    type: "select",
-    required: true,
-    label: "Payment Direction",
-    placeholder: "Select direction",
-    options: [{ label: "Received", value: "Received" }],
-  },
-  {
     name: "paymentStatus",
     type: "select",
     required: true,
     label: "Payment status",
     placeholder: "Select status",
     options: [
-      { label: "Failed", value: "Failed" },
+      // { label: "Failed", value: "Failed" },
       { label: "Pending", value: "Pending" },
       { label: "Completed", value: "Completed" },
     ],
@@ -105,5 +96,17 @@ export const paymentFormType: FormField[] = [
     required: true,
     label: "Remarks",
     placeholder: "Enter remarks",
+  },
+  {
+    type: "date",
+    required: true,
+    name: "paymentDate",
+    label: "Payment Date",
+    placeholder: "Select Payment Date",
+  },
+  {
+    name: "document",
+    label: "Upload Document (Optional)",
+    type: "file",
   },
 ];

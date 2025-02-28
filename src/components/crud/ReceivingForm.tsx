@@ -82,7 +82,6 @@ const ReceivingForm: React.FC<LedgerProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       props.onClose?.();
       setSubmitting(false);

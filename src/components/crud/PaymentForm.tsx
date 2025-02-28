@@ -35,7 +35,7 @@ const PaymentForm: React.FC<LedgerProps> = (props: any) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "/api/transaction/public/base-fields";
+        const url = "/api/payment/public/base-fields";
         const response: any = await Fetch(url, {}, 5000, true, false);
         const mappings = [
           { key: "ledgers", fieldName: "ledgerId" },
@@ -101,7 +101,6 @@ const PaymentForm: React.FC<LedgerProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }
@@ -111,9 +110,9 @@ const PaymentForm: React.FC<LedgerProps> = (props: any) => {
     <div>
       {!loading && (
         <DynamicForm
-          returnAs="object"
           fields={formField}
           formData={formData}
+          returnAs="formData"
           submitting={submitting}
           onClose={props?.onClose}
           setFormData={setFormData}

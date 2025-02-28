@@ -98,7 +98,6 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }

@@ -122,67 +122,25 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const calculateFinal = useCallback(() => {
-    const toNumber = (value: any) => {
-      const num = parseFloat(value);
-      return isNaN(num) ? 0 : num;
-    };
-    const packagingCharges = toNumber(formData.packagingCharges);
-    const installationCharges = toNumber(formData.installationCharges);
-    const transportationCharges = toNumber(formData.transportationCharges);
-    const packagingTaxPercentage = toNumber(formData.packagingTaxPercentage);
-
-    const packagingTax = (packagingCharges * packagingTaxPercentage) / 100;
-    const finalAmount =
-      packagingTax +
-      packagingCharges +
-      installationCharges +
-      transportationCharges;
-
-    const final = Number(finalAmount.toFixed(2));
-    setFormData((formData: any) => ({
-      ...formData,
-      additional: final,
-      additional2: formData.netAmount,
-      netAmount: formData.netAmount + final,
-    }));
-  }, [
-    formData.packagingCharges,
-    formData.installationCharges,
-    formData.transportationCharges,
-    formData.packagingTaxPercentage,
-  ]);
-
-  useEffect(() => {
-    calculateFinal();
-  }, [calculateFinal]);
-
-  const customFunc = useCallback(
-    (data: any, items?: any) => {
-      setFormData((prevFormData: any) => {
-        const updated = populateFormData(QuotationFieldsType, {
-          ...prevFormData,
-          ...data,
-        });
-
-        if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
-          return updated;
-        }
-        return prevFormData;
+  const customFunc = useCallback((data: any, items?: any) => {
+    setFormData((prevFormData: any) => {
+      const updated = populateFormData(QuotationFieldsType, {
+        ...prevFormData,
+        ...data,
       });
-      if (items && items.length > 0) {
-        setProducts(items);
-        calculateFinal();
+      if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
+        return updated;
       }
-    },
-    [calculateFinal]
-  );
+      return prevFormData;
+    });
+    if (items && items.length > 0) setProducts(items);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div>

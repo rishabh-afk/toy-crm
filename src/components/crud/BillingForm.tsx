@@ -1,15 +1,15 @@
 "use client";
 
 import { toast } from "react-toastify";
-import { useCallback, useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
+import { useCallback, useEffect, useState } from "react";
 import { BillingFormType } from "./formInput/BillingFormTypes";
 import {
-  getSelectFormattedData,
   populateFormData,
   populateFormFields,
+  getSelectFormattedData,
 } from "@/hooks/general";
 
 interface BillingProps {
@@ -57,7 +57,6 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
       } else return toast.error("Something went wrong!");
     } catch (error) {
       console.log("Error: ", error);
-      return toast.error("Something went wrong!");
     } finally {
       setSubmitting(false);
     }
@@ -171,7 +170,6 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
   }, [formData.quotationId]);
 
   const customFunc = useCallback((data: any, items?: any) => {
-    console.log(items);
     setFormData((prevFormData: any) => {
       const updated = populateFormData(BillingFormType, {
         ...prevFormData,
@@ -183,7 +181,43 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
       }
       return prevFormData;
     });
+    calculateFinal();
   }, []);
+
+  const calculateFinal = useCallback(() => {
+    const toNumber = (value: any) => {
+      const num = parseFloat(value);
+      return isNaN(num) ? 0 : num;
+    };
+    const packagingCharges = toNumber(formData.packagingCharges);
+    const installationCharges = toNumber(formData.installationCharges);
+    const transportationCharges = toNumber(formData.transportationCharges);
+    const packagingTaxPercentage = toNumber(formData.packagingTaxPercentage);
+
+    const packagingTax = (packagingCharges * packagingTaxPercentage) / 100;
+    const finalAmount =
+      packagingTax +
+      packagingCharges +
+      installationCharges +
+      transportationCharges;
+
+    const final = Number(finalAmount.toFixed(2));
+    setFormData((formData: any) => ({
+      ...formData,
+      additional: final,
+      additional2: formData.netAmount,
+      netAmount: formData.netAmount + final,
+    }));
+  }, [
+    formData.packagingCharges,
+    formData.installationCharges,
+    formData.transportationCharges,
+    formData.packagingTaxPercentage,
+  ]);
+
+  useEffect(() => {
+    calculateFinal();
+  }, [calculateFinal]);
 
   return (
     <div>

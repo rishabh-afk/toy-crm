@@ -10,6 +10,7 @@ interface FiltersProps {
   startDate: string;
   handleSearch: any;
   searchTerm: string;
+  hideDateFilter?: boolean;
   filterOptions: FilterOption[];
   paginate: { itemsPerPage: number };
   setEndDate: (value: string) => void;
@@ -28,6 +29,7 @@ const Filters: React.FC<FiltersProps> = ({
   setSearchTerm,
   handleSearch,
   filterOptions,
+  hideDateFilter,
   fetchFilteredData,
 }) => {
   return (
@@ -53,13 +55,15 @@ const Filters: React.FC<FiltersProps> = ({
       <ItemsPage fetchFilteredData={fetchFilteredData} paginate={paginate} />
 
       {/* Date Range Filter */}
-      <DateFilter
-        endDate={endDate}
-        startDate={startDate}
-        setEndDate={setEndDate}
-        setStartDate={setStartDate}
-        fetchFilteredData={fetchFilteredData}
-      />
+      {!hideDateFilter && (
+        <DateFilter
+          endDate={endDate}
+          startDate={startDate}
+          setEndDate={setEndDate}
+          setStartDate={setStartDate}
+          fetchFilteredData={fetchFilteredData}
+        />
+      )}
     </div>
   );
 };

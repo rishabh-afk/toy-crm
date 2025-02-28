@@ -39,7 +39,12 @@ const Modal: React.FC<ModalProps> = ({
               onClick={onClose}
             />
           </p>
-          <div className={hidePadding ? "" : "p-4"}>{children}</div>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className={hidePadding ? "" : "p-4"}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </div>,
