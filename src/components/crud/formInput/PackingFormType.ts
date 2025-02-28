@@ -1,5 +1,5 @@
 import { FormField } from "@/hooks/types";
-import { formatDate } from "@/hooks/general";
+// import { formatDate } from "@/hooks/general";
 
 export const PackingFormType: FormField[] = [
   {
@@ -31,7 +31,7 @@ export const PackingFormType: FormField[] = [
     required: true,
     name: "packingDate",
     label: "Estimated Packed Date",
-    minDate: formatDate(new Date()),
+    // minDate: formatDate(new Date()),
     placeholder: "Select Packed Date",
   },
   {

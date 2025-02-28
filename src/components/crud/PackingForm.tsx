@@ -28,11 +28,22 @@ const isDisabledFields = [
   "totalQuantity",
 ];
 
+const updateProductsWithMaxQuantity = (
+  products: any,
+  quantityObj: Record<string, number>
+): any => {
+  return products.map((product: any) => {
+    if (quantityObj[product._id] !== undefined) {
+      return { ...product, maxQuantity: quantityObj[product._id] };
+    }
+    return product;
+  });
+};
+
 const PackingForm: React.FC<PackingProps> = (props: any) => {
   const data = props.data;
 
   const formType = props.formType;
-  const [loading, setLoading] = useState(true);
   const [baseFields, setBaseFields] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [loading2, setLoading2] = useState(data?._id ? true : false);
@@ -46,7 +57,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(PackingFormType, data) : {}
   );
-  const [stock, setStock] = useState<any>(data?._id ? data?.products : null);
+  const [stock, setStock] = useState<any>([]);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -59,12 +70,22 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
       const productData = stock.reduce(
         (acc: Record<string, number>, s: any) => {
           const key = s.id || s.product;
-          if (key) acc[key] = s.packedQuantity;
+          if (key) acc[key] = s.quantity;
           return acc;
         },
         {}
       );
-      updatedData = { ...updatedData, products: productData };
+
+      const totalQuantity = stock.reduce(
+        (sum: any, item: any) => sum + item.quantity,
+        0
+      );
+
+      updatedData = {
+        ...updatedData,
+        products: productData,
+        netPackedQuantity: totalQuantity,
+      };
       const response: any = data?._id
         ? await Put(url, updatedData)
         : await Post(url, updatedData);
@@ -90,9 +111,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         const url = `/api/quotation/${formData.quotationId}`;
         const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data) {
-          setStock(response?.data?.products);
           const fieldUpdates: Record<string, any> = {
-            packing: { options: response?.data?.products },
             customerName: {
               updateFormData: {
                 key: "customerName",
@@ -131,56 +150,51 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
             }
             return field;
           });
-          setFormField(updatedFormField);
-          await fetchDetails();
+          await fetchDetails(
+            formData.quotationId,
+            data?._id ? data?.products : response?.data?.products,
+            updatedFormField
+          );
         }
       } catch (error) {
         console.log("Error: ", error);
       }
     };
-    if (formData.quotationId && !data?._id) fetchQuotationDetails();
+    if (formData.quotationId && baseFields) fetchQuotationDetails();
     // eslint-disable-next-line
-  }, [formData.quotationId]);
+  }, [formData.quotationId, baseFields]);
 
-  const updateProductsWithMaxQuantity = (
-    products: any,
-    quantityObj: Record<string, number>
-  ): any => {
-    return products.map((product: any) => {
-      if (quantityObj[product._id] !== undefined) {
-        return { ...product, maxQuantity: quantityObj[product._id] };
+  const fetchDetails = useCallback(
+    async (quotationId?: string, stock?: any, formField?: any) => {
+      try {
+        const url = `/api/packing/get-max-quantity`;
+        const params = {
+          packingId: data?._id ?? "",
+          quotationId: formData.quotationId || quotationId,
+        };
+        const response: any = await Fetch(url, params, 5000, true, false);
+        if (response.success && response?.data) {
+          const data = updateProductsWithMaxQuantity(stock, response.data);
+          const updatedFormField = formField.map((field: any) => {
+            if (field.name === "packing") return { ...field, options: data };
+            return field;
+          });
+          setStock(stock);
+          setFormField(updatedFormField);
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+      } finally {
+        setLoading2(false);
       }
-      return product;
-    });
-  };
-
-  const fetchDetails = useCallback(async () => {
-    try {
-      const url = `/api/packing/get-max-quantity`;
-      const params = {
-        packingId: data?._id ?? "",
-        quotationId: formData.quotationId,
-      };
-      const response: any = await Fetch(url, params, 5000, true, false);
-      if (response.success && response?.data) {
-        const data = updateProductsWithMaxQuantity(stock, response.data);
-        const updatedFormField = formField.map((field: any) => {
-          if (field.name === "packing") return { ...field, options: data };
-          return field;
-        });
-        setFormField(updatedFormField);
-      }
-    } catch (error) {
-      console.log("Error: ", error);
-    } finally {
-      setLoading2(false);
-    }
+    },
     // eslint-disable-next-line
-  }, []);
+    []
+  );
 
-  useEffect(() => {
-    if (data?._id && formData.quotationId) fetchDetails();
-  }, [fetchDetails, formData.quotationId, data?._id]);
+  // useEffect(() => {
+  //   if (data?._id && formData.quotationId) fetchDetails();
+  // }, [fetchDetails, formData.quotationId, data?._id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -191,17 +205,11 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
           { key: "packedBy", fieldName: "packedBy" },
           { key: "warehouse", fieldName: "warehouseId" },
           { key: "quotation", fieldName: "quotationId" },
-          { key: "products", fieldName: "packing" },
         ];
         const updatedFormField = formField.map((field: any) => {
           const mapping = mappings.find((m) => m.fieldName === field.name);
           if (mapping) {
-            if (mapping.key === "products" && Array.isArray(data?.products)) {
-              setStock(data?.products);
-              return { ...field, options: data.products };
-            }
             if (
-              mapping.key !== "products" &&
               Array.isArray(response.data[mapping.key]) &&
               response.data[mapping.key].length > 0
             ) {
@@ -218,7 +226,6 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
         console.log("Error: ", error);
       } finally {
         setBaseFields(true);
-        setLoading(false);
       }
     };
     fetchData();
@@ -228,7 +235,7 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
   const handlePackaging = useCallback((data: any) => {
     setStock(data);
     const totalQuantity = data.reduce(
-      (total: number, item: any) => total + (item?.packedQuantity || 0),
+      (total: number, item: any) => total + (item?.quantity || 0),
       0
     );
     if (totalQuantity > 0) {
@@ -241,11 +248,9 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
     }
   }, []);
 
-  if (loading || loading2) return;
-
   return (
     <div>
-      {!loading && !loading2 && (
+      {baseFields && !loading2 && (
         <>
           <DynamicForm
             returnAs="object"

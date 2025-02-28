@@ -173,10 +173,10 @@ const Summary = () => {
                     <span
                       className={`px-2 py-1 text-xs text-white rounded ${
                         deal.status === "Approved"
-                          ? "bg-green-400"
+                          ? "bg-green-500"
                           : deal.dealStatus === "Pending"
-                          ? "bg-yellow-400"
-                          : "bg-red-400"
+                          ? "bg-yellow-500"
+                          : "bg-red-500"
                       }`}
                     >
                       {deal.status}

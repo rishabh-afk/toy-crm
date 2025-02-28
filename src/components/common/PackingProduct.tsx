@@ -22,7 +22,6 @@ const PackingProduct = ({
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    console.log(initialData);
     setItems(
       initialData.map((data) => ({
         id: data?.product ?? "",
@@ -37,14 +36,13 @@ const PackingProduct = ({
         packedQuantity: data?.packedQuantity ?? 0,
       }))
     );
-    customFunc(items);
-    // eslint-disable-next-line
+    // customFunc(items);
   }, [initialData]);
 
-  useEffect(() => {
-    customFunc(items);
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   customFunc(items);
+  //   // eslint-disable-next-line
+  // }, []);
 
   const handleChange = (
     id: number,
@@ -69,7 +67,7 @@ const PackingProduct = ({
                 "Product Name",
                 "Product Code",
                 "UOM",
-                "Quantity",
+                "Max. Quantity",
                 "Packed Quantity",
               ].map((header) => (
                 <th
@@ -104,19 +102,20 @@ const PackingProduct = ({
                 </td>
                 <td className="border w-20">
                   <input
+                    min={0}
                     type="number"
-                    min={0} // Allow 0 as a valid value
                     value={item.quantity}
+                    max={item.maxQuantity}
                     disabled={item.isPacked}
                     onChange={(e) => {
                       const value =
-                        e.target.value === "" ? 0 : Number(e.target.value); // Default empty input to 0
+                        e.target.value === "" ? 0 : Number(e.target.value);
                       if (
                         !isNaN(value) &&
                         value >= 0 &&
-                        value <= item?.productQuantity
+                        value <= item?.maxQuantity
                       ) {
-                        handleChange(item._id, "packedQuantity", value);
+                        handleChange(item._id, "quantity", value);
                       }
                     }}
                     onKeyPress={(e) => {

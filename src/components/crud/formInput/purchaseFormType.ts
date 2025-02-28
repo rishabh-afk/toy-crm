@@ -1,4 +1,4 @@
-import { formatDate } from "@/hooks/general";
+// import { formatDate } from "@/hooks/general";
 import { FormField } from "@/hooks/types";
 
 export const PurchaseFieldsType: FormField[] = [
@@ -50,7 +50,7 @@ export const PurchaseFieldsType: FormField[] = [
     required: true,
     name: "purchaseDate",
     label: "Purchase Date",
-    currentDate: formatDate(new Date()),
+    // currentDate: formatDate(new Date()),
     placeholder: "Provide Purchase date",
   },
   {
