@@ -10,15 +10,15 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "purchaseNo", label: "Purchase Order Number" },
+  { key: "purchaseNo", label: "PO Number" },
   { key: "warehouseName", label: "Warehouse" },
   { key: "vendorName", label: "Supplier / Vendor" },
-  { key: "totalQuantity", label: "Total Quantity" },
+  { key: "totalQuantity", label: "Total Qty" },
   { key: "totalValue", label: "Total Value", isCurrency: "₹" },
   { key: "netAmount", label: "Final Amount", isCurrency: "₹" },
-  { key: "paymentMode", label: "Payment Method" },
-  { key: "purchaseDate", label: "Purchase Date", sortable: true, isDate: true },
-  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
+  { key: "paymentMode", label: "Payment Mode" },
+  { key: "purchaseDate", label: "Purchase On", sortable: true, isDate: true },
+  { key: "createdAt", label: "Created On", sortable: true, isDate: true },
   {
     key: "stockAdded",
     label: "Stock Added",
