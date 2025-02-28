@@ -177,7 +177,10 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
           const data = updateProductsWithMaxQuantity(stock, response.data);
           const updatedStock = data.map((item: any) => ({
             ...item,
-            quantity: item.maxQuantity <= item.quantity ? 0 : item.quantity,
+            quantity:
+              item.maxQuantity < item.quantity
+                ? item.maxQuantity
+                : item.quantity,
           }));
           const updatedFormField = formField.map((field: any) => {
             if (field.name === "packing")

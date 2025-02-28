@@ -169,21 +169,6 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
     // eslint-disable-next-line
   }, [formData.quotationId]);
 
-  const customFunc = useCallback((data: any, items?: any) => {
-    setFormData((prevFormData: any) => {
-      const updated = populateFormData(BillingFormType, {
-        ...prevFormData,
-        ...data,
-      });
-
-      if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
-        return updated;
-      }
-      return prevFormData;
-    });
-    calculateFinal();
-  }, []);
-
   const calculateFinal = useCallback(() => {
     const toNumber = (value: any) => {
       const num = parseFloat(value);
@@ -214,6 +199,25 @@ const BillingForm: React.FC<BillingProps> = (props: any) => {
     formData.transportationCharges,
     formData.packagingTaxPercentage,
   ]);
+
+  const customFunc = useCallback(
+    (data: any, items?: any) => {
+      console.log(items);
+      setFormData((prevFormData: any) => {
+        const updated = populateFormData(BillingFormType, {
+          ...prevFormData,
+          ...data,
+        });
+
+        if (JSON.stringify(updated) !== JSON.stringify(prevFormData)) {
+          return updated;
+        }
+        return prevFormData;
+      });
+      calculateFinal();
+    },
+    [calculateFinal]
+  );
 
   useEffect(() => {
     calculateFinal();

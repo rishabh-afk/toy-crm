@@ -139,7 +139,6 @@ const QuotationForm: React.FC<LedgerProps> = (props: any) => {
       return prevFormData;
     });
     if (items && items.length > 0) setProducts(items);
-    // eslint-disable-next-line
   }, []);
 
   return (
