@@ -32,6 +32,7 @@ interface TableProps {
   columns: TableColumn[];
   operationsAllowed: any;
   hideDateFilter?: boolean;
+  hideEverything?: boolean;
   pagination_data?: Pagination;
 }
 
@@ -49,6 +50,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   id = "",
   columns,
   filterOptions,
+  hideEverything,
   hideDateFilter,
   pagination_data,
   operationsAllowed,
@@ -184,7 +186,7 @@ const TableComponent = <T extends { [key: string]: any }>({
           setPaginate(response?.data?.pagination);
         }
       } catch (error) {
-        console.error("Error fetching filtered data:", error);
+        console.log("Error fetching filtered data:", error);
       }
     }
   };
@@ -250,19 +252,21 @@ const TableComponent = <T extends { [key: string]: any }>({
 
       <div className="py-5">
         {/* Search and Filters */}
-        <Filters
-          endDate={endDate}
-          paginate={paginate}
-          startDate={startDate}
-          searchTerm={searchTerm}
-          setEndDate={setEndDate}
-          handleSearch={handleSearch}
-          setStartDate={setStartDate}
-          filterOptions={filterOptions}
-          setSearchTerm={setSearchTerm}
-          hideDateFilter={hideDateFilter}
-          fetchFilteredData={fetchFilteredData}
-        />
+        {!hideEverything && (
+          <Filters
+            endDate={endDate}
+            paginate={paginate}
+            startDate={startDate}
+            searchTerm={searchTerm}
+            setEndDate={setEndDate}
+            handleSearch={handleSearch}
+            setStartDate={setStartDate}
+            filterOptions={filterOptions}
+            setSearchTerm={setSearchTerm}
+            hideDateFilter={hideDateFilter}
+            fetchFilteredData={fetchFilteredData}
+          />
+        )}
 
         {/* Table */}
         <Table
@@ -280,7 +284,12 @@ const TableComponent = <T extends { [key: string]: any }>({
         />
 
         {/* Pagination */}
-        <Pagination paginate={paginate} fetchFilteredData={fetchFilteredData} />
+        {!hideEverything && (
+          <Pagination
+            paginate={paginate}
+            fetchFilteredData={fetchFilteredData}
+          />
+        )}
       </div>
     </>
   );

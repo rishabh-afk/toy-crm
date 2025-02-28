@@ -161,6 +161,14 @@ export const endpoints: Record<
     fetchAll: "api/warehouse/public/", // to fetch all products
     operations: operations,
   },
+  ProductStock: {
+    create: "api/item-transfer", // to create a product
+    read: "api/product/get-stock/", // to get a product
+    update: `api/item-transfer/`, // to update a product
+    delete: "api/item-transfer/", // to delete a product
+    fetchAll: "api/product/get-stock/", // to fetch all products
+    operations: operations,
+  },
   Warehouse: {
     create: "api/warehouse", // to create a product
     read: "api/warehouse/", // to get a product
