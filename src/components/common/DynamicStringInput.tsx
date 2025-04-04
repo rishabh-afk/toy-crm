@@ -9,10 +9,19 @@ const DynamicStringInput = ({
   formData: any;
   setFormData: any;
 }) => {
+  const termsAndConditions = [
+    "100% payment advance along with purchase order.",
+    "Delivery time depends on quantity.",
+    "Packing, forwarding & transportation shall be charged extra.",
+    "All disputes are subject to Delhi jurisdiction only. Interest @24% PA will be charged on delayed payment not made.",
+    "Order once placed shall not be canceled and advance shall not be refunded in any condition.",
+    "The customer is responsible to provide proper road permit/ Transit form without which Maskeen Toys Private Limited shall not take any responsibility for the delivery. Any tax Obligation or penalty shall be paid by buyer only.",
+    "Installation Extra."
+  ];
   const [newInput, setNewInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputs, setInputs] = useState<string[]>(
-    formData && formData?.quotationTerms ? formData.quotationTerms : []
+    formData && formData?.quotationTerms ? formData.quotationTerms : termsAndConditions
   );
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -77,11 +86,10 @@ const DynamicStringInput = ({
         <button
           type="button"
           onClick={handleAddOrUpdate}
-          className={`px-3 min-h-full whitespace-nowrap rounded-lg text-sm text-white ${
-            editIndex !== null
-              ? "bg-yellow-500 hover:bg-yellow-600"
-              : "bg-primary hover:bg-secondary"
-          }`}
+          className={`px-3 min-h-full whitespace-nowrap rounded-lg text-sm text-white ${editIndex !== null
+            ? "bg-yellow-500 hover:bg-yellow-600"
+            : "bg-primary hover:bg-secondary"
+            }`}
         >
           {editIndex !== null ? "Update" : "Add More..."}
         </button>

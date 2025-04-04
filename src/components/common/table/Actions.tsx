@@ -7,6 +7,8 @@ import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import GenerateQuotationPDF from "../GenerateQuotationPDF";
 import ConfirmationModal from "@/components/crud/ConfirmationModal";
+import LedgerTransactionsMModal from "../LedgerTransactionsMModal";
+import { toast } from "react-toastify";
 
 interface RowData {
   _id: string;
@@ -44,8 +46,10 @@ const Actions: React.FC<ActionsProps> = ({
   const id =
     pathNameParams.length > 4 ? pathNameParams[pathNameParams.length - 1] : "";
 
+  const [transaction, setTransaction] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [selectIdForDeletion, setSelectIdForDeletion] = useState<string>("");
+  const [showTransactionModal, setShowTransactionModal] = useState<boolean>(false);
 
   const handleEdit = async (id?: string) => {
     if (!id) return;
@@ -99,6 +103,42 @@ const Actions: React.FC<ActionsProps> = ({
     return router.push(url);
   };
 
+  const handleTransactions = async (id?: string) => {
+    if (!id) return;
+
+    const paymentEndpoint = endpoints["Payment"]?.fetchAll;
+    const receivingEndpoint = endpoints["Receiving"]?.fetchAll;
+
+    if (!paymentEndpoint || !receivingEndpoint) {
+      console.warn("Missing endpoints for Payment or Receiving");
+      return;
+    }
+
+    try {
+      const [paymentRes, receivingRes]: any = await Promise.all([
+        Fetch(paymentEndpoint, { ledgerId: id }, 5000, true, false),
+        Fetch(receivingEndpoint, { ledgerId: id }, 5000, true, false),
+      ]);
+
+      const paymentData = paymentRes?.data?.result ?? [];
+      const receivingData = receivingRes?.data?.result ?? [];
+
+      if (paymentRes?.success && paymentData.length > 0) {
+        setTransaction({ ...paymentRes.data, type: "Payment", id: id });
+        setShowTransactionModal(true);
+      } else if (receivingRes?.success && receivingData.length > 0) {
+        setTransaction({ ...receivingRes.data, types: "Receiving", id: id });
+        setShowTransactionModal(true);
+      } else {
+        toast.warn("No transaction found");
+        setTransaction({});
+      }
+    } catch (error) {
+      console.error("Error while fetching transactions:", error);
+      toast.error("Failed to fetch transactions");
+    }
+  };
+
   const handleDeleteModal = () => {
     setShowDeleteModal(false);
   };
@@ -111,6 +151,9 @@ const Actions: React.FC<ActionsProps> = ({
           handleDelete={handleDelete}
           handleDeleteModal={handleDeleteModal}
         />
+      </Modal>
+      <Modal isVisible={showTransactionModal} onClose={() => setShowTransactionModal(false)}>
+        <LedgerTransactionsMModal data={transaction} />
       </Modal>
       {operationsAllowed?.update && (
         <button
@@ -139,7 +182,17 @@ const Actions: React.FC<ActionsProps> = ({
       {type === "Product" && (
         <BarcodeGenerator rowValue={row?.name} id={row?._id} />
       )}
+      {type === "Ledger" &&
+        <button
+          type="button"
+          onClick={() => handleTransactions(row?._id)}
+          className="ml-1 text-sm flex gap-2 items-center bg-blue-500 text-white hover:bg-blue-600 py-1 px-2 rounded transition"
+        >
+          View Payments
+        </button>
+      }
       {type === "Quotation" && <GenerateQuotationPDF id={row._id} />}
+      {type === "Packing" && <GenerateQuotationPDF packing={true} id={row._id} />}
     </>
   );
 };

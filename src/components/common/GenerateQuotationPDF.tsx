@@ -4,15 +4,16 @@ import PdfModal from "./PdfModal";
 import { Fetch } from "@/hooks/apiUtils";
 import { endpoints } from "@/data/endpoints";
 import { FaRegFilePdf } from "react-icons/fa";
+import PackingPdfModal from "./PackingPdfModal";
 
-const GenerateQuotationPDF = ({ id }: { id: any }) => {
+const GenerateQuotationPDF = ({ id, packing = false }: { id: any, packing?: boolean }) => {
   const [data, setPdfData] = useState<any>({});
   const [isVisible, setIsVisible] = useState(false);
   const handleEdit = async (id?: string) => {
     if (!id) return;
 
     try {
-      const endpoint = endpoints["Quotation"]?.read;
+      const endpoint = packing ? endpoints["Packing"]?.read : endpoints["Quotation"]?.read;
       if (!endpoint) return;
       const url = `${endpoint}${id}`;
       const response: any = await Fetch(url, {}, 5000, true);
@@ -40,7 +41,12 @@ const GenerateQuotationPDF = ({ id }: { id: any }) => {
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}
       >
-        <PdfModal data={data} onClose={() => setIsVisible(false)} />
+        {
+          packing ?
+            <PackingPdfModal data={data} onClose={() => setIsVisible(false)} />
+            :
+            <PdfModal data={data} onClose={() => setIsVisible(false)} />
+        }
       </Modal>
     </div>
   );

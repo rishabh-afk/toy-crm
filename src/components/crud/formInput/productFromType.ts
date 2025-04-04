@@ -34,25 +34,26 @@ export const ProductFormType: FormField[] = [
     label: "Description",
     placeholder: "Enter product description",
   },
-  {
-    name: "barCode",
-    type: "text",
-    required: true,
-    label: "Bar Code",
-    placeholder: "Enter barcode",
-  },
+  // {
+  //   name: "barCode",
+  //   type: "text",
+  //   required: true,
+  //   label: "Bar Code",
+  //   placeholder: "Enter barcode",
+  // },
   {
     name: "sku",
     type: "text",
     label: "SKU",
+    required: true,
     placeholder: "Enter the SKU",
   },
-  {
-    name: "productSeries",
-    type: "text",
-    label: "Product Series",
-    placeholder: "Enter product series",
-  },
+  // {
+  //   name: "productSeries",
+  //   type: "text",
+  //   label: "Product Series",
+  //   placeholder: "Enter product series",
+  // },
   {
     name: "productCategory",
     type: "select",
@@ -183,7 +184,7 @@ export const ProductFormType: FormField[] = [
     name: "coverImage",
     label: "Product Cover Image",
     type: "file",
-    required: true,
+    // required: true,
   },
 ];
 

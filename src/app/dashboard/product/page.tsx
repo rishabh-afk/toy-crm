@@ -14,18 +14,18 @@ const columns = [
   { key: "productCode", label: "Product Code", sortable: true },
   { key: "name", label: "Product Name", sortable: true },
   { key: "sku", label: "SKU", sortable: true },
-  { key: "barCode", label: "Barcode" },
+  // { key: "barCode", label: "Barcode" },
   { key: "productCategory", label: "Category" },
   { key: "brandName", label: "Brand" },
   { key: "mrp", label: "MRP", sortable: true, isCurrency: "₹" },
   { key: "ourPrice", label: "Our Price", sortable: true, isCurrency: "₹" },
   { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
-  {
-    key: "updatedAt",
-    label: "Last Updated Date",
-    sortable: true,
-    isDate: true,
-  },
+  // {
+  //   key: "updatedAt",
+  //   label: "Last Updated Date",
+  //   sortable: true,
+  //   isDate: true,
+  // },
 ];
 
 const filterOptions = [

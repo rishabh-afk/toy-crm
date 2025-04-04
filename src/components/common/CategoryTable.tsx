@@ -31,18 +31,18 @@ const FinalRow = ({ data }: { data: Record<string, any> }) => {
     }
   );
   return (
-    <tr className="bg-gray-100 text-center font-semibold">
-      <td className="border-x border-gray-200 pb-4 px-2" colSpan={3}>
+    <tr className="bg-gray-100 text-[10px] text-center font-semibold">
+      <td className="border-x border-gray-200 pb-2 px-2" colSpan={3}>
         **Total Summary**
       </td>
-      <td className="border-x border-gray-200 pb-4 px-2">{total.quantity}</td>
-      <td className="border-x border-gray-200 pb-4 px-2" colSpan={2}>
+      <td className="border-x border-gray-200 pb-2 px-2">{total.quantity}</td>
+      <td className="border-x border-gray-200 pb-2 px-2" colSpan={2}>
         {formatCurrency(total.taxableAmount)}
       </td>
-      <td className="border-x border-gray-200 pb-4 px-2">
+      <td className="border-x border-gray-200 pb-2 px-2">
         {formatCurrency(total.taxAmount)}
       </td>
-      <td className="border-x border-gray-200 pb-4 px-2">
+      <td className="border-x border-gray-200 pb-2 px-2">
         {formatCurrency(total.totalAmount)}
       </td>
     </tr>
@@ -55,50 +55,49 @@ const DynamicTable: React.FC<{ data: DataType }> = ({ data }) => {
 
   return (
     <div className="overflow-x-auto mt-5">
-      <h2 className="text-xl font-bold pb-5">Tax Summary</h2>
-      <table className="w-full border-x border-gray-200 text-sm">
+      <h2 className="text-sm font-bold pb-2">Tax Summary</h2>
+      <table className="w-fit border-x border-gray-200 text-[10px]">
         <thead>
-          <tr className="bg-red-400 text-white text-sm">
-            <th className="border-x border-gray-200 px-2 pb-4">S. No.</th>
-            <th className="border-x border-gray-200 px-2 pb-4">Category</th>
-            <th className="border-x border-gray-200 px-2 pb-4">HSN Code</th>
-            <th className="border-x border-gray-200 px-2 pb-4">Quantity</th>
-            <th className="border-x border-gray-200 px-2 pb-4">
+          <tr className="bg-red-400 text-white text-[10px]">
+            <th className="border-x border-gray-200 px-2 pb-2">S. No.</th>
+            <th className="border-x border-gray-200 px-2 pb-2">Category</th>
+            <th className="border-x border-gray-200 px-2 pb-2">HSN Code</th>
+            <th className="border-x border-gray-200 px-2 pb-2">Quantity</th>
+            <th className="border-x border-gray-200 px-2 pb-2">
               Taxable Amount
             </th>
-            <th className="border-x border-gray-200 px-2 pb-4">GST (%)</th>
-            <th className="border-x border-gray-200 px-2 pb-4">Tax Amount</th>
-            <th className="border-x border-gray-200 px-2 pb-4">Total Amount</th>
+            <th className="border-x border-gray-200 px-2 pb-2">GST (%)</th>
+            <th className="border-x border-gray-200 px-2 pb-2">Tax Amount</th>
+            <th className="border-x border-gray-200 px-2 pb-2">Total Amount</th>
           </tr>
         </thead>
         <tbody>
           {Object.entries(data).map(([customer, details], index) => (
             <tr
               key={index}
-              className={`text-center text-xs ${
-                index % 2 === 0 ? "bg-white" : "bg-gray-100"
-              }`}
+              className={`text-center text-[8px] ${index % 2 === 0 ? "bg-white" : "bg-gray-100"
+                }`}
             >
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {index + 1}.
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">{customer}</td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">{customer}</td>
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {details.hsn}
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {details.quantity}
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {formatCurrency(details.taxableAmount)}
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {formatPercentage(details.gst)}
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {formatCurrency(details.taxAmount)}
               </td>
-              <td className="border-x border-gray-200 px-2 pb-4">
+              <td className="border-x border-gray-200 px-2 pb-2">
                 {formatCurrency(details.totalAmount)}
               </td>
             </tr>

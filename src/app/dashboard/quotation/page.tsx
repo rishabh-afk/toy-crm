@@ -11,24 +11,25 @@ import TableComponent from "@/components/common/Table";
 
 const columns = [
   { key: "quotationNo", label: "Quotation ID" },
+  { key: "age", label: "Age (In Days)", sortable: true },
   { key: "billNumber", label: "Invoice No." },
   { key: "leadName", label: "Lead Name" },
   { key: "customerName", label: "Customer / Company" },
   { key: "preparedByName", label: "Assigned To (Name)" },
   { key: "preparedByEmail", label: "Assigned To (Email)" },
   { key: "netAmount", label: "Net Amount", isCurrency: "₹" },
-  {
-    key: "invoiceGenerated",
-    isMultiPurpose: true,
-    label: "Invoice Generated",
-    multiPurposeProps: { type: "label" },
-  },
-  {
-    key: "packed",
-    label: "Is Packed",
-    isMultiPurpose: true,
-    multiPurposeProps: { type: "label" },
-  },
+  // {
+  //   key: "invoiceGenerated",
+  //   isMultiPurpose: true,
+  //   label: "Invoice Generated",
+  //   multiPurposeProps: { type: "label" },
+  // },
+  // {
+  //   key: "packed",
+  //   label: "Is Packed",
+  //   isMultiPurpose: true,
+  //   multiPurposeProps: { type: "label" },
+  // },
   {
     key: "status",
     label: "Status",

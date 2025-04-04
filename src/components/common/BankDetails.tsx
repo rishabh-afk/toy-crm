@@ -11,35 +11,41 @@ const termsAndConditions = [
   "Installation Extra.",
 ];
 
-const BankDetails = ({ terms }: { terms?: any }) => {
+const BankDetails = ({ terms, hideBanking = false }: { terms?: any, hideBanking?: boolean }) => {
   const termExist = terms && terms.length > 0 ? terms : termsAndConditions;
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden mt-6">
       {/* Header */}
-      <div className="bg-red-400 text-white font-semibold text-lg px-2 pb-4 border-b border-gray-200">
-        Bank Details
-      </div>
+      {!hideBanking &&
+        <div className="bg-red-400 text-white font-semibold text-lg px-2 pb-4 border-b border-gray-200">
+          Bank Details
+        </div>
+      }
 
       {/* Main Content */}
       <div className="grid grid-cols-3">
         {/* Left Section - Bank Details */}
         <div className="col-span-2 border-r border-gray-200 p-2 text-sm">
-          <h6 className="mb-1">
-            <strong>Name:</strong> Bank Of India
-          </h6>
-          <h6 className="mb-1">
-            <strong>Branch:</strong> Sme Branch Delhi 110087
-          </h6>
-          <h6 className="mb-1">
-            <strong>Account Number:</strong> 6049 3011 000 260
-          </h6>
-          <h6 className="mb-1">
-            <strong>Branch IFSC:</strong> BKID0006049
-          </h6>
+          {!hideBanking &&
+            <>
+              <h6 className="mb-1">
+                <strong>Name:</strong> Bank Of India
+              </h6>
+              <h6 className="mb-1">
+                <strong>Branch:</strong> Sme Branch Delhi 110087
+              </h6>
+              <h6 className="mb-1">
+                <strong>Account Number:</strong> 6049 3011 000 260
+              </h6>
+              <h6 className="mb-1">
+                <strong>Branch IFSC:</strong> BKID0006049
+              </h6>
+            </>
+          }
 
           {/* Terms and Conditions */}
-          <div className="mt-4">
+          <div className={`${!hideBanking && "mt-4"}`}>
             <h6 className="font-semibold text-base mb-2 underline">
               Terms and Conditions
             </h6>

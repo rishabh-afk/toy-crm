@@ -10,21 +10,22 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "leadId", label: "Lead Identifier (ID)" },
+  { key: "leadId", label: "Lead ID" },
+  { key: "age", label: "Age (In Days)", sortable: true },
   { key: "name", label: "Full Name", sortable: true },
   { key: "email", label: "Email Address", sortable: true },
   { key: "phone", label: "Phone Number", sortable: true },
   { key: "companyName", label: "Company Name" },
   { key: "salesPersonName", label: "Salesperson Name" },
-  { key: "salesPersonEmail", label: "Salesperson Email" },
+  // { key: "salesPersonEmail", label: "Salesperson Email" },
   { key: "source", label: "Lead Source", sortable: true },
-  { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
-  {
-    key: "updatedAt",
-    label: "Last Updated Date",
-    sortable: true,
-    isDate: true,
-  },
+  // { key: "createdAt", label: "Creation Date", sortable: true, isDate: true },
+  // {
+  //   key: "updatedAt",
+  //   label: "Last Updated Date",
+  //   sortable: true,
+  //   isDate: true,
+  // },
   {
     sortable: true,
     label: "Priority Level",

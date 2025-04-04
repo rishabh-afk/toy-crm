@@ -58,6 +58,14 @@ export const QuotationFieldsType: FormField[] = [
   //   placeholder: "Enter transport",
   // },
   {
+    name: "age",
+    maxLength: 3,
+    required: true,
+    type: "stringNumeric",
+    label: "Quotation Age (in Days)",
+    placeholder: "Enter Quotation Age (in Days)",
+  },
+  {
     type: "br",
     name: "terms",
     widthFull: true,
