@@ -7,13 +7,13 @@ import useFetch from "@/hooks/useFetch";
 // import BarChart from "../chart/Barchart";
 import { useRouter } from "next/navigation";
 import { endpoints } from "@/data/endpoints";
-import { formatCurrency, formatDate } from "@/hooks/general";
 // import { FaFileAlt } from "react-icons/fa";
+import { formatCurrency, formatDate } from "@/hooks/general";
 
 const Summary = () => {
   const router = useRouter();
   const { data } = useFetch(endpoints["Quotation"].fetchAll);
-  const updatedData = data?.data.result.slice(0, 5);
+  const updatedData = data?.data.result;
 
   return (
     <>
@@ -146,7 +146,7 @@ const Summary = () => {
               <th className="p-4 border border-infobg">Deal ID</th>
               <th className="p-4 border border-infobg">Client</th>
               <th className="p-4 border border-infobg">Deal Value</th>
-              <th className="p-4 border border-infobg">Deal Status</th>
+              <th className="p-4 border border-infobg">Status</th>
               <th className="p-4 border border-infobg">Approved On</th>
               <th className="p-4 border border-infobg">Salesperson</th>
               <th className="p-4 border border-infobg">Salesperson (Email)</th>
@@ -161,7 +161,7 @@ const Summary = () => {
                   className="border-b border-infobg text-iconBlack hover:bg-infobg cursor-pointer"
                 >
                   <td className="p-4 border border-infobg">
-                    Quotation_{deal.quotationNo}
+                    #{deal.quotationNo}
                   </td>
                   <td className="p-4 capitalize border border-infobg">
                     {deal.customerName}
@@ -171,13 +171,12 @@ const Summary = () => {
                   </td>
                   <td className="p-4 border border-infobg">
                     <span
-                      className={`px-2 py-1 text-xs text-white rounded ${
-                        deal.status === "Approved"
-                          ? "bg-green-500"
-                          : deal.dealStatus === "Pending"
+                      className={`px-2 py-1 text-xs text-white rounded ${deal.status === "Approved"
+                        ? "bg-green-500"
+                        : deal.dealStatus === "Pending"
                           ? "bg-yellow-500"
                           : "bg-red-500"
-                      }`}
+                        }`}
                     >
                       {deal.status}
                     </span>

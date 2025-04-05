@@ -113,7 +113,6 @@ const Actions: React.FC<ActionsProps> = ({
       console.warn("Missing endpoints for Payment or Receiving");
       return;
     }
-
     try {
       const [paymentRes, receivingRes]: any = await Promise.all([
         Fetch(paymentEndpoint, { ledgerId: id }, 5000, true, false),
@@ -124,10 +123,12 @@ const Actions: React.FC<ActionsProps> = ({
       const receivingData = receivingRes?.data?.result ?? [];
 
       if (paymentRes?.success && paymentData.length > 0) {
-        setTransaction({ ...paymentRes.data, type: "Payment", id: id });
+        const resp: any = await Fetch(`api/payment/total/${id}`, {}, 5000, true, false);
+        setTransaction({ ...paymentRes.data, type: "Payment", id: id, expense: resp?.data });
         setShowTransactionModal(true);
       } else if (receivingRes?.success && receivingData.length > 0) {
-        setTransaction({ ...receivingRes.data, types: "Receiving", id: id });
+        const resp: any = await Fetch(`api/payment/total/${id}`, {}, 5000, true, false);
+        setTransaction({ ...receivingRes.data, types: "Receiving", id: id, expense: resp?.data });
         setShowTransactionModal(true);
       } else {
         toast.warn("No transaction found");

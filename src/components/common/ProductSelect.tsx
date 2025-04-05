@@ -14,6 +14,13 @@ const ProductSelect = ({
   handleProductChange: (productCode: string) => void;
 }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      inputRef.current?.focus();
+    }
+  }, [searchTerm]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,6 +40,7 @@ const ProductSelect = ({
     <div className="relative" ref={dropdownRef}>
       <input
         type="text"
+        ref={inputRef}
         value={searchTerm}
         placeholder="Type to search products by name or code..."
         onChange={(e) => setSearchTerm(e.target.value)}

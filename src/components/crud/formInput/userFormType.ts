@@ -1,8 +1,8 @@
-import { countries } from "@/data/data";
+// import { countries } from "@/data/data";
 import { FormField } from "@/hooks/types";
 import { includes } from "@/hooks/polyfills";
-import { formatDate, getSelectFormattedData } from "@/hooks/general";
-import { states } from "@/data/states";
+import { formatDate } from "@/hooks/general";
+// import { states } from "@/data/states";
 
 export const userFormType: FormField[] = [
   {
@@ -133,18 +133,25 @@ export const userFormType: FormField[] = [
   },
   {
     type: "select",
-    name: "city",
-    label: "City",
-    required: true,
-    placeholder: "Select city",
-    options: getSelectFormattedData(states),
+    value: "India",
+    name: "country",
+    label: "Country",
+    placeholder: "Select Country",
+    options: [{ label: "India", value: "India" }],
   },
   {
+    type: "select",
     name: "state",
-    type: "text",
-    required: true,
     label: "State",
-    placeholder: "Enter state",
+    options: [],
+    placeholder: "Select state",
+  },
+  {
+    type: "select",
+    name: "city",
+    label: "City",
+    placeholder: "Select city",
+    options: [],
   },
   {
     name: "pinCode",
@@ -153,14 +160,6 @@ export const userFormType: FormField[] = [
     required: true,
     type: "stringNumeric",
     placeholder: "Enter pin code",
-  },
-  {
-    type: "select",
-    name: "country",
-    required: true,
-    label: "Country",
-    placeholder: "Select Country",
-    options: getSelectFormattedData(countries),
   },
   {
     name: "landmark",

@@ -1,6 +1,8 @@
+import { toast } from "react-toastify";
 import { Fetch } from "@/hooks/apiUtils";
 import { debounce } from "@/hooks/general";
-import { useEffect, useState } from "react";
+import ProductSelect from "./ProductSelect";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const PurchaseProductForm = ({
   initialData,
@@ -26,8 +28,12 @@ const PurchaseProductForm = ({
     discountPercentage: 0,
   };
   const [nextId, setNextId] = useState(2);
-  const [items, setItems] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState<any>([]);
+  const [items, setItems] = useState<any>(
+    initialData && initialData.length > 0 ? initialData : [emptyProduct]
+  );
 
   const addItem = () => {
     const newItems = [...items, { id: nextId, ...emptyProduct }];
@@ -46,6 +52,34 @@ const PurchaseProductForm = ({
     });
     return updatedArray;
   };
+
+  const fetchProducts = useCallback(async (searchTerm: string) => {
+    try {
+      setLoading(true);
+      const url = "/api/product/search";
+      const param = { search: searchTerm };
+      const response: any = await Fetch(url, param, 5000, true, false);
+      if (response.success) setProducts(response?.data || []);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const debouncedFetchProducts = useMemo(
+    () => debounce((search: string) => fetchProducts(search), 1000),
+    [fetchProducts]
+  );
+
+
+  useEffect(() => {
+    if (searchTerm) {
+      setProducts([]);
+      debouncedFetchProducts(searchTerm);
+    }
+    // eslint-disable-next-line
+  }, [searchTerm]);
 
   const deleteItem = (id: number) => {
     const updatedItems = items.filter((item: any) => item.id !== id);
@@ -100,62 +134,77 @@ const PurchaseProductForm = ({
     };
   };
 
-  const handleProductChange = (rowId: number, productCode: string) => {
-    const selectedProduct = products.find(
-      (product: any) => product.productCode === productCode
-    );
+  const handleProductChange = (product: any) => {
+    setItems((prevItems: any[]) => {
+      const existingItemIndex = prevItems.findIndex(
+        (item: any) => item.productCode === product.productCode
+      );
 
-    if (selectedProduct) {
-      const data = {
+      if (existingItemIndex !== -1) {
+        toast.info("Product already selected!");
+        return prevItems;
+      }
+      const emptyItemIndex = prevItems.findIndex(
+        (item: any) => !item.productCode
+      );
+
+      const newProduct = {
         value: 0,
-        id: rowId,
         quantity: 1,
         gstAmount: 0,
         totalAmount: 0,
         taxableAmount: 0,
+        id: product?._id,
+        _id: product?._id,
         discountAmount: 0,
+        name: product.name,
         discountPercentage: 0,
-        product: selectedProduct._id,
-        gst: selectedProduct?.gst ?? 0,
-        uom: selectedProduct?.uom ?? "",
-        listPrice: selectedProduct?.ourPrice ?? 0,
-        stockInHand: selectedProduct?.stockInHand ?? 0,
-        productCode: selectedProduct?.productCode ?? "",
+        product: product?._id,
+        gst: product?.gst ?? 0,
+        uom: product?.uom ?? "",
+        listPrice: product?.ourPrice ?? 0,
+        stockInHand: product?.stockInHand ?? 0,
+        productCode: product?.productCode ?? "",
       };
 
-      const calculated = getUpdatedCalculated(data);
+      const calculated = getUpdatedCalculated(newProduct);
+      const finalCalculated = { ...newProduct, ...calculated };
 
-      setItems((prevItems: any[]) => {
-        const existingItemIndex = prevItems.findIndex(
-          (item: any) => item.id === rowId // Match by rowId
-        );
-        let updatedItems;
-        if (existingItemIndex !== -1) {
-          updatedItems = [...prevItems];
-          updatedItems[existingItemIndex] = {
-            ...updatedItems[existingItemIndex],
-            ...calculated,
-          };
-        } else updatedItems = [...prevItems, calculated];
+      if (emptyItemIndex !== -1) {
+        const updatedItems = [...prevItems];
+        updatedItems[emptyItemIndex] = finalCalculated;
         const data = calculatedFinal(updatedItems);
-        debounce(onProductDataChange(data, updatedItems), 1000);
+        onProductDataChange(data, updatedItems);
         return updatedItems;
-      });
-    }
+      }
+      const updated = [...prevItems, finalCalculated];
+      const data = calculatedFinal(updated);
+      onProductDataChange(data, updated);
+      return updated;
+    });
   };
+
+  useEffect(() => {
+    if (items.length > 0 && items[items.length - 1]?.productCode) {
+      const data = calculatedFinal(items);
+      onProductDataChange(data, items);
+      addItem();
+    }
+    // eslint-disable-next-line
+  }, [items]);
 
   const handleChange = (id: number, field: any, value: string | number) => {
     const updatedItems = items.map((item: any) =>
-      item.id === id ? { ...item, [field]: value } : item
+      item._id === id ? { ...item, [field]: value } : item
     );
     setItems(updatedItems);
-    const targetItem = updatedItems.find((item: any) => item.id === id);
+    const targetItem = updatedItems.find((item: any) => item._id === id);
     if (targetItem) {
       const calculated = getUpdatedCalculated(targetItem);
 
       setItems((prevItems: any[]) => {
         const existingItemIndex = prevItems.findIndex(
-          (item: any) => item.id === id
+          (item: any) => item._id === id
         );
 
         let updatedItems;
@@ -218,14 +267,21 @@ const PurchaseProductForm = ({
             Select Product
           </p>
         </div>
-        <button
+        {/* <button
           type="button"
           onClick={addItem}
           className="px-4 py-2 bg-primary text-white rounded-md"
         >
           + Add Product
-        </button>
+        </button> */}
       </div>
+      <ProductSelect
+        loading={loading}
+        searchTerm={searchTerm}
+        filteredProducts={products}
+        setSearchTerm={setSearchTerm}
+        handleProductChange={handleProductChange}
+      />
       <div className="overflow-x-auto no-scrollbar">
         <table className="table-auto border-collapse whitespace-nowrap border border-gray-300">
           <thead>
@@ -261,20 +317,9 @@ const PurchaseProductForm = ({
                   className="odd:bg-white text-black even:bg-gray-50"
                 >
                   <td className="border border-gray-300">
-                    <select
-                      value={item.productCode}
-                      onChange={(e) =>
-                        handleProductChange(item.id, e.target.value)
-                      }
-                      className="w-40 p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
-                    >
-                      <option value="">--Select Product--</option>
-                      {products.map((product: any, index: number) => (
-                        <option key={index} value={product.productCode}>
-                          {product.name} ({product.productCode})
-                        </option>
-                      ))}
-                    </select>
+                    <p className="px-2">
+                      {item.name} {item.productCode && `(${item.productCode})`} {!item?.name && !item.productCode && <span className="text-gray-400">Select a Product</span>}
+                    </p>
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.uom}
@@ -289,9 +334,12 @@ const PurchaseProductForm = ({
                       value={item.quantity || ""}
                       placeholder="Qty"
                       onChange={(e) => {
-                        const enteredValue = Number(e.target.value);
                         debounce(
-                          handleChange(item.id, "quantity", enteredValue),
+                          handleChange(
+                            item._id,
+                            "quantity",
+                            Number(e.target.value)
+                          ),
                           1000
                         );
                       }}
@@ -313,7 +361,7 @@ const PurchaseProductForm = ({
                         const validatedValue = Math.min(enteredValue, 100); // Limit the value to 100
                         debounce(
                           handleChange(
-                            item.id,
+                            item._id,
                             "discountPercentage",
                             validatedValue
                           ),

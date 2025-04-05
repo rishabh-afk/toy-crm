@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
 import { endpoints } from "@/data/endpoints";
 import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { warehouseType } from "./formInput/warehouseFormType";
 import {
+  getSelectFormattedData,
   nestFields,
   populateFormData,
   populateFormFields,
@@ -26,9 +27,11 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
   // const [stock, setStock] = useState<any>();
   // const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const formField = data?._id
+  const [fetchingStates, setFetchingState] = useState(true);
+  const [formField, setFormField] = useState(data?._id
     ? populateFormFields(warehouseType, data)
-    : warehouseType;
+    : warehouseType
+  );
 
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(warehouseType, data) : {}
@@ -103,6 +106,61 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        const url = "/api/region/state";
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response?.length > 0) {
+          const sortedData = response.sort((a: any, b: any) =>
+            a.name.localeCompare(b.name)
+          );
+          const selectData = getSelectFormattedData(sortedData);
+          const updatedFormField = formField.map((obj: any) => {
+            if (obj.name === "state")
+              return { ...obj, options: selectData };
+            return obj;
+          });
+          setFormField(updatedFormField);
+        }
+      } catch (error) {
+        console.log("State fetch error: ", error)
+      } finally {
+        setFetchingState(false);
+      }
+    }
+    fetchStates();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    const fetchCity = async () => {
+      if (formData?.state) {
+        try {
+          const url = "/api/region/city/";
+          const response: any = await Fetch(url + formData?.state, {}, 5000, true, false);
+          if (response?.length > 0) {
+            const sortedData = response.sort((a: any, b: any) =>
+              a.name.localeCompare(b.name)
+            );
+            const selectData = getSelectFormattedData(sortedData);
+            const updatedFormField = formField.map((obj: any) => {
+              if (obj.name === "city")
+                return { ...obj, options: selectData };
+              return obj;
+            });
+            setFormField(updatedFormField);
+          }
+        } catch (error) {
+          console.log("State fetch error: ", error)
+        }
+      }
+    }
+    if (!fetchingStates) fetchCity();
+    // eslint-disable-next-line
+  }, [formData.state, fetchingStates])
+
+
   // useEffect(() => {
   //   const fetchQuotationDetails = async () => {
   //     try {
@@ -168,18 +226,18 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
 
   return (
     <div>
-      {/* {!loading && ( */}
-      <DynamicForm
-        returnAs="object"
-        fields={formField}
-        formData={formData}
-        submitting={submitting}
-        onClose={props?.onClose}
-        setFormData={setFormData}
-        makeApiCall={makeApiCall}
-        customFunc={handleStocks}
-      />
-      {/* )} */}
+      {!fetchingStates && (
+        <DynamicForm
+          returnAs="object"
+          fields={formField}
+          formData={formData}
+          submitting={submitting}
+          onClose={props?.onClose}
+          setFormData={setFormData}
+          makeApiCall={makeApiCall}
+          customFunc={handleStocks}
+        />
+      )}
     </div>
   );
 };

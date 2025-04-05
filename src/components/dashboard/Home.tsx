@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 // import { CRMStats } from "@/hooks/types";
 import LineGraph from "../chart/Linegraph";
@@ -8,17 +8,46 @@ import { DashboardEndpoint } from "@/data/endpoints";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
 // import ConcentricCircleGraph from "../chart/ConcentricCircleGraph";
 import { formatCompactNumber, formatIndianCurrency } from "@/hooks/general";
+import DateFilter from "../common/table/DateFilter";
+// import { Fetch } from "@/hooks/apiUtils";
 // import BarChartWithNegativePositiveXAxis from "../chart/BarChartWithNegativePositiveXAxis";
 
 const Home: FC = () => {
+  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState("");
   const { data: dealsData } = useFetch(DashboardEndpoint["fetchSale"]);
   const crmStats: any = dealsData?.data;
+
+  const fetchData = async () => {
+    const params = {
+      start_date: startDate,
+      end_date: endDate,
+    };
+    try {
+      console.log(params)
+      // // const { data, success }: any = await Fetch(
+      // //   DashboardEndpoint["fetchSale"],
+      // //   params
+      // );
+      // if (success) setData({ labels: months, datasets: data?.finalData });
+    } catch (error) {
+      console.log("fetchSale error:", error);
+    }
+  }
 
   return (
     <div className="space-y-10">
       {/* CRM Stats */}
       <section className="">
-        <h2 className="text-xl font-bold text-iconBlack">CRM Dashboard</h2>
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-iconBlack">CRM Dashboard</h2>
+          <DateFilter
+            endDate={endDate}
+            startDate={startDate}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            fetchFilteredData={fetchData} />
+        </div>
         <div className="grid grid-cols-2 gap-5 mt-6 md:grid-cols-4">
           <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">

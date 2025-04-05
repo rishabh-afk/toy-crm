@@ -73,7 +73,7 @@ const StockTransferForm: React.FC<LedgerProps> = (props: any) => {
         const response: any = await Fetch(url, {}, 5000, true, false);
         if (response.success && response?.data) {
           const fieldUpdates: Record<string, any> = {
-            stockTransferForm: { options: response?.data?.product },
+            stockTransferForm: { options: response?.data },
           };
           const updatedFormField = formField.map((field: any) => {
             const update = fieldUpdates[field.name];

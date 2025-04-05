@@ -1,8 +1,7 @@
-import { countries } from "@/data/data";
+// import { states } from "@/data/states";
 import { FormField } from "@/hooks/types";
 import { includes } from "@/hooks/polyfills";
-import { formatDate, getSelectFormattedData } from "@/hooks/general";
-import { states } from "@/data/states";
+import { formatDate } from "@/hooks/general";
 
 export const LeadFormType: FormField[] = [
   {
@@ -68,18 +67,18 @@ export const LeadFormType: FormField[] = [
   },
   {
     type: "select",
+    value: "India",
     name: "country",
     label: "Country",
-    required: true,
     placeholder: "Select Country",
-    options: getSelectFormattedData(countries),
+    options: [{ label: "India", value: "India" }],
   },
   {
     type: "select",
     name: "state",
     label: "State",
+    options: [],
     placeholder: "Select state",
-    options: getSelectFormattedData(states),
   },
   {
     type: "select",

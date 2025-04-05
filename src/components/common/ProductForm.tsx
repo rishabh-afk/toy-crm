@@ -114,7 +114,6 @@ const ProductForm = ({
         toast.info("Product already selected!");
         return prevItems;
       }
-
       const emptyItemIndex = prevItems.findIndex(
         (item: any) => !item.productCode
       );
@@ -286,7 +285,7 @@ const ProductForm = ({
                 >
                   <td className="border min-w-64 border-gray-300">
                     <p className="px-2">
-                      {item.name} {item.productCode && `(${item.productCode})`}
+                      {item.name} {item.productCode && `(${item.productCode})`} {!item?.name && !item.productCode && <span className="text-gray-400">Select a Product</span>}
                     </p>
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">

@@ -10,7 +10,7 @@ import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
 
 const columns = [
-  { key: "_id", label: "Employee Identifier (ID)" },
+  { key: "_id", label: "Employee ID" },
   { key: "name", label: "Full Name", sortable: true },
   { key: "email", label: "Email Address", sortable: true },
   { key: "mobileNo", label: "Phone Number", sortable: true },

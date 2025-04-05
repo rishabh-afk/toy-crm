@@ -1,8 +1,8 @@
+// import { states } from "@/data/states";
+import { bankNames } from "@/data/data";
 import { FormField } from "@/hooks/types";
 import { includes } from "@/hooks/polyfills";
-import { bankNames, countries } from "@/data/data";
 import { getSelectFormattedData } from "@/hooks/general";
-import { states } from "@/data/states";
 
 export const LedgerType: FormField[] = [
   {
@@ -108,18 +108,18 @@ export const LedgerType: FormField[] = [
   },
   {
     type: "select",
+    value: "India",
     name: "country",
     label: "Country",
-    required: true,
     placeholder: "Select Country",
-    options: getSelectFormattedData(countries),
+    options: [{ label: "India", value: "India" }],
   },
   {
+    options: [],
     type: "select",
     name: "state",
     label: "State",
     placeholder: "Select state",
-    options: getSelectFormattedData(states),
   },
   {
     type: "select",

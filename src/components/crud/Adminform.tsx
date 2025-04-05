@@ -26,6 +26,7 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
   const formType = props.formType;
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [fetchingStates, setFetchingState] = useState(true);
   const [formField, setFormFields] = useState<any>(
     data?._id ? populateFormFields(userFormType, data) : userFormType
   );
@@ -99,9 +100,65 @@ const UserForm: React.FC<DealerFormProps> = (props: any) => {
     }
   };
 
+
+  useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        const url = "/api/region/state";
+        const response: any = await Fetch(url, {}, 5000, true, false);
+        if (response?.length > 0) {
+          const sortedData = response.sort((a: any, b: any) =>
+            a.name.localeCompare(b.name)
+          );
+          const selectData = getSelectFormattedData(sortedData);
+          const updatedFormField = formField.map((obj: any) => {
+            if (obj.name === "state")
+              return { ...obj, options: selectData };
+            return obj;
+          });
+          setFormFields(updatedFormField);
+        }
+      } catch (error) {
+        console.log("State fetch error: ", error)
+      } finally {
+        setFetchingState(false);
+      }
+    }
+    if (!loading) setTimeout(() => { fetchStates(); }, 500);
+    // eslint-disable-next-line
+  }, [loading]);
+
+  useEffect(() => {
+    const fetchCity = async () => {
+      if (formData?.state) {
+        try {
+          const url = "/api/region/city/";
+          const response: any = await Fetch(url + formData?.state, {}, 5000, true, false);
+          if (response?.length > 0) {
+            const sortedData = response.sort((a: any, b: any) =>
+              a.name.localeCompare(b.name)
+            );
+            const selectData = getSelectFormattedData(sortedData);
+            const updatedFormField = formField.map((obj: any) => {
+              if (obj.name === "city")
+                return { ...obj, options: selectData };
+              return obj;
+            });
+            setFormFields(updatedFormField);
+          }
+        } catch (error) {
+          console.log("State fetch error: ", error)
+        }
+      }
+    }
+    if (!loading && !fetchingStates) fetchCity();
+    // eslint-disable-next-line
+  }, [formData.state, loading, fetchingStates])
+
+
   return (
     <div>
-      {!loading && (
+      {!loading && !fetchingStates && (
         <DynamicForm
           fields={formField}
           formData={formData}

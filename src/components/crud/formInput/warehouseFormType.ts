@@ -1,7 +1,7 @@
-import { countries } from "@/data/data";
+// import { countries } from "@/data/data";
 import { FormField } from "@/hooks/types";
-import { getSelectFormattedData } from "@/hooks/general";
-import { states } from "@/data/states";
+// import { getSelectFormattedData } from "@/hooks/general";
+// import { states } from "@/data/states";
 
 export const warehouseType: FormField[] = [
   {
@@ -26,18 +26,28 @@ export const warehouseType: FormField[] = [
   },
   {
     type: "select",
+    value: "India",
+    name: "country",
+    label: "Country",
+    required: true,
+    placeholder: "Select Country",
+    options: [{ label: "India", value: "India" }],
+  },
+  {
+    type: "select",
+    name: "state",
+    label: "State",
+    options: [],
+    required: true,
+    placeholder: "Select state",
+  },
+  {
+    type: "select",
     name: "city",
     label: "City",
     required: true,
     placeholder: "Select city",
-    options: getSelectFormattedData(states),
-  },
-  {
-    name: "state",
-    type: "text",
-    required: true,
-    label: "State",
-    placeholder: "Enter state",
+    options: [],
   },
   {
     name: "pinCode",
@@ -46,14 +56,6 @@ export const warehouseType: FormField[] = [
     required: true,
     type: "stringNumeric",
     placeholder: "Enter pin code",
-  },
-  {
-    type: "select",
-    name: "country",
-    required: true,
-    label: "Country",
-    placeholder: "Select Country",
-    options: getSelectFormattedData(countries),
   },
   {
     name: "landmark",

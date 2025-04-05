@@ -7,6 +7,7 @@ import ExpenseStats from "./table/ExpenseStats";
 interface LedgerTransactionsMModalProps {
     data: {
         id?: string;
+        expense?: any;
         result?: any[];
         pagination?: any;
         types?: "Payment" | "Receiving";
@@ -21,6 +22,7 @@ interface Pagination {
 }
 
 const LedgerTransactionsMModal = ({ data }: LedgerTransactionsMModalProps) => {
+    const [expense, setExpenses] = useState(data?.expense ?? {});
     const [paginate, setPaginate] = useState<Pagination>({
         totalPages: data?.pagination?.totalPages ?? 1,
         totalItems: data?.pagination?.totalItems ?? 0,
@@ -32,7 +34,10 @@ const LedgerTransactionsMModal = ({ data }: LedgerTransactionsMModalProps) => {
 
     const fetchTransaction = async (type: "Payment" | "Receiving") => {
         const endpoint = endpoints[type]?.fetchAll;
+        const url = `api/payment/total/${data?.id}`;
         const response: any = await Fetch(endpoint, { ledgerId: data?.id }, 5000, true);
+        const responseT: any = await Fetch(url, {}, 5000, true, false);
+        if (responseT?.success) setExpenses(responseT?.data);
         const paymentData = response?.data?.result ?? [];
         if (response?.success && paymentData.length > 0) {
             setTransaction(paymentData);
@@ -49,7 +54,7 @@ const LedgerTransactionsMModal = ({ data }: LedgerTransactionsMModalProps) => {
             {/* Tab Header */}
             <span className="text-2xl absolute top-5 font-semibold">Ledger Transactions</span>
             <div className="my-5">
-                <ExpenseStats data={{}} />
+                <ExpenseStats data={expense} />
             </div>
             <div className="flex items-center space-x-3 bg-gray-50 p-1 rounded-xl shadow-sm w-fit mb-4">
                 {[
