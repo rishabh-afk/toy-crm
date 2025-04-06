@@ -60,6 +60,7 @@ const StockTransferProductForm = ({
         quantity: 1,
         totalAmount: 0,
         id: product?._id,
+        name: selectedProduct?.name,
         product: selectedProduct._id,
         mrp: selectedProduct?.mrp ?? 0,
         stockInHand: selectedProduct?.stockInHand ?? 0,
