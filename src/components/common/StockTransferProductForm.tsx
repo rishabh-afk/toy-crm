@@ -18,7 +18,6 @@ const StockTransferProductForm = ({
     stockInHand: 0,
     productCode: "",
   };
-  const [nextId, setNextId] = useState(2);
   const [items, setItems] = useState<any>(
     initialData && initialData.length > 0 ? initialData : [emptyProduct]
   );
@@ -99,6 +98,7 @@ const StockTransferProductForm = ({
     } finally {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, []);
 
   const debouncedFetchProducts = useMemo(
