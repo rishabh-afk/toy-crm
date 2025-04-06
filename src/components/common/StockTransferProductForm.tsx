@@ -1,6 +1,7 @@
 import { debounce } from "@/hooks/general";
 import ProductSelect from "./ProductSelect";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { toast } from "react-toastify";
 
 const StockTransferProductForm = ({
   initialData,
@@ -86,20 +87,25 @@ const StockTransferProductForm = ({
     }
   };
 
-  const fetchProducts = useCallback(async (searchTerm: string) => {
-    try {
-      setLoading(true);
-      const data = initialData.filter((item: any) =>
-        item.name.toLowerCase().includes(searchTerm)
-      );
-      setProducts(data || []);
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    } finally {
-      setLoading(false);
-    }
-    // eslint-disable-next-line
-  }, []);
+  const fetchProducts = useCallback(
+    async (searchTerm: string) => {
+      try {
+        setLoading(true);
+        if (initialData?.length === 0) return toast.info("No products found");
+        const data = initialData.filter((item: any) => {
+          const name = item?.name?.toString().toLowerCase() || "";
+          const term = searchTerm.trim().toLowerCase();
+          return name.includes(term);
+        });
+        setProducts(data || []);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [initialData]
+  );
 
   const debouncedFetchProducts = useMemo(
     () => debounce((search: string) => fetchProducts(search), 1000),
