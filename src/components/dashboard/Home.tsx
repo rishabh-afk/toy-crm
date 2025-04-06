@@ -1,64 +1,87 @@
-import { FC, useState } from "react";
+import dayjs from "dayjs";
 import useFetch from "@/hooks/useFetch";
-// import { CRMStats } from "@/hooks/types";
+import { Fetch } from "@/hooks/apiUtils";
 import LineGraph from "../chart/Linegraph";
 import { IoStatsChart } from "react-icons/io5";
-// import { ImParagraphLeft } from "react-icons/im";
-import { DashboardEndpoint } from "@/data/endpoints";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
-// import ConcentricCircleGraph from "../chart/ConcentricCircleGraph";
-import { formatCompactNumber, formatIndianCurrency } from "@/hooks/general";
+import { FC, useEffect, useState } from "react";
 import DateFilter from "../common/table/DateFilter";
-// import { Fetch } from "@/hooks/apiUtils";
-// import BarChartWithNegativePositiveXAxis from "../chart/BarChartWithNegativePositiveXAxis";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
+import { formatCompactNumber, formatIndianCurrency } from "@/hooks/general";
 
 const Home: FC = () => {
-  const [endDate, setEndDate] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const { data: dealsData } = useFetch(DashboardEndpoint["fetchSale"]);
+  const [dateDiff, setDateDiff] = useState<number>(0);
+  const [startDate, setStartDate] = useState(
+    dayjs().subtract(7, "day").format("YYYY-MM-DD")
+  );
+  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
+  const { data: dealsData } = useFetch("api/dashboard");
   const crmStats: any = dealsData?.data;
 
-  const fetchData = async () => {
+  const [data, setData] = useState(crmStats);
+
+  useEffect(() => {
+    const diff = dayjs(endDate).diff(dayjs(startDate), "day");
+    setDateDiff(diff);
+  }, [startDate, endDate]);
+
+  useEffect(() => {
+    if (crmStats) setData(crmStats);
+  }, [crmStats]);
+
+  const fetchData = async (filterParams: any) => {
     const params = {
-      start_date: startDate,
-      end_date: endDate,
+      endDate: filterParams.end ?? endDate,
+      startDate: filterParams.start ?? startDate,
     };
     try {
-      console.log(params)
-      // // const { data, success }: any = await Fetch(
-      // //   DashboardEndpoint["fetchSale"],
-      // //   params
-      // );
-      // if (success) setData({ labels: months, datasets: data?.finalData });
+      const { data, success }: any = await Fetch("api/dashboard", params);
+      if (success) setData(data);
     } catch (error) {
       console.log("fetchSale error:", error);
     }
-  }
+  };
+
+  const renderIcon = (value: string = "") => {
+    if (typeof value !== "string" || value.length === 0) return null;
+    return value.trim().startsWith("+") ? (
+      <FaArrowUp className="text-green-500" />
+    ) : (
+      <FaArrowDown className="text-red-500" />
+    );
+  };
 
   return (
     <div className="space-y-10">
       {/* CRM Stats */}
       <section className="">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-iconBlack">CRM Dashboard</h2>
+          <h2 className="text-3xl font-extrabold text-iconBlack">
+            CRM Dashboard <br />
+            <span className="text-lg font-medium text-iconBlack">
+              - Showing data from the last {dateDiff} day
+              {dateDiff > 1 ? "s" : ""}
+            </span>
+          </h2>
           <DateFilter
             endDate={endDate}
             startDate={startDate}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
-            fetchFilteredData={fetchData} />
+            fetchFilteredData={fetchData}
+          />
         </div>
         <div className="grid grid-cols-2 gap-5 mt-6 md:grid-cols-4">
           <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
               <p className="text-lg inline-flex items-center text-iconBlack font-bold">
-                1.23% <FaArrowUp />
+                {data?.difference?.totalRevenue}%{" "}
+                {renderIcon(data?.difference?.totalRevenue)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
               <LineGraph
-                data={[20, 25, 15, 35, 20, 30, 15]}
+                data={[20, 15, 15, 45, 20, 20, 15]}
                 borderColor="rgba(0, 123, 255, 1)"
               />
             </div>
@@ -70,7 +93,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {formatIndianCurrency(crmStats?.totalRevenue)}
+                  {formatIndianCurrency(data?.currentPeriod?.totalRevenue)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Total Revenue
@@ -81,13 +104,14 @@ const Home: FC = () => {
           <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
               <p className="text-lg inline-flex items-center text-iconBlack font-bold">
-                0.3% <FaArrowDown />
+                {data?.difference?.activeUsers}%{" "}
+                {renderIcon(data?.difference?.activeUsers)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
               <LineGraph
-                data={[20, 25, 15, 35, 20, 30, 15]}
+                data={[20, 25, 20, 45, 20, 30, 50]}
                 borderColor="rgba(255, 165, 0, 1)"
               />
             </div>
@@ -99,7 +123,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {formatCompactNumber(crmStats?.activeUsers)}
+                  {formatCompactNumber(data?.currentPeriod?.activeUsers)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Active Users
@@ -110,13 +134,14 @@ const Home: FC = () => {
           <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
               <p className="text-lg inline-flex items-center text-iconBlack font-bold">
-                5.3% <FaArrowUp />
+                {data?.difference?.totalDeals}%{" "}
+                {renderIcon(data?.difference?.totalDeals)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
               </h3>
               <LineGraph
-                data={[20, 25, 15, 35, 20, 30, 15]}
+                data={[20, 45, 15, 20, 10, 50, 15]}
                 borderColor="rgba(255, 0, 0, 1)"
               />
             </div>
@@ -128,7 +153,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {formatCompactNumber(crmStats?.totalDeals)}
+                  {formatCompactNumber(data?.currentPeriod?.totalDeals)}
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Total Deals
@@ -139,7 +164,8 @@ const Home: FC = () => {
           <div className="p-4 flex gap-2 bg-whiteBg rounded-lg">
             <div className="w-[55%]">
               <p className="text-lg inline-flex items-center text-iconBlack font-bold">
-                1.2% <FaArrowDown />
+                {data?.difference?.conversionRatio}%
+                {renderIcon(data?.difference?.conversionRatio)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
                 from last month
@@ -157,7 +183,7 @@ const Home: FC = () => {
               </div>
               <div>
                 <p className="text-xl font-bold text-iconBlack">
-                  {crmStats?.conversionRatio}%
+                  {data?.currentPeriod?.conversionRatio}%
                 </p>
                 <h3 className="text-xs text-gray-500 font-semibold">
                   Conversion Ratio

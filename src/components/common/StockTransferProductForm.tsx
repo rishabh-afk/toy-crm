@@ -1,5 +1,6 @@
 import { debounce } from "@/hooks/general";
-import { useEffect, useState } from "react";
+import ProductSelect from "./ProductSelect";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const StockTransferProductForm = ({
   initialData,
@@ -18,14 +19,12 @@ const StockTransferProductForm = ({
     productCode: "",
   };
   const [nextId, setNextId] = useState(2);
-  const [items, setItems] = useState<any>([]);
-  const [products, setProducts] = useState<any>([]);
-
-  const addItem = () => {
-    const newItems = [...items, { id: nextId, ...emptyProduct }];
-    setItems(newItems);
-    setNextId(nextId + 1);
-  };
+  const [items, setItems] = useState<any>(
+    initialData && initialData.length > 0 ? initialData : [emptyProduct]
+  );
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState<any>(initialData ?? []);
 
   const deleteItem = (id: number) => {
     const updatedItems = items.filter((item: any) => item.id !== id);
@@ -50,17 +49,17 @@ const StockTransferProductForm = ({
     };
   };
 
-  const handleProductChange = (rowId: number, productCode: string) => {
+  const handleProductChange = (product: any) => {
     const selectedProduct = products.find(
-      (product: any) => product.productCode === productCode
+      (product: any) => product.productCode === product?.productCode
     );
 
     if (selectedProduct) {
       const data = {
         value: 0,
-        id: rowId,
         quantity: 1,
         totalAmount: 0,
+        id: product?._id,
         product: selectedProduct._id,
         mrp: selectedProduct?.mrp ?? 0,
         stockInHand: selectedProduct?.stockInHand ?? 0,
@@ -71,7 +70,7 @@ const StockTransferProductForm = ({
 
       setItems((prevItems: any[]) => {
         const existingItemIndex = prevItems.findIndex(
-          (item: any) => item.id === rowId // Match by rowId
+          (item: any) => item.id === product?._id // Match by rowId
         );
         let updatedItems;
         if (existingItemIndex !== -1) {
@@ -87,6 +86,33 @@ const StockTransferProductForm = ({
       });
     }
   };
+
+  const fetchProducts = useCallback(async (searchTerm: string) => {
+    try {
+      setLoading(true);
+      const data = initialData.filter((item: any) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setProducts(data || []);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const debouncedFetchProducts = useMemo(
+    () => debounce((search: string) => fetchProducts(search), 1000),
+    [fetchProducts]
+  );
+
+  useEffect(() => {
+    if (searchTerm) {
+      setProducts([]);
+      debouncedFetchProducts(searchTerm);
+    }
+    // eslint-disable-next-line
+  }, [searchTerm]);
 
   const handleChange = (id: number, field: any, value: string | number) => {
     const updatedItems = items.map((item: any) =>
@@ -170,14 +196,21 @@ const StockTransferProductForm = ({
             Select Product
           </p>
         </div>
-        <button
+        {/* <button
           type="button"
           onClick={addItem}
           className="px-4 py-2 bg-primary text-white rounded-md"
         >
           + Add Product
-        </button>
+        </button> */}
       </div>
+      <ProductSelect
+        loading={loading}
+        searchTerm={searchTerm}
+        filteredProducts={products}
+        setSearchTerm={setSearchTerm}
+        handleProductChange={handleProductChange}
+      />
       <div className="overflow-x-auto no-scrollbar">
         <table className="table-auto min-w-full border-collapse whitespace-nowrap border border-gray-300">
           <thead>
@@ -208,20 +241,12 @@ const StockTransferProductForm = ({
                   className="odd:bg-white text-black even:bg-gray-50"
                 >
                   <td className="border border-gray-300">
-                    <select
-                      value={item.productCode}
-                      onChange={(e) =>
-                        handleProductChange(item.id, e.target.value)
-                      }
-                      className="w-full p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
-                    >
-                      <option value="">--Select Product--</option>
-                      {products.map((product: any, index: number) => (
-                        <option key={index} value={product.productCode}>
-                          {product.name} ({product.productCode})
-                        </option>
-                      ))}
-                    </select>
+                    <p className="px-2">
+                      {item.name} {item.productCode && `(${item.productCode})`}{" "}
+                      {!item?.name && !item.productCode && (
+                        <span className="text-gray-400">Select a Product</span>
+                      )}
+                    </p>
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.mrp ? "₹ " + item.mrp : 0}
