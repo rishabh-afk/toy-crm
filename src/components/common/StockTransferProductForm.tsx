@@ -23,7 +23,7 @@ const StockTransferProductForm = ({
   );
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState<any>(initialData ?? []);
+  const [products, setProducts] = useState<any>([]);
 
   const deleteItem = (id: number) => {
     const updatedItems = items.filter((item: any) => item.id !== id);
@@ -90,7 +90,7 @@ const StockTransferProductForm = ({
     try {
       setLoading(true);
       const data = initialData.filter((item: any) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+        item.name.toLowerCase().includes(searchTerm)
       );
       setProducts(data || []);
     } catch (error) {
