@@ -8,8 +8,11 @@ import DateFilter from "../common/table/DateFilter";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
 import { formatCompactNumber, formatIndianCurrency } from "@/hooks/general";
 
+import isToday from "dayjs/plugin/isToday";
+dayjs.extend(isToday);
+
 const Home: FC = () => {
-  const [dateDiff, setDateDiff] = useState<number>(0);
+  const [dateRangeMessage, setDateRangeMessage] = useState<string>("");
   const [startDate, setStartDate] = useState(
     dayjs().subtract(7, "day").format("YYYY-MM-DD")
   );
@@ -20,8 +23,24 @@ const Home: FC = () => {
   const [data, setData] = useState(crmStats);
 
   useEffect(() => {
-    const diff = dayjs(endDate).diff(dayjs(startDate), "day");
-    setDateDiff(diff);
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+    const diff = end.diff(start, "day");
+
+    const isEndToday = end.isToday();
+    const formattedStart = start.format("MMM D, YYYY");
+    const formattedEnd = end.format("MMM D, YYYY");
+
+    let message = "";
+
+    if (isEndToday) {
+      if (diff === 7)
+        message = `last 7 days (${formattedStart} - ${formattedEnd})`;
+      else message = `last ${diff} days (${formattedStart} - ${formattedEnd})`;
+    } else
+      message = `date range ${formattedStart} - ${formattedEnd} (${diff} days)`;
+
+    setDateRangeMessage(message);
   }, [startDate, endDate]);
 
   useEffect(() => {
@@ -58,8 +77,7 @@ const Home: FC = () => {
           <h2 className="text-3xl font-extrabold text-iconBlack">
             CRM Dashboard <br />
             <span className="text-lg font-medium text-iconBlack">
-              - Showing data from the last {dateDiff} day
-              {dateDiff > 1 ? "s" : ""}
+              - Showing data from the {dateRangeMessage}
             </span>
           </h2>
           <DateFilter
@@ -78,7 +96,7 @@ const Home: FC = () => {
                 {renderIcon(data?.difference?.totalRevenue)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
-                from last month
+                from last period
               </h3>
               <LineGraph
                 data={[20, 15, 15, 45, 20, 20, 15]}
@@ -108,7 +126,7 @@ const Home: FC = () => {
                 {renderIcon(data?.difference?.activeUsers)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
-                from last month
+                from last period
               </h3>
               <LineGraph
                 data={[20, 25, 20, 45, 20, 30, 50]}
@@ -138,7 +156,7 @@ const Home: FC = () => {
                 {renderIcon(data?.difference?.totalDeals)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
-                from last month
+                from last period
               </h3>
               <LineGraph
                 data={[20, 45, 15, 20, 10, 50, 15]}
@@ -168,7 +186,7 @@ const Home: FC = () => {
                 {renderIcon(data?.difference?.conversionRatio)}
               </p>
               <h3 className="text-sm font-semibold text-gray-400">
-                from last month
+                from last period
               </h3>
               <LineGraph
                 data={[20, 25, 15, 0, 20, 30, 15]}
@@ -259,7 +277,7 @@ const Home: FC = () => {
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">
-                          from last month
+                          from last period
                         </h3>
                       </div>
                     </div>
@@ -279,7 +297,7 @@ const Home: FC = () => {
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">
-                          from last month
+                          from last period
                         </h3>
                       </div>
                     </div>
@@ -299,7 +317,7 @@ const Home: FC = () => {
                           1.23% <FaArrowUp />
                         </p>
                         <h3 className="text-xs font-semibold text-gray-400">
-                          from last month
+                          from last period
                         </h3>
                       </div>
                     </div>
