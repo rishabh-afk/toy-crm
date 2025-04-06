@@ -53,7 +53,13 @@ const Home: FC = () => {
       startDate: filterParams.start ?? startDate,
     };
     try {
-      const { data, success }: any = await Fetch("api/dashboard", params);
+      const { data, success }: any = await Fetch(
+        "api/dashboard",
+        params,
+        5000,
+        true,
+        false
+      );
       if (success) setData(data);
     } catch (error) {
       console.log("fetchSale error:", error);
