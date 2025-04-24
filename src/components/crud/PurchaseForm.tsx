@@ -86,7 +86,8 @@ const PurchaseForm: React.FC<LedgerProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const updated = { products: products, ...updatedData };
+      const updatedProducts = products.filter((item: any) => item?._id);
+      const updated = { products: updatedProducts, ...updatedData };
 
       const response: any = data?._id
         ? await Put(url, updated)
