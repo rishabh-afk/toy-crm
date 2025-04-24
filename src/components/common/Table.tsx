@@ -6,14 +6,14 @@ import Header from "./table/Header";
 import Filters from "./table/Filters";
 import { toast } from "react-toastify";
 import FormRenderer from "./FormRender";
-import NoDataFound from "./NoDataFound";
+// import NoDataFound from "./NoDataFound";
 import { Fetch } from "@/hooks/apiUtils";
 import Table from "./table/TableComponent";
 import Pagination from "./table/Pagination";
 import { endpoints } from "@/data/endpoints";
 import { usePathname } from "next/navigation";
-import React, { useState, useEffect } from "react";
 import ExpenseStats from "./table/ExpenseStats";
+import React, { useState, useEffect } from "react";
 
 interface TableColumn {
   key: string;
@@ -28,6 +28,7 @@ interface TableProps {
   id?: string;
   type?: any;
   suffix?: string;
+  customOptions?: any;
   filterOptions?: any;
   columns: TableColumn[];
   operationsAllowed: any;
@@ -49,6 +50,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   suffix,
   id = "",
   columns,
+  customOptions,
   filterOptions,
   hideEverything,
   hideDateFilter,
@@ -114,7 +116,6 @@ const TableComponent = <T extends { [key: string]: any }>({
   };
 
   const fetchFilteredData = async (filterParams: any = {}) => {
-    // Build data object with fallback to existing state
     const data = {
       end: filterParams.end ?? endDate,
       sortkey: filterParams.key ?? sort.key,
@@ -125,6 +126,7 @@ const TableComponent = <T extends { [key: string]: any }>({
       current: filterParams.page ?? paginate.currentPage,
       limit: filterParams.limit ?? paginate.itemsPerPage,
       searchkey: filterParams.selectedField ?? selectedField,
+      ...filterParams,
     };
 
     // Update pagination state
@@ -169,6 +171,8 @@ const TableComponent = <T extends { [key: string]: any }>({
       params.sortdir = data.sortdir;
     }
 
+    if (data?.warehouseId) params.warehouseId = data?.warehouseId;
+
     // Fetch data from endpoint
     const fetchEndpoint = endpoints[type]?.fetchAll;
     if (fetchEndpoint) {
@@ -182,8 +186,14 @@ const TableComponent = <T extends { [key: string]: any }>({
         );
         if (response?.success) {
           setMoreData(response.data);
-          setFilteredData(response?.data?.result || []);
-          setPaginate(response?.data?.pagination);
+          setFilteredData(
+            Array.isArray(response?.data)
+              ? response?.data
+              : response?.data?.result || []
+          );
+          setPaginate(
+            Array.isArray(response?.data) ? {} : response?.data?.pagination
+          );
         }
       } catch (error) {
         console.log("Error fetching filtered data:", error);
@@ -207,15 +217,15 @@ const TableComponent = <T extends { [key: string]: any }>({
     setIsModalVisible(true);
   };
 
-  if (filteredData.length === 0 && !isModalVisible)
-    return (
-      <NoDataFound
-        type={type}
-        handleAdd={handleAdd}
-        handleReset={handleReset}
-        operationsAllowed={operationsAllowed}
-      />
-    );
+  // if (filteredData.length === 0 && !isModalVisible)
+  //   return (
+  //     <NoDataFound
+  //       type={type}
+  //       handleAdd={handleAdd}
+  //       handleReset={handleReset}
+  //       operationsAllowed={operationsAllowed}
+  //     />
+  //   );
 
   return (
     <>
@@ -261,6 +271,7 @@ const TableComponent = <T extends { [key: string]: any }>({
             setEndDate={setEndDate}
             handleSearch={handleSearch}
             setStartDate={setStartDate}
+            customOptions={customOptions}
             filterOptions={filterOptions}
             setSearchTerm={setSearchTerm}
             hideDateFilter={hideDateFilter}

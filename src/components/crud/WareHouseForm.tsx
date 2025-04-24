@@ -7,10 +7,9 @@ import DynamicForm from "../common/DynamicForm";
 import { Fetch, Post, Put } from "@/hooks/apiUtils";
 import { warehouseType } from "./formInput/warehouseFormType";
 import {
-  getSelectFormattedData,
-  nestFields,
   populateFormData,
   populateFormFields,
+  getSelectFormattedData,
 } from "@/hooks/general";
 
 interface WarehouseProps {
@@ -24,51 +23,15 @@ interface WarehouseProps {
 const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
   const data = props.data;
   const formType = props.formType;
-  // const [stock, setStock] = useState<any>();
-  // const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [fetchingStates, setFetchingState] = useState(true);
-  const [formField, setFormField] = useState(data?._id
-    ? populateFormFields(warehouseType, data)
-    : warehouseType
+  const [formField, setFormField] = useState(
+    data?._id ? populateFormFields(warehouseType, data) : warehouseType
   );
 
   const [formData, setFormData] = useState<any>(
     data?._id ? populateFormData(warehouseType, data) : {}
   );
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const url = "/api/product/public";
-  //       const response: any = await Fetch(url, {}, 5000, true, false);
-  //       if (response.success && response?.data.length > 0) {
-  //         const updatedFormField = formField.map((obj: any) => {
-  //           if (obj.name === "warehouse" && data?.stock) {
-  //             const resp = response.data.map((dataItem: any) => {
-  //               const stockItem = data.stock[dataItem?._id];
-  //               return {
-  //                 ...dataItem,
-  //                 quantity: stockItem ? stockItem : 0,
-  //               };
-  //             });
-  //             return { ...obj, options: resp };
-  //           } else if (obj.name === "warehouse")
-  //             return { ...obj, options: response?.data };
-
-  //           return obj;
-  //         });
-  //         setFormFields(updatedFormField);
-  //       }
-  //     } catch (error) {
-  //       console.log("Error: ", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchProducts();
-  //   // eslint-disable-next-line
-  // }, []);
 
   const makeApiCall = async (updatedData: any) => {
     try {
@@ -77,19 +40,9 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
       else url = `${endpoints[formType].create}`;
 
       setSubmitting(true);
-      const nestedObj = nestFields(updatedData, "address", [
-        "city",
-        "line1",
-        "state",
-        "street",
-        "pinCode",
-        "country",
-        "landmark",
-      ]);
-
       const response: any = data?._id
-        ? await Put(url, nestedObj)
-        : await Post(url, nestedObj);
+        ? await Put(url, updatedData)
+        : await Post(url, updatedData);
 
       if (response.success) {
         const fetchUrl = `${endpoints[formType].fetchAll}`;
@@ -117,18 +70,17 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
           );
           const selectData = getSelectFormattedData(sortedData);
           const updatedFormField = formField.map((obj: any) => {
-            if (obj.name === "state")
-              return { ...obj, options: selectData };
+            if (obj.name === "state") return { ...obj, options: selectData };
             return obj;
           });
           setFormField(updatedFormField);
         }
       } catch (error) {
-        console.log("State fetch error: ", error)
+        console.log("State fetch error: ", error);
       } finally {
         setFetchingState(false);
       }
-    }
+    };
     fetchStates();
     // eslint-disable-next-line
   }, []);
@@ -138,28 +90,32 @@ const WarehouseForm: React.FC<WarehouseProps> = (props: any) => {
       if (formData?.state) {
         try {
           const url = "/api/region/city/";
-          const response: any = await Fetch(url + formData?.state, {}, 5000, true, false);
+          const response: any = await Fetch(
+            url + formData?.state,
+            {},
+            5000,
+            true,
+            false
+          );
           if (response?.length > 0) {
             const sortedData = response.sort((a: any, b: any) =>
               a.name.localeCompare(b.name)
             );
             const selectData = getSelectFormattedData(sortedData);
             const updatedFormField = formField.map((obj: any) => {
-              if (obj.name === "city")
-                return { ...obj, options: selectData };
+              if (obj.name === "city") return { ...obj, options: selectData };
               return obj;
             });
             setFormField(updatedFormField);
           }
         } catch (error) {
-          console.log("State fetch error: ", error)
+          console.log("State fetch error: ", error);
         }
       }
-    }
+    };
     if (!fetchingStates) fetchCity();
     // eslint-disable-next-line
-  }, [formData.state, fetchingStates])
-
+  }, [formData.state, fetchingStates]);
 
   // useEffect(() => {
   //   const fetchQuotationDetails = async () => {

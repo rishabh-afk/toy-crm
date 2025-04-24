@@ -30,7 +30,7 @@ const Contacts: React.FC = () => {
   const { data, loading, error } = useFetch(
     endpoints["Stock"].read + warehouseID
   );
-  const updatedData = data?.data.result;
+  const updatedData = data?.data;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
@@ -51,6 +51,7 @@ const Contacts: React.FC = () => {
           id={warehouseID}
           columns={columns}
           data={updatedData}
+          hideEverything={true}
           hideDateFilter={true}
           filterOptions={filterOptions}
           pagination_data={paginationData}

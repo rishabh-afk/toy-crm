@@ -2,69 +2,63 @@ import JsBarcode from "jsbarcode";
 import { IoMdDownload } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 
-const BarcodeGenerator = ({
-  id,
-  rowValue,
-}: {
-  id: string;
-  rowValue: string;
-}) => {
+const BarcodeGenerator = ({ rowValue }: { rowValue: string }) => {
   const barcodeRef = useRef<SVGSVGElement | null>(null);
-  const [barcodeGenerated, setBarcodeGenerated] = useState(false);
+  const [barcodeReadyToPrint, setBarcodeReadyToPrint] = useState(false);
 
-  const handleGenerateAndPrint = () => {
-    if (!rowValue) return;
-    if (barcodeRef.current) barcodeRef.current.innerHTML = "";
+  const generateBarcode = () => {
+    if (!rowValue || !barcodeRef.current) return;
 
-    setTimeout(() => {
-      if (barcodeRef.current) {
-        JsBarcode(barcodeRef.current, rowValue, {
-          format: "CODE128",
-          displayValue: true,
-        });
-        setBarcodeGenerated(true); // Mark as generated
-      }
-    }, 500);
+    JsBarcode(barcodeRef.current, rowValue, {
+      format: "EAN13",
+      width: 2,
+      height: 80,
+      margin: 10,
+      fontSize: 18,
+      lineColor: "#000",
+      displayValue: true,
+    });
+
+    setTimeout(() => setBarcodeReadyToPrint(true), 200); // Wait for barcode render
   };
 
   useEffect(() => {
-    if (barcodeGenerated) {
+    if (barcodeReadyToPrint) {
       handlePrintBarcode();
-      setBarcodeGenerated(false);
+      setBarcodeReadyToPrint(false);
     }
-    // eslint-disable-next-line
-  }, [barcodeGenerated]);
+  }, [barcodeReadyToPrint]);
 
   const handlePrintBarcode = () => {
-    const printContent = document.getElementById(id);
-    if (printContent) {
-      const printWindow = window.open("", "", "width=800,height=800");
+    const printWindow = window.open("", "", "width=800,height=800");
 
-      if (printWindow) {
-        printWindow.document.write(`
-          <html>
-            <head>
-              <style>
-                @page { margin: 0; size: auto; }
-                body { 
-                  display: flex; 
-                  justify-content: center; 
-                  align-items: center; 
-                  height: 100vh; 
-                  margin: 0; 
-                }
-                svg { max-width: 100%; }
-              </style>
-            </head>
-            <body>
-              ${printContent.innerHTML}
-            </body>
-          </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
-      }
+    if (printWindow && barcodeRef.current) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <style>
+              @page { margin: 0; size: auto; }
+              body { 
+                display: flex; 
+                justify-content: center; 
+                align-items: center; 
+                height: 100vh; 
+                margin: 0; 
+              }
+              svg {
+                width: 300px;
+                height: auto;
+              }
+            </style>
+          </head>
+          <body>
+            ${barcodeRef.current.outerHTML}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+      printWindow.close();
     }
   };
 
@@ -72,12 +66,14 @@ const BarcodeGenerator = ({
     <div className="flex flex-col items-center gap-4">
       <button
         type="button"
-        onClick={handleGenerateAndPrint}
+        onClick={generateBarcode}
         className="ml-1 text-sm flex gap-2 items-center bg-blue-500 text-white hover:bg-blue-600 py-1 px-2 rounded transition"
       >
         Print Barcode <IoMdDownload className="text-lg" />
       </button>
-      <div id={id} className="hidden">
+
+      {/* Show SVG for debug, or keep hidden */}
+      <div className="sr-only">
         <svg ref={barcodeRef}></svg>
       </div>
     </div>

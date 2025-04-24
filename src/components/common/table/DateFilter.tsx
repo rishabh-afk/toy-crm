@@ -16,7 +16,7 @@ const DateFilter: React.FC<DateFilterProps> = ({
   fetchFilteredData,
 }) => {
   return (
-    <div className="flex space-x-2">
+    <div className="flex space-x-2 w-fit">
       <div className="flex flex-col gap-1">
         <label className="text-iconBlack font-medium">Start Time:</label>
         <input

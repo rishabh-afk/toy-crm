@@ -44,14 +44,14 @@ export const LeadFormType: FormField[] = [
       { label: "Other", value: "Other" },
     ],
   },
-  {
-    name: "age",
-    maxLength: 3,
-    required: true,
-    type: "stringNumeric",
-    label: "Lead Age (in Days)",
-    placeholder: "Enter Lead Age (in Days)",
-  },
+  // {
+  //   name: "age",
+  //   maxLength: 3,
+  //   required: true,
+  //   type: "stringNumeric",
+  //   label: "Lead Age (in Days)",
+  //   placeholder: "Enter Lead Age (in Days)",
+  // },
   { type: "br", name: "Address", label: "Address Details", widthFull: true },
   {
     type: "text",

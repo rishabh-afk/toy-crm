@@ -19,7 +19,7 @@ const ItemsPage: React.FC<ItemsPageProps> = ({
       <select
         value={paginate.itemsPerPage}
         onChange={(e) => fetchFilteredData({ limit: Number(e.target.value) })}
-        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 bg-whiteBg text-iconBlack border-secondary"
+        className="border px-4 text-lg py-2.5 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 bg-whiteBg text-iconBlack border-secondary"
       >
         {[10, 20, 50, 100].map((items) => (
           <option key={items} value={items}>

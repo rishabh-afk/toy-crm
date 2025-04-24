@@ -1,19 +1,38 @@
-// import {
-//   closedDeals,
-//   recentActivity,
-//   upcomingMeetings,
-// } from "@/data/dashboard";
+import { useState } from "react";
 import useFetch from "@/hooks/useFetch";
-// import BarChart from "../chart/Barchart";
+import { Fetch } from "@/hooks/apiUtils";
 import { useRouter } from "next/navigation";
 import { endpoints } from "@/data/endpoints";
-// import { FaFileAlt } from "react-icons/fa";
 import { formatCurrency, formatDate } from "@/hooks/general";
+import Modal from "../common/Modal";
+import FormRenderer from "../common/FormRender";
 
 const Summary = () => {
+  const type = "Quotation";
   const router = useRouter();
+  const [updated, setData] = useState({});
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const { data } = useFetch(endpoints["Quotation"].fetchAll);
   const updatedData = data?.data.result;
+
+  const handleEdit = async (id?: string) => {
+    if (!id) return;
+
+    try {
+      const endpoint = endpoints[type]?.read;
+      if (!endpoint) return;
+      const response: any = await Fetch(`${endpoint}${id}`, {}, 5000, true);
+      if (
+        response?.success &&
+        (response?.data?._id || response?.data?.result?._id)
+      ) {
+        setData(response.data.result ? response.data.result : response.data);
+      } else setData({});
+      setIsModalVisible(true);
+    } catch (error) {
+      console.log("Handle Edit", error);
+    }
+  };
 
   return (
     <>
@@ -127,6 +146,21 @@ const Summary = () => {
         </div>
       </div> */}
       {/* Recent Deals */}
+      <Modal
+        formtype={"Edit " + type}
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      >
+        {type && updated && (
+          <FormRenderer
+            data={updated}
+            formType={type}
+            setPaginate={() => {}}
+            setFilteredData={() => {}}
+            onClose={() => setIsModalVisible(false)}
+          />
+        )}
+      </Modal>
       <section className="px-6 py-4 bg-whiteBg rounded-xl mt-5">
         <div className="flex justify-between items-center">
           <h2 className="text-lg text-iconBlack font-semibold">
@@ -158,6 +192,7 @@ const Summary = () => {
               updatedData.map((deal: any) => (
                 <tr
                   key={deal._id}
+                  onClick={() => handleEdit(deal._id)}
                   className="border-b border-infobg text-iconBlack hover:bg-infobg cursor-pointer"
                 >
                   <td className="p-4 border border-infobg">
@@ -171,12 +206,13 @@ const Summary = () => {
                   </td>
                   <td className="p-4 border border-infobg">
                     <span
-                      className={`px-2 py-1 text-xs text-white rounded ${deal.status === "Approved"
-                        ? "bg-green-500"
-                        : deal.dealStatus === "Pending"
+                      className={`px-2 py-1 text-xs text-white rounded ${
+                        deal.status === "Approved"
+                          ? "bg-green-500"
+                          : deal.dealStatus === "Pending"
                           ? "bg-yellow-500"
                           : "bg-red-500"
-                        }`}
+                      }`}
                     >
                       {deal.status}
                     </span>

@@ -36,13 +36,17 @@ const filterOptions = [
 ];
 
 const Contacts: React.FC = () => {
+  const response: any = useFetch(
+    endpoints["Warehouse"].fetchAll + "?limit=100&page=1"
+  );
+  const options = response?.data?.data?.result;
   const { data, loading, error } = useFetch(endpoints["Purchase"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
 
   const { user } = useAuth();
   let operationsAllowed = getAccessPoints(user, "Manage Purchase");
-  operationsAllowed = { ...operationsAllowed, update: false };
+  operationsAllowed = { ...operationsAllowed };
 
   if (loading && !updatedData && !error) return <Loader />;
 
@@ -56,6 +60,12 @@ const Contacts: React.FC = () => {
           filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
+          customOptions={{
+            options: options,
+            label: "Warehouse",
+            keyName: "warehouseId",
+            placeholder: "Select Warehouse",
+          }}
         />
       </Wrapper>
     </AuthGuard>

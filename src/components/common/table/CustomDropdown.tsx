@@ -1,44 +1,54 @@
-import React from "react";
-
-interface DropdownOption {
-  id: string | number;
-  value: string | number;
-  name: string;
-}
+import React, { useState } from "react";
 
 interface CustomDropdownProps {
+  onChange: any;
   label?: string;
+  options: any[];
+  keyName: string;
   placeholder?: string;
-  hideDropdown?: boolean;
-  options: DropdownOption[];
-  selectedValue: string | number;
-  onChange: (value: string | number) => void;
 }
 
 const CustomDropdown: React.FC<CustomDropdownProps> = ({
+  keyName,
   options,
   onChange,
-  selectedValue,
   label = "Status",
-  hideDropdown = false,
-  placeholder = "Select a option...",
+  placeholder = "Select an option...",
 }) => {
-  if (hideDropdown) return null;
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedValue(value);
+    if (value) onChange({ [keyName]: value });
+  };
 
   return (
     <div className="flex flex-col gap-1">
-      {label && <label className="text-iconBlack font-medium">{label}:</label>}
+      {label && (
+        <label htmlFor="custom-dropdown" className="text-iconBlack font-medium">
+          {label}:
+        </label>
+      )}
       <select
+        id="custom-dropdown"
+        name="custom-dropdown"
         value={selectedValue}
-        onChange={(e) => onChange(e.target.value)}
-        className="border px-4 text-lg py-2 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-iconBlack bg-whiteBg border-secondary"
+        onChange={handleChange}
+        className="border w-28 px-1 text-base py-3 rounded-xl outline-none focus:ring-2 focus:ring-primary/50 text-iconBlack bg-whiteBg border-secondary transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <option value="">{placeholder}</option>
-        {options.map((option) => (
-          <option key={option.id} value={option.value}>
-            {option.name}
+        {options.length > 0 ? (
+          options.map((option) => (
+            <option key={option._id} value={option._id}>
+              {option.name}
+            </option>
+          ))
+        ) : (
+          <option value="" disabled>
+            No options available
           </option>
-        ))}
+        )}
       </select>
     </div>
   );

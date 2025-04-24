@@ -1,5 +1,6 @@
 import Modal from "../Modal";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { endpoints } from "@/data/endpoints";
 import { Delete, Fetch } from "@/hooks/apiUtils";
 import BarcodeGenerator from "../BarcodeGenerator";
@@ -8,11 +9,11 @@ import { usePathname, useRouter } from "next/navigation";
 import GenerateQuotationPDF from "../GenerateQuotationPDF";
 import ConfirmationModal from "@/components/crud/ConfirmationModal";
 import LedgerTransactionsMModal from "../LedgerTransactionsMModal";
-import { toast } from "react-toastify";
 
 interface RowData {
   _id: string;
   name: string;
+  barCode: string;
 }
 
 interface OperationsAllowed {
@@ -49,7 +50,8 @@ const Actions: React.FC<ActionsProps> = ({
   const [transaction, setTransaction] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [selectIdForDeletion, setSelectIdForDeletion] = useState<string>("");
-  const [showTransactionModal, setShowTransactionModal] = useState<boolean>(false);
+  const [showTransactionModal, setShowTransactionModal] =
+    useState<boolean>(false);
 
   const handleEdit = async (id?: string) => {
     if (!id) return;
@@ -123,12 +125,34 @@ const Actions: React.FC<ActionsProps> = ({
       const receivingData = receivingRes?.data?.result ?? [];
 
       if (paymentRes?.success && paymentData.length > 0) {
-        const resp: any = await Fetch(`api/payment/total/${id}`, {}, 5000, true, false);
-        setTransaction({ ...paymentRes.data, type: "Payment", id: id, expense: resp?.data });
+        const resp: any = await Fetch(
+          `api/payment/total/${id}`,
+          {},
+          5000,
+          true,
+          false
+        );
+        setTransaction({
+          ...paymentRes.data,
+          type: "Payment",
+          id: id,
+          expense: resp?.data,
+        });
         setShowTransactionModal(true);
       } else if (receivingRes?.success && receivingData.length > 0) {
-        const resp: any = await Fetch(`api/payment/total/${id}`, {}, 5000, true, false);
-        setTransaction({ ...receivingRes.data, types: "Receiving", id: id, expense: resp?.data });
+        const resp: any = await Fetch(
+          `api/payment/total/${id}`,
+          {},
+          5000,
+          true,
+          false
+        );
+        setTransaction({
+          ...receivingRes.data,
+          types: "Receiving",
+          id: id,
+          expense: resp?.data,
+        });
         setShowTransactionModal(true);
       } else {
         toast.warn("No transaction found");
@@ -153,7 +177,10 @@ const Actions: React.FC<ActionsProps> = ({
           handleDeleteModal={handleDeleteModal}
         />
       </Modal>
-      <Modal isVisible={showTransactionModal} onClose={() => setShowTransactionModal(false)}>
+      <Modal
+        isVisible={showTransactionModal}
+        onClose={() => setShowTransactionModal(false)}
+      >
         <LedgerTransactionsMModal data={transaction} />
       </Modal>
       {operationsAllowed?.update && (
@@ -180,10 +207,8 @@ const Actions: React.FC<ActionsProps> = ({
           <FaEye title="View Stock" />
         </button>
       )}
-      {type === "Product" && (
-        <BarcodeGenerator rowValue={row?.name} id={row?._id} />
-      )}
-      {type === "Ledger" &&
+      {type === "Product" && <BarcodeGenerator rowValue={row?.barCode} />}
+      {type === "Ledger" && (
         <button
           type="button"
           onClick={() => handleTransactions(row?._id)}
@@ -191,9 +216,11 @@ const Actions: React.FC<ActionsProps> = ({
         >
           View Payments
         </button>
-      }
+      )}
       {type === "Quotation" && <GenerateQuotationPDF id={row._id} />}
-      {type === "Packing" && <GenerateQuotationPDF packing={true} id={row._id} />}
+      {type === "Packing" && (
+        <GenerateQuotationPDF packing={true} id={row._id} />
+      )}
     </>
   );
 };

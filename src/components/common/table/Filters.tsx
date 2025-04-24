@@ -2,14 +2,15 @@ import React from "react";
 import ItemsPage from "./ItemsPage";
 import DateFilter from "./DateFilter";
 import SearchFilter from "./SearchFilter";
-// import CustomDropdown from "./CustomDropdown";
 import { FilterOption } from "@/hooks/types";
+import CustomDropdown from "./CustomDropdown";
 
 interface FiltersProps {
   endDate: string;
   startDate: string;
   handleSearch: any;
   searchTerm: string;
+  customOptions?: any;
   hideDateFilter?: boolean;
   filterOptions: FilterOption[];
   paginate: { itemsPerPage: number };
@@ -28,43 +29,46 @@ const Filters: React.FC<FiltersProps> = ({
   setStartDate,
   setSearchTerm,
   handleSearch,
+  customOptions,
   filterOptions,
   hideDateFilter,
   fetchFilteredData,
 }) => {
   return (
-    <div className="flex gap-5 bg-whiteBg p-5 rounded-2xl justify-between items-end mb-4">
-      {/* Search Filter */}
-      <SearchFilter
-        searchTerm={searchTerm}
-        handleSearch={handleSearch}
-        setSearchTerm={setSearchTerm}
-        filterOptions={filterOptions}
-      />
-
-      {/* <CustomDropdown
-        options={[]}
-        label="Status"
-        selectedValue={""}
-        placeholder={"Select"}
-        onChange={() => {}}
-        // hideDropdown={true}
-      /> */}
-
-      {/* Pagination Filter */}
-      <ItemsPage fetchFilteredData={fetchFilteredData} paginate={paginate} />
-
-      {/* Date Range Filter */}
-      {!hideDateFilter && (
-        <DateFilter
-          endDate={endDate}
-          startDate={startDate}
-          setEndDate={setEndDate}
-          setStartDate={setStartDate}
-          fetchFilteredData={fetchFilteredData}
+    <>
+      <div className="flex gap-5 bg-whiteBg p-5 rounded-2xl justify-between items-end mb-4">
+        {/* Search Filter */}
+        <SearchFilter
+          searchTerm={searchTerm}
+          handleSearch={handleSearch}
+          setSearchTerm={setSearchTerm}
+          filterOptions={filterOptions}
         />
-      )}
-    </div>
+
+        {/* Pagination Filter */}
+        <ItemsPage fetchFilteredData={fetchFilteredData} paginate={paginate} />
+
+        {/* Date Range Filter */}
+        {!hideDateFilter && (
+          <DateFilter
+            endDate={endDate}
+            startDate={startDate}
+            setEndDate={setEndDate}
+            setStartDate={setStartDate}
+            fetchFilteredData={fetchFilteredData}
+          />
+        )}
+        {customOptions?.options?.length > 0 && (
+          <CustomDropdown
+            onChange={fetchFilteredData}
+            label={customOptions?.label}
+            keyName={customOptions?.keyName}
+            options={customOptions?.options}
+            placeholder={customOptions?.placeholder}
+          />
+        )}
+      </div>
+    </>
   );
 };
 
