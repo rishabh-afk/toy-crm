@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import Wrapper from "@/components/common/Wrapper";
 import { getAccessPoints } from "@/hooks/general";
 import TableComponent from "@/components/common/Table";
+import { useSearchParams } from "next/navigation";
 
 const columns = [
   { key: "packingNo", label: "Package No." },
@@ -27,9 +28,16 @@ const columns = [
   },
 ];
 
-const filterOptions = [{ label: "Packing No.", value: "packingNo" }];
+const filterOptions = [
+  { label: "Packing No.", value: "packingNo" },
+  { label: "Quotation No.", value: "quotationNo" },
+];
 
 const Contacts: React.FC = () => {
+  const searchParams = useSearchParams();
+  const quotationId = searchParams.get("quotationNo");
+  const quotationIdExist = searchParams.has("quotationNo");
+
   const { data, loading, error } = useFetch(endpoints["Packing"].fetchAll);
   const updatedData = data?.data.result;
   const paginationData = data?.data.pagination;
@@ -49,6 +57,9 @@ const Contacts: React.FC = () => {
           filterOptions={filterOptions}
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
+          searchParam={
+            quotationIdExist && { key: "quotationNo", value: quotationId }
+          }
         />
       </Wrapper>
     </AuthGuard>

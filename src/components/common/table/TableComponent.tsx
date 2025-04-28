@@ -150,7 +150,7 @@ const Table: React.FC<TableProps> = ({
   };
 
   return (
-    <div className="overflow-x-scroll">
+    <div className="overflow-x-scroll rounded-2xl">
       <table className="min-w-full bg-whiteBg">
         <thead>
           <tr className="whitespace-nowrap">

@@ -1,11 +1,13 @@
 import { useState } from "react";
+import Modal from "../common/Modal";
+import { FaEye } from "react-icons/fa";
 import useFetch from "@/hooks/useFetch";
 import { Fetch } from "@/hooks/apiUtils";
 import { useRouter } from "next/navigation";
 import { endpoints } from "@/data/endpoints";
-import { formatCurrency, formatDate } from "@/hooks/general";
-import Modal from "../common/Modal";
 import FormRenderer from "../common/FormRender";
+import { formatCurrency, formatDate } from "@/hooks/general";
+import Link from "next/link";
 
 const Summary = () => {
   const type = "Quotation";
@@ -161,7 +163,7 @@ const Summary = () => {
           />
         )}
       </Modal>
-      <section className="px-6 py-4 bg-whiteBg rounded-xl mt-5">
+      <section className="px-6 py-4 bg-whiteBg rounded-xl">
         <div className="flex justify-between items-center">
           <h2 className="text-lg text-iconBlack font-semibold">
             Recent Deals Status
@@ -178,13 +180,12 @@ const Summary = () => {
           <thead className="text-base text-iconBlack text-left">
             <tr>
               <th className="p-4 border border-infobg">Deal ID</th>
-              <th className="p-4 border border-infobg">Client</th>
-              <th className="p-4 border border-infobg">Deal Value</th>
-              <th className="p-4 border border-infobg">Status</th>
-              <th className="p-4 border border-infobg">Approved On</th>
-              <th className="p-4 border border-infobg">Salesperson</th>
-              <th className="p-4 border border-infobg">Salesperson (Email)</th>
-              {/* <th className="p-4 border border-infobg">Actions</th> */}
+              <th className="p-4 border border-infobg">Client Name</th>
+              <th className="p-4 border border-infobg">Deal Amount</th>
+              <th className="p-4 border border-infobg">Approval Date</th>
+              <th className="p-4 border border-infobg">Sales Agent</th>
+              <th className="p-4 border border-infobg">Deal Status</th>
+              <th className="p-4 border border-infobg">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -205,11 +206,17 @@ const Summary = () => {
                     {formatCurrency(deal.netAmount)}
                   </td>
                   <td className="p-4 border border-infobg">
+                    {deal.approvedOn ? formatDate(deal.approvedOn) : "-"}
+                  </td>
+                  <td className="p-4 border border-infobg">
+                    {deal.preparedByName}
+                  </td>
+                  <td className="p-4 border border-infobg">
                     <span
                       className={`px-2 py-1 text-xs text-white rounded ${
                         deal.status === "Approved"
                           ? "bg-green-500"
-                          : deal.dealStatus === "Pending"
+                          : deal.status === "Pending"
                           ? "bg-yellow-500"
                           : "bg-red-500"
                       }`}
@@ -218,22 +225,15 @@ const Summary = () => {
                     </span>
                   </td>
                   <td className="p-4 border border-infobg">
-                    {deal.approvedOn ? formatDate(deal.approvedOn) : "-"}
+                    <Link
+                      href={`/dashboard/warehouse/packing?quotationNo=${deal.quotationNo}`}
+                      className="flex items-center gap-2 bg-primary text-white rounded-lg text-sm w-fit px-3 py-2 hover:bg-primary/90"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <FaEye className="text-base" />
+                      <span>View Packing</span>
+                    </Link>
                   </td>
-                  <td className="p-4 border border-infobg">
-                    {deal.preparedByName}
-                  </td>
-                  <td className="p-4 border border-infobg">
-                    {deal.preparedByEmail}
-                  </td>
-                  {/* <td className="p-4 border border-infobg">
-                  <button className="bg-blue-400 text-white rounded text-lg p-1 hover:text-indigo-800 mr-2">
-                    <FaEye />
-                  </button>
-                  <button className="bg-gray-400 text-white rounded text-lg p-1 hover:text-green-800">
-                    <FaArrowDown />
-                  </button>
-                </td> */}
                 </tr>
               ))}
           </tbody>

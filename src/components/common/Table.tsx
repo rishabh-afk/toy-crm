@@ -28,6 +28,7 @@ interface TableProps {
   id?: string;
   type?: any;
   suffix?: string;
+  searchParam?: any;
   customOptions?: any;
   filterOptions?: any;
   columns: TableColumn[];
@@ -50,6 +51,7 @@ const TableComponent = <T extends { [key: string]: any }>({
   suffix,
   id = "",
   columns,
+  searchParam,
   customOptions,
   filterOptions,
   hideEverything,
@@ -78,11 +80,11 @@ const TableComponent = <T extends { [key: string]: any }>({
   const [formData, setData] = useState<any>({});
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedField, setSelectedField] = useState("");
   const [formConfig, setFormConfig] = useState<any>("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState(searchParam?.value || "");
   const [filteredData, setFilteredData] = useState<Array<T>>(data ?? []);
+  const [selectedField, setSelectedField] = useState(searchParam?.key || "");
 
   const handleCloseModal = () => {
     setFormConfig("");
@@ -275,6 +277,7 @@ const TableComponent = <T extends { [key: string]: any }>({
             filterOptions={filterOptions}
             setSearchTerm={setSearchTerm}
             hideDateFilter={hideDateFilter}
+            searchKey={searchParam?.key ?? ""}
             fetchFilteredData={fetchFilteredData}
           />
         )}

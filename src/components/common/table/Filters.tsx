@@ -6,6 +6,7 @@ import { FilterOption } from "@/hooks/types";
 import CustomDropdown from "./CustomDropdown";
 
 interface FiltersProps {
+  searchKey?: any;
   endDate: string;
   startDate: string;
   handleSearch: any;
@@ -23,8 +24,9 @@ interface FiltersProps {
 const Filters: React.FC<FiltersProps> = ({
   endDate,
   paginate,
-  searchTerm,
   startDate,
+  searchKey,
+  searchTerm,
   setEndDate,
   setStartDate,
   setSearchTerm,
@@ -39,6 +41,7 @@ const Filters: React.FC<FiltersProps> = ({
       <div className="flex gap-5 bg-whiteBg p-5 rounded-2xl justify-between items-end mb-4">
         {/* Search Filter */}
         <SearchFilter
+          searchKey={searchKey}
           searchTerm={searchTerm}
           handleSearch={handleSearch}
           setSearchTerm={setSearchTerm}

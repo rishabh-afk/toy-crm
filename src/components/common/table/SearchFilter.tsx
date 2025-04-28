@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { debounce } from "chart.js/helpers";
-import { BsFilterLeft } from "react-icons/bs";
 import { FilterOption } from "@/hooks/types";
+import { BsFilterLeft } from "react-icons/bs";
 
 interface SearchFilterProps {
+  searchKey?: any;
   handleSearch: any;
   searchTerm: string;
   filterOptions: FilterOption[];
@@ -11,6 +12,7 @@ interface SearchFilterProps {
 }
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
+  searchKey,
   searchTerm,
   handleSearch,
   setSearchTerm,
@@ -21,6 +23,10 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
       ? filterOptions[0]?.value
       : ""
   );
+
+  useEffect(() => {
+    if (searchKey) setSelectedOption(searchKey);
+  }, [searchKey]);
 
   const handleSearchClick = () => {
     handleSearch(searchTerm, selectedOption);

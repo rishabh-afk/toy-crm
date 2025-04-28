@@ -217,7 +217,7 @@ const Home: FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 my-5 gap-5 rounded-xl">
+        <div className="grid grid-cols-3 mt-5 gap-5 rounded-xl">
           <div className="col-span-2">
             {/* Revenue Chart (example) */}
             {/* <div className="bg-whiteBg p-4 rounded-xl h-full">
