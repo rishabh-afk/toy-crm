@@ -123,7 +123,8 @@ const PackingForm: React.FC<PackingProps> = (props: any) => {
             netPackedQuantity: {
               updateFormData: {
                 key: "netPackedQuantity",
-                value: response?.data?.netPackedQuantity,
+                value:
+                  data?.netPackedQuantity && data?.netPackedQuantity.toString(),
               },
               isDisabled: true,
               value: response?.data?.netPackedQuantity,

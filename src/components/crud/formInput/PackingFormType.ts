@@ -48,14 +48,14 @@ export const PackingFormType: FormField[] = [
     label: "Total Quantity",
     placeholder: "Enter total quantity",
   },
-  // {
-  //   maxLength: 6,
-  //   isDisabled: true,
-  //   type: "stringNumeric",
-  //   name: "netPackedQuantity",
-  //   label: "Net Packed Quantity",
-  //   placeholder: "Enter packed quantity",
-  // },
+  {
+    maxLength: 6,
+    isDisabled: true,
+    type: "stringNumeric",
+    name: "netPackedQuantity",
+    label: "Net Packed Quantity",
+    placeholder: "Enter packed quantity",
+  },
   {
     name: "transport",
     type: "text",
