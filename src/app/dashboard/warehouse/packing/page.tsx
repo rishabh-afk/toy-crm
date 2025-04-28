@@ -58,7 +58,7 @@ const Contacts: React.FC = () => {
           pagination_data={paginationData}
           operationsAllowed={operationsAllowed}
           searchParam={
-            quotationIdExist && { key: "quotationNo", value: quotationId }
+            quotationIdExist && { key: "quotationId", value: quotationId }
           }
         />
       </Wrapper>

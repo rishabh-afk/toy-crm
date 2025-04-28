@@ -3,12 +3,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { endpoints } from "@/data/endpoints";
 import { Delete, Fetch } from "@/hooks/apiUtils";
+import StockInOutModal from "../StockInOutModal";
 import BarcodeGenerator from "../BarcodeGenerator";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { usePathname, useRouter } from "next/navigation";
 import GenerateQuotationPDF from "../GenerateQuotationPDF";
-import ConfirmationModal from "@/components/crud/ConfirmationModal";
 import LedgerTransactionsMModal from "../LedgerTransactionsMModal";
+import ConfirmationModal from "@/components/crud/ConfirmationModal";
 
 interface RowData {
   _id: string;
@@ -47,7 +48,10 @@ const Actions: React.FC<ActionsProps> = ({
   const id =
     pathNameParams.length > 4 ? pathNameParams[pathNameParams.length - 1] : "";
 
+  const [stockId, setStockId] = useState("");
   const [transaction, setTransaction] = useState({});
+  const [stockModal, setStockModal] = useState(false);
+  const [stockModalData, setStockModalData] = useState({});
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [selectIdForDeletion, setSelectIdForDeletion] = useState<string>("");
   const [showTransactionModal, setShowTransactionModal] =
@@ -168,6 +172,20 @@ const Actions: React.FC<ActionsProps> = ({
     setShowDeleteModal(false);
   };
 
+  const handleStockTransfer = async (id: any) => {
+    const issueToUrl = `api/item-transfer`;
+    const issueFromUrl = `api/item-transfer`;
+    const [issueToRes, issueFromRes]: any = await Promise.all([
+      Fetch(issueToUrl, { issueTo: id }, 5000, true, false),
+      Fetch(issueFromUrl, { issueFrom: id }, 5000, true, false),
+    ]);
+    if (issueToRes?.success || issueFromRes?.success) {
+      setStockModal(true);
+      setStockId(id);
+      setStockModalData({ issueFrom: issueFromRes, issueTo: issueToRes });
+    }
+  };
+
   return (
     <>
       <Modal isVisible={showDeleteModal} onClose={handleDeleteModal}>
@@ -182,6 +200,13 @@ const Actions: React.FC<ActionsProps> = ({
         onClose={() => setShowTransactionModal(false)}
       >
         <LedgerTransactionsMModal data={transaction} />
+      </Modal>
+      <Modal
+        width="w-[90%]"
+        isVisible={stockModal}
+        onClose={() => setStockModal(false)}
+      >
+        <StockInOutModal id={stockId} data={stockModalData} />
       </Modal>
       {operationsAllowed?.update && (
         <button
@@ -201,7 +226,7 @@ const Actions: React.FC<ActionsProps> = ({
       )}
       {operationsAllowed?.viewStock && !id && (
         <button
-          onClick={() => handleView(row._id)}
+          onClick={() => handleView(row?._id)}
           className="text-green-700 ml-1 text-xl hover:scale-125 hover:p-1 hover:bg-green-100 p-1 rounded transition"
         >
           <FaEye title="View Stock" />
@@ -215,6 +240,15 @@ const Actions: React.FC<ActionsProps> = ({
           className="ml-1 text-sm flex gap-2 items-center bg-blue-500 text-white hover:bg-blue-600 py-1 px-2 rounded transition"
         >
           View Payments
+        </button>
+      )}
+      {type === "Warehouse" && (
+        <button
+          type="button"
+          onClick={() => handleStockTransfer(row?._id)}
+          className="ml-1 text-sm flex gap-2 items-center bg-blue-500 text-white hover:bg-blue-600 py-1 px-2 rounded transition"
+        >
+          Stock Transfer
         </button>
       )}
       {type === "Quotation" && <GenerateQuotationPDF id={row._id} />}

@@ -72,7 +72,6 @@ const PurchaseProductForm = ({
     [fetchProducts]
   );
 
-
   useEffect(() => {
     if (searchTerm) {
       setProducts([]);
@@ -318,15 +317,37 @@ const PurchaseProductForm = ({
                 >
                   <td className="border border-gray-300">
                     <p className="px-2">
-                      {item.name} {item.productCode && `(${item.productCode})`} {!item?.name && !item.productCode && <span className="text-gray-400">Select a Product</span>}
+                      {item.name} {item.productCode && `(${item.productCode})`}{" "}
+                      {!item?.name && !item.productCode && (
+                        <span className="text-gray-400">Select a Product</span>
+                      )}
                     </p>
                   </td>
                   <td className="border min-w-20 border-gray-300 p-2">
                     {item.uom}
                   </td>
-                  <td className="border min-w-20 border-gray-300 p-2">
-                    {item.listPrice ? "₹ " + item.listPrice : 0}
+                  <td className="border border-gray-300">
+                    <input
+                      type="number"
+                      min={1} // Minimum value is 1
+                      value={item.listPrice || ""}
+                      placeholder="Qty"
+                      onChange={(e) => {
+                        debounce(
+                          handleChange(
+                            item._id,
+                            "listPrice",
+                            Number(e.target.value)
+                          ),
+                          1000
+                        );
+                      }}
+                      className="w-full p-2 focus:outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-blue-400"
+                    />
                   </td>
+                  {/* <td className="border min-w-20 border-gray-300 p-2">
+                    {item.listPrice ? "₹ " + item.listPrice : 0}
+                  </td> */}
                   <td className="border border-gray-300">
                     <input
                       type="number"

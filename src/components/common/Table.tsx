@@ -80,11 +80,11 @@ const TableComponent = <T extends { [key: string]: any }>({
   const [formData, setData] = useState<any>({});
   const [endDate, setEndDate] = useState("");
   const [startDate, setStartDate] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [formConfig, setFormConfig] = useState<any>("");
+  const [selectedField, setSelectedField] = useState("");
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState(searchParam?.value || "");
   const [filteredData, setFilteredData] = useState<Array<T>>(data ?? []);
-  const [selectedField, setSelectedField] = useState(searchParam?.key || "");
 
   const handleCloseModal = () => {
     setFormConfig("");
@@ -174,6 +174,7 @@ const TableComponent = <T extends { [key: string]: any }>({
     }
 
     if (data?.warehouseId) params.warehouseId = data?.warehouseId;
+    if (data?.quotationId) params.quotationId = data?.quotationId;
 
     // Fetch data from endpoint
     const fetchEndpoint = endpoints[type]?.fetchAll;
@@ -204,9 +205,11 @@ const TableComponent = <T extends { [key: string]: any }>({
   };
 
   useEffect(() => {
-    if (pathname) fetchFilteredData({});
+    if (pathname && !searchParam?.key) fetchFilteredData({});
+    else if (searchParam?.key)
+      fetchFilteredData({ [searchParam?.key]: searchParam?.value });
     // eslint-disable-next-line
-  }, [pathname]);
+  }, [pathname, searchParam]);
 
   useEffect(() => {
     if (isModalVisible) {
@@ -277,7 +280,6 @@ const TableComponent = <T extends { [key: string]: any }>({
             filterOptions={filterOptions}
             setSearchTerm={setSearchTerm}
             hideDateFilter={hideDateFilter}
-            searchKey={searchParam?.key ?? ""}
             fetchFilteredData={fetchFilteredData}
           />
         )}

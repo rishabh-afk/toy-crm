@@ -226,7 +226,7 @@ const Summary = () => {
                   </td>
                   <td className="p-4 border border-infobg">
                     <Link
-                      href={`/dashboard/warehouse/packing?quotationNo=${deal.quotationNo}`}
+                      href={`/dashboard/warehouse/packing?quotationNo=${deal._id}`}
                       className="flex items-center gap-2 bg-primary text-white rounded-lg text-sm w-fit px-3 py-2 hover:bg-primary/90"
                       onClick={(e) => e.stopPropagation()}
                     >

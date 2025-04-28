@@ -20,12 +20,12 @@ const columns = [
     sortable: true,
     isDate: true,
   },
-  {
-    key: "updatedAt",
-    label: "Last Updated Date",
-    sortable: true,
-    isDate: true,
-  },
+  // {
+  //   key: "updatedAt",
+  //   label: "Last Updated Date",
+  //   sortable: true,
+  //   isDate: true,
+  // },
 ];
 
 const filterOptions = [

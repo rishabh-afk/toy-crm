@@ -5,7 +5,7 @@ import Modal from "./common/Modal";
 import Notification from "./Notification";
 import { useEffect, useState } from "react";
 import { includes } from "@/hooks/polyfills";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import FormRenderer from "./common/FormRender";
 import DarkLightToggle from "./DarkLightToggle";
 import { useAuth } from "../context/AuthContext";
@@ -14,6 +14,7 @@ import FullScreenButton from "./FullScreenButton";
 const Navbar: React.FC = () => {
   const { token } = useAuth();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [formConfig, setFormConfig] = useState<any>({});
   const [stateReady, setStateReady] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
@@ -24,9 +25,12 @@ const Navbar: React.FC = () => {
 
   useEffect(() => {
     const list = ["/auth/login", "/login", "/auth"];
-    if (!includes(list, pathname)) localStorage.setItem("pathname", pathname);
+    const fullUrl = `${pathname}${
+      searchParams.toString() ? `?${searchParams.toString()}` : ""
+    }`;
+    if (!includes(list, pathname)) localStorage.setItem("pathname", fullUrl);
     else localStorage.removeItem("pathname");
-  }, [pathname]);
+  }, [pathname, searchParams]);
 
   useEffect(() => {
     setStateReady(true);
