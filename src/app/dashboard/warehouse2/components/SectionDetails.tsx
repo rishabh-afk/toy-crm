@@ -24,7 +24,7 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div
         className={`w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br ${color} text-white relative`}
       >

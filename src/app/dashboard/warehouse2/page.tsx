@@ -114,14 +114,14 @@ export default function WarehousePage() {
           compartments, designed for optimized space and organization.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 justify-center">
           {sections.map((section, index) => (
             <motion.div
               key={index}
+              whileHover={{ scale: 0.95 }}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               onClick={() => setSelectedSection(index)}
-              whileHover={{ scale: 1.05 }} // Adding hover scale effect
               transition={{ duration: 0.1, ease: "linear" }}
               className={`rounded-2xl cursor-pointer p-5 w-full transition-all duration-300 bg-gradient-to-br ${section.color} text-white`}
               aria-label={`Warehouse Section ${section.name}`}
@@ -135,7 +135,7 @@ export default function WarehousePage() {
                   title={`Add a new compartment to section ${section.name}`}
                   aria-label={`Add Compartment to ${section.name}`}
                 >
-                  <FaPlusCircle className="w-6 h-6 hover:scale-110 transition-transform" />
+                  <FaPlusCircle className="w-6 h-6 relative z-50 hover:scale-110 transition-transform" />
                 </button>
               </div>
 

@@ -129,6 +129,14 @@ export const tabs = [
         label: "Manage Inventory",
         permission: "Manage Packing",
         pageTitle: "Manage Inventory",
+        href: "/dashboard/warehouse",
+      },
+      {
+        id: 3,
+        icon: FaWarehouse,
+        label: "Manage Inventory2",
+        permission: "Manage Packing",
+        pageTitle: "Manage Inventory2",
         href: "/dashboard/warehouse2",
       },
       {
