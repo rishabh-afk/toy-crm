@@ -1,8 +1,8 @@
 "use client";
 
+import { FaPlus } from "react-icons/fa";
 import React, { useState } from "react";
 import ProductModal from "./ProductModal";
-import { FaPlusCircle } from "react-icons/fa";
 
 interface SectionDetailsProps {
   name: string;
@@ -26,7 +26,7 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
       <div
-        className={`w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br ${color} text-white relative`}
+        className={`w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br ${color} text-white relative`}
       >
         <button
           onClick={onClose}
@@ -36,11 +36,11 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
           ✕
         </button>
 
-        <div className="p-8">
+        <div className="p-6">
           <h2 className="text-4xl font-extrabold mb-2">
             Section {name} Overview
           </h2>
-          <p className="mb-6 text-white/90 w-3/4">
+          <p className="mb-6 text-white/90 italic">
             Click a compartment to manage its products.
           </p>
 
@@ -67,9 +67,10 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
 
           <button
             onClick={onAddCompartment}
-            className="inline-flex items-center gap-3 bg-white text-black hover:bg-gray-200 font-semibold text-sm px-5 py-3 rounded-full transition duration-200"
+            className="inline-flex items-center gap-2 bg-white text-black hover:bg-gray-100 border border-gray-300 font-medium text-sm px-5 py-2.5 rounded-full transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <FaPlusCircle className="text-blue-600" /> Add Compartment
+            <FaPlus className="text-blue-600 text-sm" />
+            Add Compartment
           </button>
         </div>
       </div>
