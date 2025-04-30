@@ -1,8 +1,9 @@
 "use client";
 
-import { FaPlus } from "react-icons/fa";
 import React, { useState } from "react";
 import ProductModal from "./ProductModal";
+import ConfirmModal from "./ConfirmModal";
+import { FaPlus, FaTimes } from "react-icons/fa";
 
 interface SectionDetailsProps {
   name: string;
@@ -10,6 +11,7 @@ interface SectionDetailsProps {
   onClose: () => void;
   compartments: string[];
   onAddCompartment: () => void;
+  onDeleteCompartment: (compartment: string) => void;
 }
 
 const SectionDetails: React.FC<SectionDetailsProps> = ({
@@ -18,10 +20,12 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
   onClose,
   compartments,
   onAddCompartment,
+  onDeleteCompartment,
 }) => {
   const [activeCompartment, setActiveCompartment] = useState<string | null>(
     null
   );
+  const [toDelete, setToDelete] = useState<string | null>(null);
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
@@ -53,13 +57,20 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
             ) : (
               <div className="flex flex-wrap gap-3 pr-2">
                 {compartments.map((comp, idx) => (
-                  <button
+                  <div
                     key={idx}
                     onClick={() => setActiveCompartment(comp)}
-                    className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium shadow-md hover:bg-white/30 transition"
+                    className="relative group bg-white/20 cursor-pointer backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium shadow-md hover:bg-white/30 transition"
                   >
-                    {comp}
-                  </button>
+                    <button className="text-white pr-4">{comp}</button>
+                    <button
+                      onClick={() => setToDelete(comp)}
+                      className="absolute -top-1 -right-1 bg-white text-red-600 p-1 rounded-full text-[10px] hover:bg-red-600 hover:text-white transition"
+                      aria-label="Delete compartment"
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
                 ))}
               </div>
             )}
@@ -80,6 +91,22 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
         <ProductModal
           compartmentName={activeCompartment}
           onClose={() => setActiveCompartment(null)}
+        />
+      )}
+
+      {/* Confirm Delete Modal */}
+      {toDelete && (
+        <ConfirmModal
+          cancelText="Cancel"
+          confirmText="Yes, Delete"
+          title="Delete Compartment"
+          onCancel={() => setToDelete(null)}
+          isOpen={toDelete ? true : false}
+          onConfirm={() => {
+            onDeleteCompartment(toDelete);
+            setToDelete(null);
+          }}
+          description={`Are you sure you want to delete the compartment "${toDelete}"? This action cannot be undone.`}
         />
       )}
     </div>

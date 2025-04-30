@@ -102,6 +102,23 @@ export default function WarehousePage() {
     setSections(updatedSections);
   };
 
+  const onDeleteCompartment = (
+    sectionIndex: number,
+    compartmentName: string
+  ) => {
+    setSections((prevSections) => {
+      const updatedSections = [...prevSections];
+      const section = updatedSections[sectionIndex];
+
+      // Remove the compartment by name
+      section.compartments = section.compartments
+        .filter((comp) => comp !== compartmentName)
+        .map((_, idx) => `${section.name}${idx + 1}`); // Reorder remaining compartments
+
+      return updatedSections;
+    });
+  };
+
   return (
     <AuthGuard>
       <Wrapper>
@@ -192,6 +209,9 @@ export default function WarehousePage() {
             onAddCompartment={() => {
               addCompartment(selectedSection);
             }}
+            onDeleteCompartment={(compartmentName: string) =>
+              onDeleteCompartment(selectedSection, compartmentName)
+            }
           />
         )}
       </Wrapper>
