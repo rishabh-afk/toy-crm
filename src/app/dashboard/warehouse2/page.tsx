@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaPlusCircle } from "react-icons/fa";
 import AuthGuard from "@/components/AuthGuard";
 import Wrapper from "@/components/common/Wrapper";
+import { FaPlusCircle, FaPlus } from "react-icons/fa";
 import SectionDetails from "./components/SectionDetails";
 
 /**
@@ -42,29 +42,28 @@ const getSectionName = (index: number): string => {
  */
 const getRandomGradient = (): string => {
   const gradients = [
-    "from-pink-500 to-yellow-500", // Pink to Yellow
-    "from-purple-500 to-indigo-500", // Purple to Indigo
-    "from-green-400 to-blue-500", // Green to Blue
-    "from-yellow-400 to-red-500", // Yellow to Red
-    "from-cyan-500 to-blue-600", // Cyan to Blue
-    "from-teal-400 to-green-600", // Teal to Green
-    "from-orange-400 to-yellow-500", // Orange to Yellow
-    "from-red-500 to-pink-600", // Red to Pink
-    "from-blue-400 to-indigo-700", // Blue to Indigo
-    "from-lime-400 to-cyan-500", // Lime to Cyan
-    "from-gray-600 to-gray-900", // Dark Gray Gradient
-    "from-purple-700 to-blue-900", // Purple to Blue
-    "from-blue-400 to-pink-500", // Blue to Pink
-    "from-green-500 to-yellow-500", // Green to Yellow
-    "from-indigo-500 to-purple-600", // Indigo to Purple
-    "from-red-600 to-orange-600", // Red to Orange
-    "from-pink-600 to-teal-500", // Pink to Teal
-    "from-indigo-600 to-pink-400", // Indigo to Pink
-    "from-fuchsia-500 to-rose-500", // Fuchsia to Rose
+    "from-pink-500 via-red-400 to-yellow-500", // Pink → Red → Yellow
+    "from-purple-400 via-violet-500 to-indigo-500", // Purple → Violet → Indigo
+    "from-green-400 via-teal-400 to-blue-500", // Green → Teal → Blue
+    "from-yellow-400 via-orange-400 to-red-500", // Yellow → Orange → Red
+    "from-cyan-500 via-sky-500 to-blue-600", // Cyan → Sky → Blue
+    "from-teal-400 via-emerald-500 to-green-600", // Teal → Emerald → Green
+    "from-orange-300 via-amber-400 to-yellow-500", // Orange → Amber → Yellow
+    "from-red-500 via-rose-500 to-pink-600", // Red → Rose → Pink
+    "from-blue-400 via-indigo-500 to-indigo-700", // Blue → Indigo
+    "from-lime-300 via-teal-400 to-cyan-500", // Lime → Teal → Cyan
+    "from-gray-500 via-gray-700 to-gray-900", // Gray Gradient
+    "from-purple-600 via-indigo-700 to-blue-900", // Purple → Indigo → Blue
+    "from-blue-300 via-purple-400 to-pink-500", // Blue → Purple → Pink
+    "from-green-500 via-lime-500 to-yellow-500", // Green → Lime → Yellow
+    "from-indigo-500 via-violet-500 to-purple-600", // Indigo → Violet → Purple
+    "from-red-500 via-orange-500 to-orange-600", // Red → Orange
+    "from-pink-600 via-fuchsia-500 to-teal-500", // Pink → Fuchsia → Teal
+    "from-indigo-700 via-blue-600 to-pink-400", // Indigo → Blue → Pink
+    "from-fuchsia-500 via-rose-400 to-rose-500", // Fuchsia → Rose
   ];
   return gradients[Math.floor(Math.random() * gradients.length)];
 };
-
 /**
  * WarehousePage displays a dynamic grid layout of warehouse sections and their compartments.
  * Users can add new sections and compartments interactively.
@@ -135,7 +134,7 @@ export default function WarehousePage() {
                   title={`Add a new compartment to section ${section.name}`}
                   aria-label={`Add Compartment to ${section.name}`}
                 >
-                  <FaPlusCircle className="w-6 h-6 relative z-50 hover:scale-110 transition-transform" />
+                  <FaPlus className="text-base relative z-50 hover:scale-110 transition-transform" />
                 </button>
               </div>
 
