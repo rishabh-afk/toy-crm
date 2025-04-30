@@ -129,7 +129,7 @@ export const tabs = [
         label: "Manage Inventory",
         permission: "Manage Packing",
         pageTitle: "Manage Inventory",
-        href: "/dashboard/warehouse",
+        href: "/dashboard/warehouse2",
       },
       {
         id: 1,
