@@ -64,7 +64,10 @@ const SectionDetails: React.FC<SectionDetailsProps> = ({
                   >
                     <button className="text-white pr-4">{comp}</button>
                     <button
-                      onClick={() => setToDelete(comp)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setToDelete(comp);
+                      }}
                       className="absolute -top-1 -right-1 bg-white text-red-600 p-1 rounded-full text-[10px] hover:bg-red-600 hover:text-white transition"
                       aria-label="Delete compartment"
                     >
